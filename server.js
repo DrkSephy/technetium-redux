@@ -14,7 +14,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./routes/hello')(app);
 require('./routes/issues')(app, request);
 
 app.listen(app.get('port'), () => 
