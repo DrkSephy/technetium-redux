@@ -12,10 +12,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/api/hello', (req, res) => {
-	res.send('Hello World!');
-});
-
+require('./routes/hello')(app);
 
 app.listen(app.get('port'), () => 
 	console.log('Express server listening on port ' + app.get('port')));
+
+module.exports = app;
