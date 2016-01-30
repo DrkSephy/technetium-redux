@@ -18,6 +18,6 @@ require('./routes/hello')(app);
 require('./routes/issues')(app, request);
 
 app.listen(app.get('port'), () => 
-	console.log('Express server listening on port ' + app.get('port')));
+  console.log('Express server listening on port ' + app.get('port')));
 
 module.exports = app;
