@@ -15,7 +15,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./routes/issues')(app, request);
-require('./routes/commits')(app, request);
+require('./routes/count')(app, request);
 
 app.listen(app.get('port'), () => 
   console.log('Express server listening on port ' + app.get('port')));
