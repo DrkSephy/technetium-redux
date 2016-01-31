@@ -1,7 +1,7 @@
 // Route for iterating over all commits in a repo
 'use strict';
 
-module.exports = (app, request, _) => {
+module.exports = (app, request, _, config) => {
 
   app.get('/api/count', (req, res) => {
     request.get('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', 
@@ -44,16 +44,17 @@ module.exports = (app, request, _) => {
 
   function getJSON(url) {
     return new Promise((resolve, reject) => {
-      request.get(url, (error, response, body) => {
-        console.log('Status Code: ' + response.statusCode);
-        if(response.statusCode == 200) {
-          let data = JSON.parse(body);
-          resolve(data);
-        }
-        else {
-          resolve({});
-        }
-      });
+      request.get(url, { 'auth': { 'user': config.USERNAME, 'pass': config.PASSWORD}}, 
+        (error, response, body) => {
+          console.log('Status Code: ' + response.statusCode);
+          if(response.statusCode == 200) {
+            let data = JSON.parse(body);
+            resolve(data);
+          }
+          else {
+            resolve({});
+          }
+        });
     });
   }
 
