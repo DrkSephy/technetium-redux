@@ -12,23 +12,14 @@ module.exports = (app, request) => {
 
   app.get('/api/commits', (req, res) => {
     // Get number of commits in the repository
-    getCount('https://bitbucket.org/api/1.0/repositories/DrkSephy/technetium-redux-testing/changesets')
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/technetium-redux-testing/changesets')
     // Compute all urls
     .then((data) => {
-      computeUrls(data);
-      res.json(data);
+      // computeUrls(data);
+      res.json(data.count);
     });
 
   });
-
-  function getCount(url) {
-    return new Promise((resolve, reject) => {
-      request.get(url, (error, response, body) => {
-        let data = JSON.parse(body);
-        resolve(data.count);
-      });
-    });
-  }
 
   function getJSON(url) {
     return new Promise((resolve, reject) => {
@@ -53,6 +44,7 @@ module.exports = (app, request) => {
     }
 
     let promises = urls.map((url) => getJSON(url));
+
     Promise.all(promises)
       .then((results) => {
         results.forEach((item) => {
