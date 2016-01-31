@@ -46,9 +46,9 @@ module.exports = (app, request) => {
     let start = 0;
 
     while (start <= stop) {
-      let url = 'https://api.bitbucket.org/2.0/repositories/DrkSephy/wombat/commits/master';
+      let url = 'https://api.bitbucket.org/2.0/repositories/DrkSephy/wombat/commits/master?page=' + page;
       urls.push(url);
-      // page++;
+      page++;
       start++;
     }
 
