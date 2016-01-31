@@ -4,7 +4,7 @@
 module.exports = (app, request, _) => {
 
   app.get('/api/count', (req, res) => {
-    request.get('https://bitbucket.org/api/1.0/repositories/DrkSephy/technetium-redux-testing/changesets/', 
+    request.get('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', 
       (error, response, body) => {
         res.send(body);
     })
@@ -12,7 +12,7 @@ module.exports = (app, request, _) => {
 
   app.get('/api/commits', (req, res) => {
     // Get number of commits in the repository
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/technetium-redux-testing/changesets')
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets')
     // Compute all urls
     .then((data) => {
       let promises = computeUrls(data.count);
@@ -56,6 +56,7 @@ module.exports = (app, request, _) => {
   }
 
   function computeUrls(count) {
+    console.log(count);
     let urls = [];
     let page = 1;
     let stop = Math.floor(count / 30);
