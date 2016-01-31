@@ -1,7 +1,7 @@
 // Route for iterating over all commits in a repo
 'use strict';
 
-module.exports = (app, request) => {
+module.exports = (app, request, _) => {
 
   app.get('/api/count', (req, res) => {
     request.get('https://bitbucket.org/api/1.0/repositories/DrkSephy/technetium-redux-testing/changesets/', 
@@ -15,8 +15,33 @@ module.exports = (app, request) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/technetium-redux-testing/changesets')
     // Compute all urls
     .then((data) => {
-      // computeUrls(data);
-      res.json(data.count);
+      let promises = computeUrls(data.count);
+
+      Promise.all(promises)
+        .then((results) => {
+          let users = []
+          let parsedData = [];
+          let commitData = {}
+          results.forEach((item) => {
+            const data = item.values;
+            for (let value in data) {
+              const username = data[value].author.user.username;
+
+              // Check if we created a data object for a contributor
+              if(username !== undefined && !(_.contains(users, username))) {
+                users.push(username);
+                commitData[username] = {
+                  commits: 0
+                };
+              }
+
+              commitData[username].commits += 1;
+            }
+          });
+
+          res.json(commitData);
+
+        });
     });
 
   });
@@ -44,13 +69,6 @@ module.exports = (app, request) => {
     }
 
     let promises = urls.map((url) => getJSON(url));
-
-    Promise.all(promises)
-      .then((results) => {
-        results.forEach((item) => {
-          console.log(item);
-        });
-      });
-
+    return promises;
   }
 }
