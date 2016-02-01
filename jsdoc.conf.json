@@ -1,0 +1,31 @@
+{
+    "source": {
+        "include": [
+            "./routes/"
+        ],
+        "exclude": [],
+        "includePattern": ".+\\.js(doc)?$",
+        "excludePattern": "(^|\\/|\\\\)_"
+    },
+    "opts": {
+        "destination": "./docs/build",
+        "encoding"   : "utf8",
+        "lenient"    : true,
+        "private"    : true,
+        "recurse"    : true,
+        "template"   : "./node_modules/minami",
+        "tutorials"  : "./docs/tutorials"
+    },
+    "tags": {
+        "allowUnknownTags": true,
+        "dictionaries": ["jsdoc","closure"]
+    },
+    "markdown": {
+        "parser"  : "gfm",
+        "hardwrap": true
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "templates": {}
+}
