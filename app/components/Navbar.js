@@ -34,6 +34,7 @@ class Navbar extends React.Component {
           <ul className='nav navbar-nav'>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/commits'>Commits</Link></li>
+            <li><Link to='/issues'>Issues</Link></li>
           </ul>
         </div>
       </nav>
