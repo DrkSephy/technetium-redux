@@ -1,6 +1,14 @@
-// Base url for issues: https://bitbucket.org/api/1.0/repositories/{username}/{reponame}/issues
+/**
+ * Gathers Issue data from Bitbucket API.
+ * @module routes/issues
+*/
+
 'use strict';
 
+/**
+ * GET /api/issues
+ * Returns issue data for a given repository.
+*/
 module.exports = (app, request) => {
 
   app.get('/api/issues', (req, res) => {
@@ -20,6 +28,12 @@ module.exports = (app, request) => {
     });
   });
 
+  /** 
+   * Helper function for returning JSON from url.
+   *
+   * @param {string} url - The url to query.
+   * @return {object} data - JSON response from API.
+  */
   function getJSON(url) {
     return new Promise((resolve, reject) => {
       request.get(url, (error, response, body) => {

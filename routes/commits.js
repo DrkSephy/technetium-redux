@@ -1,6 +1,14 @@
-// Route for iterating over all commits in a repo
+/**
+ * Gathers Commit data from Bitbucket API.
+ * @module routes/commits
+*/
+
 'use strict';
 
+/**
+ * GET /api/commits
+ * Returns commit data for a given repository.
+*/
 module.exports = (app, request, _, config) => {
 
   app.get('/api/count', (req, res) => {
@@ -13,9 +21,7 @@ module.exports = (app, request, _, config) => {
   app.get('/api/commits', (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0')
     .then((data) => {
-
       let promises = computeUrls(data.count);
-
       Promise.all(promises)
       .then((results) => {
         let users = []
@@ -42,6 +48,12 @@ module.exports = (app, request, _, config) => {
     });
   });
 
+  /** 
+   * Helper function for returning JSON from url.
+   *
+   * @param {string} url - The url to query.
+   * @return {object} data - JSON response from API.
+  */
   function getJSON(url) {
     return new Promise((resolve, reject) => {
       request.get(url, { 'auth': { 'user': config.USERNAME, 'pass': config.PASSWORD}}, 
@@ -57,6 +69,12 @@ module.exports = (app, request, _, config) => {
     });
   }
 
+  /**
+   * Helper function for computing all query urls.
+   * 
+   * @param {number} count - The number of commits in a repository.
+   * @return {object} promises - An array of promises.
+  */
   function computeUrls(count) {
     let urls = [];
     let page = 1;
@@ -69,7 +87,6 @@ module.exports = (app, request, _, config) => {
       page++;
       start++;
     }
-
 
     let promises = urls.map((url) => getJSON(url));
     return promises;
