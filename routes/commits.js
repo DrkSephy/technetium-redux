@@ -40,7 +40,6 @@ module.exports = (app, request, _, config) => {
 
       });
     });
-
   });
 
   function getJSON(url) {
@@ -51,8 +50,7 @@ module.exports = (app, request, _, config) => {
           if(response.statusCode == 200) {
             let data = JSON.parse(body);
             resolve(data);
-          }
-          else {
+          } else {
             resolve({});
           }
         });
