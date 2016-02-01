@@ -35,7 +35,8 @@ module.exports = (app, request, _, config) => {
           }
         });
 
-        res.json(commitData);
+        parsedData.push(commitData);
+        res.json(parsedData);
 
       });
     });
