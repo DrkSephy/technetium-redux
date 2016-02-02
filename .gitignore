@@ -3,3 +3,4 @@ secrets.js
 bower_components/
 public/js/*
 *.DS_Store
+public/css/*
