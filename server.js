@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-require('./routes/issues')(app, config);
+require('./routes/issues')(app, _, config);
 require('./routes/commits')(app, _, config);
 
 app.use(function(req, res) {

@@ -16,7 +16,6 @@ import request from 'request';
  * @return {object} data - JSON response from API.
 */
 export function getJSON(url, config) {
-  console.log(config.USERNAME);
   return new Promise((resolve, reject) => {
     request.get(url, { 'auth': { 'user': config.USERNAME, 'pass': config.PASSWORD}}, 
       (error, response, body) => {

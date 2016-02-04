@@ -7,7 +7,7 @@ import { getJSON } from './utils';
 
 'use strict';
 
-module.exports = (app, config) => {
+module.exports = (app, _, config) => {
   /**
    * GET /api/issues
    * Returns issue data for a given repository.
@@ -31,10 +31,29 @@ module.exports = (app, config) => {
 
   /**
    * GET /api/issues/opened
-   * Returns issues that were opened by each contributor in 
-   * a given repository.
+   * Returns number of issues opened by each contributor in a repository.
   */
   app.get('/api/issues/opened', (req, res) => {
-    res.send('Opened issues per contributor');
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    .then((results) => {
+      let parsedData = [];
+      let usernames = [];
+      results['issues'].forEach((issue) => {
+        let username = issue.responsible.username;
+        if(!(_.contains(usernames, username))) {
+          let entry = {};
+          entry.username = username;
+          entry.opened = 0;
+          parsedData.push(entry);
+          usernames.push(username);
+        }
+        parsedData.forEach((contributor) => {
+          if(contributor.username == issue.reported_by.username) {
+              contributor.opened++;
+          }
+        });
+      });
+      res.send(parsedData);
+    });
   });
 }
