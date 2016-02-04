@@ -3,16 +3,17 @@
  * @module routes/issues
 */
 
+import { getJSON } from './utils';
+
 'use strict';
 
-/**
- * GET /api/issues
- * Returns issue data for a given repository.
-*/
-module.exports = (app, request) => {
-
+module.exports = (app, config) => {
+  /**
+   * GET /api/issues
+   * Returns issue data for a given repository.
+  */
   app.get('/api/issues', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/')
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
     .then((results) => {
       let parsedData = [];
       results['issues'].forEach((issue) => {
@@ -28,22 +29,12 @@ module.exports = (app, request) => {
     });
   });
 
-  /** 
-   * Helper function for returning JSON from url.
-   *
-   * @param {string} url - The url to query.
-   * @return {object} data - JSON response from API.
+  /**
+   * GET /api/issues/opened
+   * Returns issues that were opened by each contributor in 
+   * a given repository.
   */
-  function getJSON(url) {
-    return new Promise((resolve, reject) => {
-      request.get(url, (error, response, body) => {
-        if(response.statusCode == 200) {
-          let data = JSON.parse(body);
-          resolve(data);
-        } else {
-          resolve({});
-        }
-      });
-    });
-  }
+  app.get('/api/issues/opened', (req, res) => {
+    res.send('Opened issues per contributor');
+  });
 }

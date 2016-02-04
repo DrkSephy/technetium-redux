@@ -3,6 +3,7 @@
  * @module routes/commits
 */
 
+import { getJSON } from './utils';
 
 'use strict';
 
@@ -10,7 +11,7 @@
  * GET /api/commits
  * Returns commit data for a given repository.
 */
-module.exports = (app, request, _, config) => {
+module.exports = (app, _, config) => {
 
   app.get('/api/count', (req, res) => {
     request.get('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', 
@@ -20,9 +21,9 @@ module.exports = (app, request, _, config) => {
   });
 
   app.get('/api/commits', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0')
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count);
+      let promises = computeUrls(data.count, config);
       Promise.all(promises)
       .then((results) => {
         let users = []
@@ -49,34 +50,13 @@ module.exports = (app, request, _, config) => {
     });
   });
 
-  /** 
-   * Helper function for returning JSON from url.
-   *
-   * @param {string} url - The url to query.
-   * @return {object} data - JSON response from API.
-  */
-  function getJSON(url) {
-    return new Promise((resolve, reject) => {
-      request.get(url, { 'auth': { 'user': config.USERNAME, 'pass': config.PASSWORD}}, 
-        (error, response, body) => {
-          console.log('Status Code: ' + response.statusCode);
-          if(response.statusCode == 200) {
-            let data = JSON.parse(body);
-            resolve(data);
-          } else {
-            resolve({});
-          }
-        });
-    });
-  }
-
   /**
    * Helper function for computing all query urls.
    * 
    * @param {number} count - The number of commits in a repository.
    * @return {object} promises - An array of promises.
   */
-  function computeUrls(count) {
+  function computeUrls(count, config) {
     let urls = [];
     let page = 1;
     let stop = Math.floor(count / 30);
@@ -89,7 +69,7 @@ module.exports = (app, request, _, config) => {
       start++;
     }
 
-    let promises = urls.map((url) => getJSON(url));
+    let promises = urls.map((url) => getJSON(url, config));
     return promises;
   }
 }
