@@ -90,4 +90,35 @@ module.exports = (app, _, config) => {
     });
   });
 
+  /**
+   * GET /api/issues/completed
+   * Returns number of issues completed by each contributor in a repository.
+  */
+  app.get('/api/issues/completed', (req, res) => {
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    .then((results) => {
+      let parsedData = [];
+      let usernames = [];
+      results['issues'].forEach((issue) => {
+        let username = issue.responsible.username;
+        if(!(_.contains(usernames, username))) {
+          let entry = {};
+          entry.username = username;
+          entry.completed = 0;
+          entry.id = null;
+          parsedData.push(entry);
+          usernames.push(username);
+        }
+        parsedData.forEach((contributor) => {
+          if(contributor.username == issue.responsible.username) {
+            if(issue.status === 'resolved') {
+              contributor.completed++;
+            }
+          }
+          contributor.id = generateRandomNumber();
+        });
+      });
+      res.send(parsedData);
+    });
+  });
 }
