@@ -25,15 +25,13 @@ class Issues extends React.Component {
   render() {
     let issues = this.state.issues.map((data) => {
       return (
-        <tbody>
-          <tr>
-            <td>{data.reported_by}</td>
-            <td>{data.title}</td>
-            <td>{data.responsible}</td>
-            <td>{data.priority}</td>
-            <td>{data.metadata}</td>
-          </tr> 
-        </tbody>
+        <tr key={data.id}>
+          <td>{data.reported_by}</td>
+          <td>{data.title}</td>
+          <td>{data.responsible}</td>
+          <td>{data.priority}</td>
+          <td>{data.metadata}</td>
+        </tr> 
       );
     });
 
@@ -50,7 +48,9 @@ class Issues extends React.Component {
               <td colSpan='1'>Type</td>
             </tr>
             </thead>
+            <tbody>
               {issues}
+            </tbody>
           </table>
         </div>
       </div>
