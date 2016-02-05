@@ -6,6 +6,7 @@ import Commits from './components/Commits';
 import Issues from './components/Issues';
 import IssuesOpened from './components/IssuesOpened';
 import IssuesAssigned from './components/IssuesAssigned';
+import IssuesCompleted from './components/IssuesCompleted';
 
 export default (
   <Route component={App}>
@@ -14,5 +15,6 @@ export default (
     <Route path='/issues' component={Issues} />
     <Route path='/issuesOpened' component={IssuesOpened} />
     <Route path='/issuesAssigned' component={IssuesAssigned} />
+    <Route path='/issuesCompleted' component={IssuesCompleted} />
   </Route>
 );
