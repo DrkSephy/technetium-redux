@@ -105,7 +105,7 @@ module.exports = (app, _, config) => {
           let entry = {};
           entry.username = username;
           entry.completed = 0;
-          entry.id = null;
+          entry.id = generateRandomNumber();
           parsedData.push(entry);
           usernames.push(username);
         }
@@ -115,7 +115,6 @@ module.exports = (app, _, config) => {
               contributor.completed++;
             }
           }
-          contributor.id = generateRandomNumber();
         });
       });
       res.send(parsedData);

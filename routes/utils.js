@@ -1,4 +1,3 @@
-
 /**
  * Utility methods.
  * @module routes/utils
@@ -40,6 +39,13 @@ export function generateRandomNumber(min=1, max=9999) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
+/**
+ * Generates all URLS for accessing Issue Comments.
+ *
+ * @param {number} count - The number of issues in a repository.
+ * @param {object} config - Credentials for making authenticated calls.
+ * @return {object} promises - An array of promises for Issue Comments.
+*/
 export function getIssueCommentUrls(count, config) {
   let urls = [];
   while(count > 0) {
