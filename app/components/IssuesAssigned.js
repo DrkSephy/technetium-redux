@@ -24,7 +24,6 @@ class IssuesAssigned extends React.Component {
 
   render() {
     let issuesAssigned = this.state.issuesAssigned.map((data) => {
-      console.log(data);
       return (
         <tr key={data.id}>
           <td>{data.username}</td>
