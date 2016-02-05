@@ -11,7 +11,7 @@ class IssuesAssigned extends React.Component {
 
   componentDidMount() {
     IssuesAssignedStore.listen(this.onChange);
-    IssuesAssignedActions.getAssignedIssues();
+    IssuesAssignedActions.getIssuesAssigned();
   }
 
   componentWillUnmount() {
@@ -24,30 +24,33 @@ class IssuesAssigned extends React.Component {
 
   render() {
     let issuesAssigned = this.state.issuesAssigned.map((data) => {
+      console.log(data);
       return (
         <tr key={data.id}>
           <td>{data.username}</td>
           <td>{data.responsible}</td>
         </tr>
       );
-
-      return (
-        <div className='container'>
-          <div className='panel panel-default'>
-            <table className='table table-striped'>
-              <thead>
-              <tr>
-                <td colSpan='1'>Username</td>
-                <td colSpan='1'>Issues Assigned</td>
-              </tr>
-              </thead>
-              <tbody>
-                {issuesAssigned}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      );
     });
+
+    return (
+      <div className='container'>
+        <div className='panel panel-default'>
+          <table className='table table-striped'>
+            <thead>
+            <tr>
+              <td colSpan='1'>Username</td>
+              <td colSpan='1'>Issues Assigned</td>
+            </tr>
+            </thead>
+            <tbody>
+              {issuesAssigned}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    );
   }
 }
+
+export default IssuesAssigned;
