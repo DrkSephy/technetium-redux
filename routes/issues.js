@@ -3,7 +3,7 @@
  * @module routes/issues
 */
 
-import { getJSON, generateRandomNumber } from './utils';
+import { getJSON, generateRandomNumber, getIssueCommentUrls } from './utils';
 
 'use strict';
 
@@ -119,6 +119,42 @@ module.exports = (app, _, config) => {
         });
       });
       res.send(parsedData);
+    });
+  });
+
+  /**
+   * GET /api/issues/comments
+   * Returns number of total comments by each contributor in a repository.
+  */
+  app.get('/api/issues/comments', (req, res) => {
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    .then((data) => {
+      let promises = getIssueCommentUrls(data.count, config);
+      Promise.all(promises)
+      .then((results) => {
+        let usernames = [];
+        let parsedData = [];
+        results.forEach((entry) => {
+          if(entry.length > 0) {
+            entry.forEach((issue) => {
+              if(!(_.contains(usernames, issue.author_info.username))) {
+                let userEntry = {};
+                userEntry.username = issue.author_info.username;
+                userEntry.comments = 0;
+                userEntry.id = generateRandomNumber();
+                parsedData.push(userEntry);
+                usernames.push(issue.author_info.username);
+              }
+              parsedData.forEach((contributor) => {
+                if(contributor.username == issue.author_info.username) {
+                  contributor.comments++;
+                }
+              });
+            });
+          }
+        });
+        res.send(parsedData);
+      }); 
     });
   });
 }

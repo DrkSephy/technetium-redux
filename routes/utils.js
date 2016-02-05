@@ -39,3 +39,15 @@ export function getJSON(url, config) {
 export function generateRandomNumber(min=1, max=9999) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+export function getIssueCommentUrls(count, config) {
+  let urls = [];
+  while(count > 0) {
+    const url = 'https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/' + count + '/comments';
+    urls.push(url);
+    count--;
+  }
+
+  let promises = urls.map((url) => getJSON(url, config));
+  return promises;
+}
