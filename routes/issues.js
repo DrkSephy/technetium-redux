@@ -59,4 +59,35 @@ module.exports = (app, _, config) => {
       res.send(parsedData);
     });
   });
+
+  /**
+   * GET /api/issues/assigned
+   * Returns number of issues assigned to each contributor in a repository.
+  */
+  app.get('/api/issues/assigned', (req, res) => {
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    .then((results) => {
+      let parsedData = [];
+      let usernames = [];
+      results['issues'].forEach((issue) => {
+        let username = issue.responsible.username;
+        if(!(_.contains(usernames, username))) {
+          let entry = {};
+          entry.username = username;
+          entry.responsible = 0;
+          entry.id = null;
+          parsedData.push(entry);
+          usernames.push(username);
+        }
+        parsedData.forEach((contributor) => {
+          if(contributor.username == issue.responsible.username) {
+              contributor.responsible++;
+          }
+          contributor.id = generateRandomNumber();
+        });
+      });
+      res.send(parsedData);
+    });
+  });
+
 }
