@@ -24,14 +24,11 @@ class Issues extends React.Component {
 
   render() {
     let issuesOpened = this.state.issuesOpened.map((data) => {
-      console.log(data);
       return (
-        <tbody>
-          <tr>
-            <td>{data.username}</td>
-            <td>{data.opened}</td>
-          </tr>
-        </tbody>
+        <tr key={data.id}>
+          <td>{data.username}</td>
+          <td>{data.opened}</td>
+        </tr>
       );
     });
 
@@ -45,7 +42,9 @@ class Issues extends React.Component {
               <td colSpan='1'>Opened</td>
             </tr>
             </thead>
+            <tbody>
               {issuesOpened}
+            </tbody>
           </table>
         </div>
       </div>

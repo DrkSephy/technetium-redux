@@ -28,3 +28,14 @@ export function getJSON(url, config) {
       });
   });
 }
+
+/**
+ * Helper function for generating unique numbers for use in React Components.
+ * 
+ * @param {number} min - The minimum number.
+ * @param {number} max - The maximum number.
+ * @return {number} undefined
+*/
+export function generateRandomNumber(min=1, max=9999) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

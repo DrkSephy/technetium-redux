@@ -3,7 +3,7 @@
  * @module routes/issues
 */
 
-import { getJSON } from './utils';
+import { getJSON, generateRandomNumber } from './utils';
 
 'use strict';
 
@@ -44,6 +44,7 @@ module.exports = (app, _, config) => {
           let entry = {};
           entry.username = username;
           entry.opened = 0;
+          entry.id = null;
           parsedData.push(entry);
           usernames.push(username);
         }
@@ -51,6 +52,7 @@ module.exports = (app, _, config) => {
           if(contributor.username == issue.reported_by.username) {
               contributor.opened++;
           }
+          contributor.id = generateRandomNumber();
         });
       });
       res.send(parsedData);
