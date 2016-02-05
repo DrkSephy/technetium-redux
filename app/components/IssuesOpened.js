@@ -11,7 +11,7 @@ class Issues extends React.Component {
 
   componentDidMount() {
     IssuesOpenedStore.listen(this.onChange);
-    IssuesOpenedActions.getOpenedIssues();
+    IssuesOpenedActions.getIssuesOpened();
   }
 
   componentWillUnmount() {
@@ -24,6 +24,7 @@ class Issues extends React.Component {
 
   render() {
     let issuesOpened = this.state.issuesOpened.map((data) => {
+      console.log(data);
       return (
         <tbody>
           <tr>
@@ -32,23 +33,23 @@ class Issues extends React.Component {
           </tr>
         </tbody>
       );
-
-      return (
-        <div className='container'>
-          <div className='panel panel-default'>
-            <table className='table table-striped'>
-              <thead>
-              <tr>
-                <td colSpan='1'>Username</td>
-                <td colSpan='1'>Opened</td>
-              </tr>
-              </thead>
-                {issuesOpened}
-            </table>
-          </div>
-        </div>
-      );
     });
+
+    return (
+      <div className='container'>
+        <div className='panel panel-default'>
+          <table className='table table-striped'>
+            <thead>
+            <tr>
+              <td colSpan='1'>Username</td>
+              <td colSpan='1'>Opened</td>
+            </tr>
+            </thead>
+              {issuesOpened}
+          </table>
+        </div>
+      </div>
+    );
   }
 }
 
