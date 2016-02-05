@@ -23,6 +23,7 @@ module.exports = (app, _, config) => {
         issueData.responsible = issue.responsible.username;
         issueData.priority = issue.priority;
         issueData.metadata = issue.metadata.kind;
+        issueData.id = generateRandomNumber();
         parsedData.push(issueData);
       });
       res.send(parsedData);
