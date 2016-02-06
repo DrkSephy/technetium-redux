@@ -27,7 +27,7 @@ class Commits extends React.Component {
 
     let commits = this.state.commits.map((data) => {
       return (
-        <tr>
+        <tr key={data.id}>
           <td>{data.username}</td>
           <td>{data.commits}</td>
         </tr>

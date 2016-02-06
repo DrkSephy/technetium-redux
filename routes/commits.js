@@ -3,7 +3,7 @@
  * @module routes/commits
 */
 
-import { getJSON } from './utils';
+import { getJSON, generateRandomNumber } from './utils';
 
 'use strict';
 
@@ -36,6 +36,7 @@ module.exports = (app, _, config) => {
               let userEntry = {};
               userEntry.username = username;
               userEntry.commits = 0;
+              userEntry.id = generateRandomNumber();
               parsedData.push(userEntry);
               users.push(username);
             }
