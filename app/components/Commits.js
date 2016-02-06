@@ -27,16 +27,10 @@ class Commits extends React.Component {
 
     let commits = this.state.commits.map((data) => {
       return (
-        <tbody>
-          <tr>
-            <td>DrkSephy</td>
-            <td>Commits: {data['DrkSephy'].commits}</td>
-          </tr>
-          <tr>
-            <td>Venegu</td>
-            <td>Commits: {data['venegu'].commits}</td>
-          </tr>
-        </tbody>
+        <tr>
+          <td>{data.username}</td>
+          <td>{data.commits}</td>
+        </tr>
       );
     });
 
@@ -46,10 +40,13 @@ class Commits extends React.Component {
           <table className='table table-striped'>
             <thead>
             <tr>
-              <th colSpan='2'>Commits</th>
+              <th colSpan='1'>Username</th>
+              <th colSpan='1'>Commits</th>
             </tr>
             </thead>
+            <tbody>
               {commits}
+            </tbody>
           </table>
         </div>
       </div>

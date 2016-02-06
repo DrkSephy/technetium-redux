@@ -28,24 +28,25 @@ module.exports = (app, _, config) => {
       .then((results) => {
         let users = []
         let parsedData = [];
-        let commitData = {}
         results.forEach((item) => {
           const data = item.values;
           for (let value in data) {
             const username = data[value].author.user.username;
             if(username !== undefined && !(_.contains(users, username))) {
+              let userEntry = {};
+              userEntry.username = username;
+              userEntry.commits = 0;
+              parsedData.push(userEntry);
               users.push(username);
-              commitData[username] = {
-                commits: 0
-              };
             }
-            commitData[username].commits += 1;
+            parsedData.forEach((contributor) => {
+              if(contributor.username === username) {
+                contributor.commits++;
+              }
+            });
           }
         });
-
-        parsedData.push(commitData);
         res.json(parsedData);
-
       });
     });
   });
