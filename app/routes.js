@@ -9,6 +9,7 @@ import IssuesAssigned from './components/IssuesAssigned';
 import IssuesCompleted from './components/IssuesCompleted';
 import IssueComments from './components/IssueComments';
 import Chart from './components/Chart';
+import TimeSeries from './components/TimeSeries';
 
 
 export default (
@@ -21,5 +22,6 @@ export default (
     <Route path='/issuesCompleted' component={IssuesCompleted} />
     <Route path='/issueComments' component={IssueComments} />
     <Route path='/chart' component={Chart} />
+    <Route path='/timeseries' component={TimeSeries} />
   </Route>
 );
