@@ -3,7 +3,7 @@
  * @module routes/commits
 */
 
-import { getJSON, generateRandomNumber } from './utils';
+import { getJSON, generateRandomNumber, getDateRange } from './utils';
 
 'use strict';
 
@@ -14,10 +14,12 @@ import { getJSON, generateRandomNumber } from './utils';
 module.exports = (app, _, config) => {
 
   app.get('/api/count', (req, res) => {
-    request.get('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', 
-      (error, response, body) => {
-        res.send(body);
-    })
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', config) 
+    .then((data) => {
+      let ranges = getDateRange();
+      console.log(ranges);
+      res.send(data);
+    });
   });
 
   app.get('/api/commits', (req, res) => {
@@ -31,6 +33,7 @@ module.exports = (app, _, config) => {
         results.forEach((item) => {
           const data = item.values;
           for (let value in data) {
+            console.log(data[value].date);
             const username = data[value].author.user.username;
             if(username !== undefined && !(_.contains(users, username))) {
               let userEntry = {};
