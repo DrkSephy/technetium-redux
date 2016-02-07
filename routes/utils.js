@@ -4,6 +4,7 @@
 */
 
 import request from 'request';
+import moment from 'moment';
 
 'use strict';
 
@@ -56,4 +57,10 @@ export function getIssueCommentUrls(count, config) {
 
   let promises = urls.map((url) => getJSON(url, config));
   return promises;
+}
+
+export function getDateRange() {
+  let startDate = moment().format('YYYY-MM-DD');
+  let endDate = moment().subtract(7, 'days').format('YYYY-MM-DD');
+  return { startDate: startDate, endDate: endDate };
 }
