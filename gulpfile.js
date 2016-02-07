@@ -90,9 +90,17 @@ gulp.task('styles', function() {
     .pipe(gulp.dest('public/css'));
 });
 
+gulp.task('css', function() {
+  return gulp.src([
+    'public/css/main.css',
+    'bower_components/c3/c3.css'
+  ]).pipe(concat('compiled.css'))
+    .pipe(gulp.dest('public/css'));
+});
+
 gulp.task('watch', function() {
   gulp.watch('app/stylesheets/**/*.less', ['styles']);
 });
 
-gulp.task('default', ['styles', 'vendor', 'browserify-watch', 'watch']);
-gulp.task('build', ['styles', 'vendor', 'browserify']);
+gulp.task('default', ['styles', 'css', 'vendor', 'browserify-watch', 'watch']);
+gulp.task('build', ['styles', 'css', 'vendor', 'browserify']);
