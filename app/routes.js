@@ -8,6 +8,7 @@ import IssuesOpened from './components/IssuesOpened';
 import IssuesAssigned from './components/IssuesAssigned';
 import IssuesCompleted from './components/IssuesCompleted';
 import IssueComments from './components/IssueComments';
+import Chart from './components/Chart';
 
 
 export default (
@@ -19,5 +20,6 @@ export default (
     <Route path='/issuesAssigned' component={IssuesAssigned} />
     <Route path='/issuesCompleted' component={IssuesCompleted} />
     <Route path='/issueComments' component={IssueComments} />
+    <Route path='/chart' component={Chart} />
   </Route>
 );

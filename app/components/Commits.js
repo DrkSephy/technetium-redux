@@ -24,7 +24,6 @@ class Commits extends React.Component {
   }
 
   render() {
-
     let commits = this.state.commits.map((data) => {
       return (
         <tr key={data.id}>
@@ -52,8 +51,6 @@ class Commits extends React.Component {
       </div>
     );
   }
-
-  
 }
 
 export default Commits;
