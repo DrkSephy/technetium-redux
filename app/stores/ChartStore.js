@@ -17,8 +17,6 @@ class ChartStore {
         ]
       }
     });
-    console.log(this.chartData);
-
   }
 
   onGetChartFail(data) {

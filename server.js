@@ -27,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 require('./routes/issues')(app, _, config);
 require('./routes/commits')(app, _, config);
 require('./routes/charts')(app);
+require('./routes/timeseries')(app);
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
