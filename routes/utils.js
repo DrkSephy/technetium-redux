@@ -49,7 +49,7 @@ export function generateRandomNumber(min=1, max=9999) {
 */
 export function getIssueCommentUrls(count, config) {
   let urls = [];
-  while(count > 0) {
+  while (count > 0) {
     const url = 'https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/' + count + '/comments';
     urls.push(url);
     count--;
@@ -60,7 +60,17 @@ export function getIssueCommentUrls(count, config) {
 }
 
 export function getDateRange() {
-  let startDate = moment().format('YYYY-MM-DD');
-  let endDate = moment().subtract(7, 'days').format('YYYY-MM-DD');
+  let endDate = moment();
+  let startDate = moment().subtract(14, 'days');
   return { startDate: startDate, endDate: endDate };
+}
+
+export function generateDateRange(startDate, endDate) {
+  let datesArray = [];
+  let currentDate = moment(startDate);
+  while (currentDate <= endDate) {
+    datesArray.push(moment(currentDate).format('YYYY-MM-DD'));
+    currentDate = moment(currentDate).add(1, 'days');
+  }
+  return datesArray;
 }
