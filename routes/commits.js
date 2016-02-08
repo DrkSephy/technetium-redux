@@ -70,7 +70,7 @@ module.exports = (app, _, config) => {
           const data = item.values;
           for (let value in data) {
             let date = moment(data[value].date);
-            if (date.isBetween(ranges.startDate, ranges.endDate)) {
+            if (date.isBetween(ranges.startDate.subtract(1, 'day'), ranges.endDate)) {
               let userEntry = {};
               userEntry.username = data[value].author.user.username;
               userEntry.date = date.format('YYYY-MM-DD');
