@@ -66,13 +66,12 @@ export function getDateRange() {
 }
 
 export function generateDateRange(startDate, endDate) {
-  console.log(moment(endDate).format('YYYY-MM-DD'));
   let datesArray = [];
   let currentDate = moment(startDate);
   while (currentDate < endDate) {
     datesArray.push(moment(currentDate).format('YYYY-MM-DD'));
     currentDate = moment(currentDate).add(1, 'days');
   }
-  console.log(datesArray);
+  
   return datesArray;
 }
