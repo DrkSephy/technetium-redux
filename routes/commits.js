@@ -110,7 +110,9 @@ module.exports = (app, _, config) => {
           talliedCommits.forEach((username) => {
             if(username[user] !== undefined) {
               for(var key in username[user]) {
-                userCommits.push(username[user][key]);
+                if(!isNaN(username[user][key])) {
+                  userCommits.push(username[user][key]);
+                }
               }
             }
           });
