@@ -8,15 +8,12 @@ class TimeSeriesStore {
   }
 
   onGetTimeSeriesSuccess(data) {
+    console.log(data);
     this.chartData = c3.generate({
       bindto: '.chart_2',
       data: {
         x: 'x',
-        columns: [
-          data[0],
-          data[1],
-          data[2]
-        ]
+        columns: data
       },
       axis: {
         x: {
