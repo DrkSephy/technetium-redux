@@ -59,15 +59,29 @@ export function getIssueCommentUrls(count, config) {
   return promises;
 }
 
+
+/**
+ * Generates an object containing the startDate and endDate.
+ *
+ * @returns {object} - An object containing the start and end dates.
+*/
 export function getDateRange() {
   let endDate = moment().add(1, 'days');
   let startDate = moment().subtract(14, 'days');
   return { startDate: startDate, endDate: endDate };
 }
 
+/**
+ * Generates an array of strings containing all dates within range. 
+ *
+ * @param {object} startDate - The start date to begin iteration.
+ * @param {object} endDate - The end date to end iteration.
+ * @returns {object} datesArray - An array of strings containing all dates within range.
+*/
 export function generateDateRange(startDate, endDate) {
   let datesArray = [];
   let currentDate = moment(startDate);
+
   while (currentDate < endDate) {
     datesArray.push(moment(currentDate).format('YYYY-MM-DD'));
     currentDate = moment(currentDate).add(1, 'days');
