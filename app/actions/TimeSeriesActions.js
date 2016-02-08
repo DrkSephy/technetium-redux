@@ -9,7 +9,7 @@ class TimeSeriesActions {
   }
 
   getData() {
-    $.ajax({ url: '/api/timeseries' })
+    $.ajax({ url: '/api/weeklycommits' })
       .done((data) => {
         this.actions.getTimeSeriesSuccess(data);
       })
