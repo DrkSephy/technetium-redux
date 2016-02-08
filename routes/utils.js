@@ -60,17 +60,19 @@ export function getIssueCommentUrls(count, config) {
 }
 
 export function getDateRange() {
-  let endDate = moment();
+  let endDate = moment().add(1, 'days');
   let startDate = moment().subtract(14, 'days');
   return { startDate: startDate, endDate: endDate };
 }
 
 export function generateDateRange(startDate, endDate) {
+  console.log(moment(endDate).format('YYYY-MM-DD'));
   let datesArray = [];
   let currentDate = moment(startDate);
-  while (currentDate <= endDate) {
+  while (currentDate < endDate) {
     datesArray.push(moment(currentDate).format('YYYY-MM-DD'));
     currentDate = moment(currentDate).add(1, 'days');
   }
+  console.log(datesArray);
   return datesArray;
 }
