@@ -5,6 +5,7 @@ class ReportsStore {
   constructor() {
     this.bindActions(ReportsActions);
     this.commits = [];
+    this.issuesOpened = [];
   }
 
   onGetCommitsSuccess(data) {
@@ -12,6 +13,15 @@ class ReportsStore {
   }
 
   onGetCommitsFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
+  }
+
+  onGetIssuesOpenedSuccess(data) {
+    console.log(data);
+    this.issuesOpened = data;
+  }
+
+  onGetIssuesOpenedFail(data) {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }

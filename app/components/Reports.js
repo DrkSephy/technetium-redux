@@ -13,6 +13,7 @@ class Reports extends React.Component {
   componentDidMount() {
     ReportsStore.listen(this.onChange);
     ReportsActions.getCommits();
+    ReportsActions.getIssues();
   }
 
   componentWillUnmount() {
@@ -33,6 +34,15 @@ class Reports extends React.Component {
       );
     });
     
+    let issuesOpened = this.state.issuesOpened.map((data) => {
+      return (
+        <tr key={data.id}>
+          <td>{data.username}</td>
+          <td>{data.opened}</td>
+        </tr>
+      );
+    });
+
     return (
       <div className='container'>
         <div className='panel panel-default'>
@@ -45,6 +55,13 @@ class Reports extends React.Component {
             </thead>
             <tbody>
               {commits}
+
+            <tr>
+              <th colSpan='1'>Username</th>
+              <th colSpan='1'>Issues Opened</th>
+            </tr>
+              {issuesOpened}
+              
             </tbody>
           </table>
         </div>

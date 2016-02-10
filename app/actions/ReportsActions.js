@@ -4,7 +4,9 @@ class ReportsActions {
   constructor() {
     this.generateActions(
       'getCommitsSuccess',
-      'getCommitsFail'
+      'getCommitsFail',
+      'getIssuesOpenedSuccess',
+      'getIssuesOpenedFail'
     );
   }
 
@@ -15,6 +17,16 @@ class ReportsActions {
       })
       .fail((jqXhr) => {
         this.actions.getCommitsFail(jqXhr);
+      });
+  }
+
+  getIssues() {
+    $.ajax({ url: '/api/issues/opened' })
+      .done((data) => {
+        this.actions.getIssuesOpenedSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getIssuesOpenedFail(jqXhr);
       });
   }
 }
