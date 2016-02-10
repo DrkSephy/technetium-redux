@@ -15,6 +15,7 @@ class Reports extends React.Component {
     ReportsActions.getCommits();
     ReportsActions.getIssuesOpened();
     ReportsActions.getIssuesAssigned();
+    ReportsActions.getIssuesCompleted();
   }
 
   componentWillUnmount() {
@@ -53,6 +54,15 @@ class Reports extends React.Component {
       );
     });
 
+    let issuesCompleted = this.state.issuesCompleted.map((data) => {
+      return (
+        <tr key={data.id}>
+          <td>{data.username}</td>
+          <td>{data.completed}</td>
+        </tr>
+      );
+    });
+
     return (
       <div className='container'>
         <div className='panel panel-default'>
@@ -75,6 +85,11 @@ class Reports extends React.Component {
               <th colSpan='1'>Issues Assigned</th>
             </tr>
               {issuesAssigned}
+            <tr>
+              <th colSpan='1'>Username</th>
+              <th colSpan='1'>Issues Completed</th>
+            </tr>
+              {issuesCompleted}
             </tbody>
           </table>
         </div>

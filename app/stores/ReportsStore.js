@@ -7,6 +7,7 @@ class ReportsStore {
     this.commits = [];
     this.issuesOpened = [];
     this.issuesAssigned = [];
+    this.issuesCompleted = [];
   }
 
   onGetCommitsSuccess(data) {
@@ -21,7 +22,7 @@ class ReportsStore {
     this.issuesOpened = data;
   }
 
-  onGetIssuesOpenedFail(data) {
+  onGetIssuesOpenedFail(jqXhr) {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
@@ -29,7 +30,15 @@ class ReportsStore {
     this.issuesAssigned = data;
   }
 
-  onGetIssuesAssignedFail(data) {
+  onGetIssuesAssignedFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
+  }
+
+  onGetIssuesCompletedSuccess(data) {
+    this.issuesCompleted = data;
+  }
+
+  onGetIssuesCompletedFail(jqXhr) {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }

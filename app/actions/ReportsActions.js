@@ -8,7 +8,9 @@ class ReportsActions {
       'getIssuesOpenedSuccess',
       'getIssuesOpenedFail',
       'getIssuesAssignedSuccess',
-      'getIssuesAssignedFail'
+      'getIssuesAssignedFail',
+      'getIssuesCompletedSuccess',
+      'getIssuesCompletedFail'
     );
   }
 
@@ -39,6 +41,16 @@ class ReportsActions {
       })
       .fail((jqXhr) => {
         this.actions.getIssuesAssignedFail(jqXhr);
+      });
+  }
+
+  getIssuesCompleted() {
+    $.ajax({ url: '/api/issues/completed' })
+      .done((data) => {
+        this.actions.getIssuesCompletedSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getIssuesCompletedFail(jqXhr);
       });
   }
 }
