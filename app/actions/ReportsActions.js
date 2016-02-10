@@ -6,7 +6,9 @@ class ReportsActions {
       'getCommitsSuccess',
       'getCommitsFail',
       'getIssuesOpenedSuccess',
-      'getIssuesOpenedFail'
+      'getIssuesOpenedFail',
+      'getIssuesAssignedSuccess',
+      'getIssuesAssignedFail'
     );
   }
 
@@ -20,13 +22,23 @@ class ReportsActions {
       });
   }
 
-  getIssues() {
+  getIssuesOpened() {
     $.ajax({ url: '/api/issues/opened' })
       .done((data) => {
         this.actions.getIssuesOpenedSuccess(data);
       })
       .fail((jqXhr) => {
         this.actions.getIssuesOpenedFail(jqXhr);
+      });
+  }
+
+  getIssuesAssigned() {
+    $.ajax({ url: '/api/issues/assigned' })
+      .done((data) => {
+        this.actions.getIssuesAssignedSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getIssuesAssignedFail(jqXhr);
       });
   }
 }
