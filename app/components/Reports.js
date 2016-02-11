@@ -16,6 +16,7 @@ class Reports extends React.Component {
     ReportsActions.getIssuesOpened();
     ReportsActions.getIssuesAssigned();
     ReportsActions.getIssuesCompleted();
+    ReportsActions.getIssuesComments();
   }
 
   componentWillUnmount() {
@@ -63,6 +64,8 @@ class Reports extends React.Component {
       );
     });
 
+    console.log(this.state.issuesComments);
+    
     return (
       <div className='container'>
         <div className='panel panel-default'>

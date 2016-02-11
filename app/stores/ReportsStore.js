@@ -8,6 +8,7 @@ class ReportsStore {
     this.issuesOpened = [];
     this.issuesAssigned = [];
     this.issuesCompleted = [];
+    this.issuesComments = [];
   }
 
   onGetCommitsSuccess(data) {
@@ -39,6 +40,14 @@ class ReportsStore {
   }
 
   onGetIssuesCompletedFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
+  }
+
+  onGetIssuesCommentsSuccess(data) {
+    this.issuesComments = data;
+  }
+
+  onGetIssuesCommentsFail(jqXhr) {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }

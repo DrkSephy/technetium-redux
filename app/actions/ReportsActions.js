@@ -10,7 +10,9 @@ class ReportsActions {
       'getIssuesAssignedSuccess',
       'getIssuesAssignedFail',
       'getIssuesCompletedSuccess',
-      'getIssuesCompletedFail'
+      'getIssuesCompletedFail',
+      'getIssuesCommentsSuccess',
+      'getIssuesCommentsFail'
     );
   }
 
@@ -51,6 +53,16 @@ class ReportsActions {
       })
       .fail((jqXhr) => {
         this.actions.getIssuesCompletedFail(jqXhr);
+      });
+  }
+
+  getIssuesComments() {
+    $.ajax({ url: '/api/issues/comments' })
+      .done((data) => {
+          this.actions.getIssuesCommentsSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getIssuesCommentsFail(jqXhr);
       });
   }
 }
