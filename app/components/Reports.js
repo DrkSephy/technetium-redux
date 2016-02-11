@@ -29,38 +29,15 @@ class Reports extends React.Component {
   }
 
   render() {
-    let commits = this.state.commits.map((data) => {
+    let reportData = this.state.reportData.map((data) => {
       return (
         <tr key={data.id}>
           <td>{data.username}</td>
           <td>{data.commits}</td>
-        </tr>
-      );
-    });
-    
-    let issuesOpened = this.state.issuesOpened.map((data) => {
-      return (
-        <tr key={data.id}>
-          <td>{data.username}</td>
-          <td>{data.opened}</td>
-        </tr>
-      );
-    });
-
-    let issuesAssigned = this.state.issuesAssigned.map((data) => {
-      return (
-        <tr key={data.id}>
-          <td>{data.username}</td>
-          <td>{data.responsible}</td>
-        </tr>
-      );
-    });
-
-    let issuesCompleted = this.state.issuesCompleted.map((data) => {
-      return (
-        <tr key={data.id}>
-          <td>{data.username}</td>
-          <td>{data.completed}</td>
+          <td>{data.issuesAssigned}</td>
+          <td>{data.issuesClosed}</td>
+          <td>{data.issuesOpened}</td>
+          <td>{data.issuesComments}</td>
         </tr>
       );
     });
@@ -73,25 +50,14 @@ class Reports extends React.Component {
             <tr>
               <th colSpan='1'>Username</th>
               <th colSpan='1'>Commits</th>
+              <th colSpan='1'>Issues Assigned</th>
+              <th colSpan='1'>Issues Closed</th>
+              <th colSpan='1'>Issues Opened</th>
+              <th colSpan='1'>Issue Comments</th>
             </tr>
             </thead>
             <tbody>
-              {commits}
-            <tr>
-              <th colSpan='1'>Username</th>
-              <th colSpan='1'>Issues Opened</th>
-            </tr>
-              {issuesOpened}
-            <tr>
-              <th colSpan='1'>Username</th>
-              <th colSpan='1'>Issues Assigned</th>
-            </tr>
-              {issuesAssigned}
-            <tr>
-              <th colSpan='1'>Username</th>
-              <th colSpan='1'>Issues Completed</th>
-            </tr>
-              {issuesCompleted}
+              {reportData}
             </tbody>
           </table>
         </div>

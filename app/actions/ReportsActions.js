@@ -1,4 +1,5 @@
 import alt from '../alt';
+import _ from 'underscore';
 
 class ReportsActions {
   constructor() {
@@ -27,7 +28,8 @@ class ReportsActions {
       '/api/issues/comments'
     ];
 
-    let data = [];
+    let parsedData = [];
+    let usernames = []; 
 
     let promises = urls.map((url) => {
       return new Promise((resolve, reject) => {
@@ -39,9 +41,77 @@ class ReportsActions {
     });
 
     Promise.all(promises)
-    .then((data) => {
-      console.log(data);
-      this.actions.getReportDataSuccess(data);
+    .then((results) => {
+      results.forEach((result) => {
+        result.forEach((item) => {
+
+          if(item.username && !(_.contains(usernames, item.username))) {
+            let userData = {
+              username: item.username,
+              issuesOpened: 0, 
+              issuesAssigned: 0,
+              issuesClosed: 0,
+              issuesComments: 0,
+              commits: 0,
+              id: 0
+            }
+            parsedData.push(userData);
+            usernames.push(item.username);
+          }
+
+          if(item.commits) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.commits = item.commits;
+              }
+            });
+          }
+
+
+          if(item.opened) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.issuesOpened = item.opened;
+              }
+            });
+          }
+
+
+          if(item.responsible) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.issuesAssigned = item.responsible;
+              }
+            });
+          }
+
+
+          if(item.completed) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.issuesClosed = item.completed;
+              }
+            });
+          }
+
+          if(item.comments) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.issuesComments = item.comments;
+              }
+            });
+          }
+
+          if(item.id) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.id = item.id;
+              }
+            });
+          }
+        });
+      });
+      this.actions.getReportDataSuccess(parsedData);
     });
     
   }
