@@ -9,6 +9,11 @@ class ReportsStore {
     this.issuesAssigned = [];
     this.issuesCompleted = [];
     this.issuesComments = [];
+    this.reportData = [];
+  }
+
+  onGetReportDataSuccess(data) {
+    this.reportData = data;
   }
 
   onGetCommitsSuccess(data) {

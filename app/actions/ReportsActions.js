@@ -12,8 +12,38 @@ class ReportsActions {
       'getIssuesCompletedSuccess',
       'getIssuesCompletedFail',
       'getIssuesCommentsSuccess',
-      'getIssuesCommentsFail'
+      'getIssuesCommentsFail',
+      'getReportDataSuccess',
+      'getReportDataFail'
     );
+  }
+
+  getReportData() {
+    let urls = [
+      '/api/commits',
+      '/api/issues/opened',
+      '/api/issues/assigned',
+      '/api/issues/completed',
+      '/api/issues/comments'
+    ];
+
+    let data = [];
+
+    let promises = urls.map((url) => {
+      return new Promise((resolve, reject) => {
+        $.ajax({ url: url })
+          .done((data) => {
+            resolve(data);
+          });
+      });
+    });
+
+    Promise.all(promises)
+    .then((data) => {
+      console.log(data);
+      this.actions.getReportDataSuccess(data);
+    });
+    
   }
 
   getCommits() {
