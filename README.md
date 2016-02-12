@@ -47,7 +47,7 @@
 
 ### Report Generation
 
-- [ ] Should export PDF (or other formats) of all data in #reports and #visualizations
+- [ ] Should export PDF (or other formats) of all data in [reports](https://github.com/DrkSephy/technetium-redux#reports) and [visualizations](https://github.com/DrkSephy/technetium-redux#visualizations)
 
 ### CSV Uploader
 
