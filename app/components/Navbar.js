@@ -34,10 +34,16 @@ class Navbar extends React.Component {
           <ul className='nav navbar-nav'>
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/commits'>Commits</Link></li>
-            <li><Link to='/issuesOpened'>Issues Opened</Link></li>
-            <li><Link to='/issuesAssigned'>Issues Assigned</Link></li>
-            <li><Link to='/issuesCompleted'>Issues Completed</Link></li>
-            <li><Link to='/issueComments'>Issue comments</Link></li>
+            <li className='dropdown'>
+              <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Issue Data <span className='caret'></span></a>
+              <ul className='dropdown-menu'>
+                <li><Link to='/issues'>Issues</Link></li>
+                <li><Link to='/issuesOpened'>Issues Opened</Link></li>
+                <li><Link to='/issuesAssigned'>Issues Assigned</Link></li>
+                <li><Link to='/issuesCompleted'>Issues Completed</Link></li>
+                <li><Link to='/issueComments'>Issue comments</Link></li>
+              </ul>
+            </li>
             <li><Link to='/timeseries'>Time Series</Link></li>
             <li><Link to='/reports'>Reports</Link></li>
           </ul>
