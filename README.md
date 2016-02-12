@@ -9,17 +9,17 @@
 
 ### Reports
 
-- [ ] Number of issues opened per contributor on a repository
-- [ ] Number of issues closed per contributor on a repository
-- [ ] Number of issues assigned per contributor on a repository
-- [ ] Number of comments per contributor on a repository
+- [X] Number of issues opened per contributor on a repository
+- [X] Number of issues closed per contributor on a repository
+- [X] Number of issues assigned per contributor on a repository
+- [X] Number of issue comments per contributor on a repository
 - [ ] Number of pull requests per contributor on a repository
 - [ ] Number of lines of code per contributor on a repository
-- [ ] Number of commits per contributor on a repository
+- [X] Number of commits per contributor on a repository
 
 ### Visualizations
 
-- [ ] Commit graphs over time
+- [X] Commit graphs over time
 - [ ] Issues closed over time graphs (Possibly a bar graph)
 - [ ] Percentage of work done by each contributor relative to total work
  
