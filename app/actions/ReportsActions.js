@@ -17,7 +17,9 @@ class ReportsActions {
       'getReportDataSuccess',
       'getReportDataFail',
       'getReportPullRequestsSuccess',
-      'getReportPullRequestsFail'
+      'getReportPullRequestsFail',
+      'getLinesOfCodeSuccess',
+      'getLinesOfCodeFail'
     );
   }
 
@@ -28,7 +30,8 @@ class ReportsActions {
       '/api/issues/assigned',
       '/api/issues/completed',
       '/api/issues/comments',
-      '/api/pullrequests'
+      '/api/pullrequests',
+      '/api/diffstat'
     ];
 
     let parsedData = [];
@@ -57,6 +60,8 @@ class ReportsActions {
               issuesComments: 0,
               commits: 0,
               pullRequests: 0,
+              linesAdded: 0,
+              linesRemoved: 0,
               id: 0
             }
             parsedData.push(userData);
@@ -112,6 +117,22 @@ class ReportsActions {
                 user.pullRequests = item.pullRequests;
               }
             })
+          }
+
+          if(item.diff) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.linesAdded = item.diff.linesAdded;
+              }
+            })
+          }
+
+          if(item.diff) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.linesRemoved = item.diff.linesRemoved;
+              }
+            });
           }
 
           if(item.id) {
@@ -185,6 +206,16 @@ class ReportsActions {
       })
       .fail((jqXhr) => {
         this.actions.getReportPullRequestsFail(jqXhr);
+      });
+  }
+
+  getLinesOfCode() {
+    $.ajax({ url: '/api/diffstat' })
+      .done((data) => {
+        this.actions.getLinesOfCodeSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getLinesOfCodeFail(jqXhr);
       });
   }
 }
