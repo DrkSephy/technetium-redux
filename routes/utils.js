@@ -19,7 +19,7 @@ export function getJSON(url, config) {
   return new Promise((resolve, reject) => {
     request.get(url, { 'auth': { 'user': config.USERNAME, 'pass': config.PASSWORD}}, 
       (error, response, body) => {
-        if(response.statusCode == 200) {
+        if(body && response.statusCode == 200) {
             let data = JSON.parse(body);
             resolve(data);
           } else {
