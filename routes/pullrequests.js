@@ -9,9 +9,8 @@ import { getJSON, generateRandomNumber } from './utils';
 
 /**
  * GET /api/pullrequests
- * Returns pull request data for a given repository.
+ * Returns the number of pull requests per contributor on a repository.
 */
-
 module.exports = (app, _, config) => {
   app.get('/api/pullrequests', (req, res) => {
     getJSON('https://api.bitbucket.org/2.0/repositories/DrkSephy/wombat/pullrequests?state=[MERGED]', config)

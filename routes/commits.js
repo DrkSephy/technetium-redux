@@ -8,12 +8,12 @@ import moment from 'moment';
 
 'use strict';
 
-/**
- * GET /api/commits
- * Returns commit data for a given repository.
-*/
 module.exports = (app, _, config) => {
 
+  /**
+   * GET /api/count
+   * Returns the number of commits in a repository.
+  */
   app.get('/api/count', (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', config) 
     .then((data) => {
@@ -21,6 +21,10 @@ module.exports = (app, _, config) => {
     });
   });
 
+  /**
+   * GET /api/commits
+   * Returns the number of commits in a repository per contributor.
+  */
   app.get('/api/commits', (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
     .then((data) => {
@@ -53,6 +57,10 @@ module.exports = (app, _, config) => {
     });
   });
 
+  /**
+   * GET /api/diffstat
+   * Returns the lines of code per contributor in a repository.
+  */
   app.get('/api/diffstat', (req, res) => {
     let usernames = [];
     let parsedData = [];
@@ -79,6 +87,7 @@ module.exports = (app, _, config) => {
               parsedData.push(userData);
               usernames.push(dataset.author.user.username);
             }
+
             parsedData.forEach((contributor) => {
               if (!(dataset.message).includes('Merge')) {
                 if(!(_.contains(hashes, dataset.hash))) {
@@ -118,6 +127,10 @@ module.exports = (app, _, config) => {
     });
   });
 
+  /**
+   * GET /api/weeklycommits
+   * Bundles commit data to render timeseries chart.
+  */
   app.get('/api/weeklycommits', (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
     .then((data) => {
