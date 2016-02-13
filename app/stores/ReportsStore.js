@@ -11,6 +11,15 @@ class ReportsStore {
     this.issuesComments = [];
     this.pullRequests = [];
     this.reportData = [];
+    this.linesOfCode = [];
+  }
+
+  onGetLinesOfCodeSuccess(data) {
+    this.linesOfCode = data;
+  }
+
+  onGetLinesOfCodeFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
   onGetReportPullRequestsSuccess(data) {
