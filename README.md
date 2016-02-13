@@ -13,7 +13,7 @@
 - [X] Number of issues closed per contributor on a repository
 - [X] Number of issues assigned per contributor on a repository
 - [X] Number of issue comments per contributor on a repository
-- [ ] Number of pull requests per contributor on a repository
+- [X] Number of pull requests per contributor on a repository
 - [ ] Number of lines of code per contributor on a repository
 - [X] Number of commits per contributor on a repository
 
