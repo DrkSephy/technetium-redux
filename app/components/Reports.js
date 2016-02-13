@@ -19,6 +19,7 @@ class Reports extends React.Component {
     ReportsActions.getIssuesComments();
     ReportsActions.getReportData();
     ReportsActions.getPullRequests();
+    ReportsActions.getLinesOfCode();
   }
 
   componentWillUnmount() {
@@ -40,6 +41,8 @@ class Reports extends React.Component {
           <td>{data.issuesClosed}</td>
           <td>{data.issuesOpened}</td>
           <td>{data.issuesComments}</td>
+          <td>{data.linesAdded}</td>
+          <td>{data.linesRemoved}</td>
         </tr>
       );
     });
@@ -57,6 +60,8 @@ class Reports extends React.Component {
               <th colSpan='1'>Issues Closed</th>
               <th colSpan='1'>Issues Opened</th>
               <th colSpan='1'>Issue Comments</th>
+              <th colSpan='1'>Lines Added</th>
+              <th colSpan='1'>Lines Removed</th>
             </tr>
             </thead>
             <tbody>
