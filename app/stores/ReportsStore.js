@@ -9,7 +9,16 @@ class ReportsStore {
     this.issuesAssigned = [];
     this.issuesCompleted = [];
     this.issuesComments = [];
+    this.pullRequests = [];
     this.reportData = [];
+  }
+
+  onGetReportPullRequestsSuccess(data) {
+    this.pullRequests = data;
+  }
+
+  onGetReportPullRequestsFail(data) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
   onGetReportDataSuccess(data) {

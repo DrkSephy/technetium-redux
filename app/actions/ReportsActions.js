@@ -15,7 +15,9 @@ class ReportsActions {
       'getIssuesCommentsSuccess',
       'getIssuesCommentsFail',
       'getReportDataSuccess',
-      'getReportDataFail'
+      'getReportDataFail',
+      'getReportPullRequestsSuccess',
+      'getReportPullRequestsFail'
     );
   }
 
@@ -25,7 +27,8 @@ class ReportsActions {
       '/api/issues/opened',
       '/api/issues/assigned',
       '/api/issues/completed',
-      '/api/issues/comments'
+      '/api/issues/comments',
+      '/api/pullrequests'
     ];
 
     let parsedData = [];
@@ -53,6 +56,7 @@ class ReportsActions {
               issuesClosed: 0,
               issuesComments: 0,
               commits: 0,
+              pullRequests: 0,
               id: 0
             }
             parsedData.push(userData);
@@ -100,6 +104,14 @@ class ReportsActions {
                 user.issuesComments = item.comments;
               }
             });
+          }
+
+          if(item.pullRequests) {
+            parsedData.forEach((user) => {
+              if(user.username === item.username) {
+                user.pullRequests = item.pullRequests;
+              }
+            })
           }
 
           if(item.id) {
@@ -163,6 +175,16 @@ class ReportsActions {
       })
       .fail((jqXhr) => {
         this.actions.getIssuesCommentsFail(jqXhr);
+      });
+  }
+
+  getPullRequests() {
+    $.ajax({ url: '/api/pullrequests' })
+      .done((data) => {
+          this.actions.getReportPullRequestsSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getReportPullRequestsFail(jqXhr);
       });
   }
 }

@@ -18,6 +18,7 @@ class Reports extends React.Component {
     ReportsActions.getIssuesCompleted();
     ReportsActions.getIssuesComments();
     ReportsActions.getReportData();
+    ReportsActions.getPullRequests();
   }
 
   componentWillUnmount() {
@@ -34,6 +35,7 @@ class Reports extends React.Component {
         <tr key={data.id}>
           <td>{data.username}</td>
           <td>{data.commits}</td>
+          <td>{data.pullRequests}</td>
           <td>{data.issuesAssigned}</td>
           <td>{data.issuesClosed}</td>
           <td>{data.issuesOpened}</td>
@@ -50,6 +52,7 @@ class Reports extends React.Component {
             <tr>
               <th colSpan='1'>Username</th>
               <th colSpan='1'>Commits</th>
+              <th colSpan='1'>Pull Requests</th>
               <th colSpan='1'>Issues Assigned</th>
               <th colSpan='1'>Issues Closed</th>
               <th colSpan='1'>Issues Opened</th>
