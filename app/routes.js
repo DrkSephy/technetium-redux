@@ -11,6 +11,7 @@ import IssueComments from './components/IssueComments';
 import Chart from './components/Chart';
 import TimeSeries from './components/TimeSeries';
 import Reports from './components/Reports';
+import PullRequest from './components/PullRequest';
 
 
 export default (
@@ -25,5 +26,6 @@ export default (
     <Route path='/chart' component={Chart} />
     <Route path='/timeseries' component={TimeSeries} />
     <Route path='/reports' component={Reports} />
+    <Route path='/pullRequests' component={PullRequest} />
   </Route>
 );

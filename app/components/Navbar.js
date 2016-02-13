@@ -44,6 +44,7 @@ class Navbar extends React.Component {
                 <li><Link to='/issueComments'>Issue comments</Link></li>
               </ul>
             </li>
+            <li><Link to='/pullRequests'>Pull Requests</Link></li>
             <li><Link to='/timeseries'>Time Series</Link></li>
             <li><Link to='/reports'>Reports</Link></li>
           </ul>
