@@ -53,6 +53,78 @@ module.exports = (app, _, config) => {
     });
   });
 
+  app.get('/api/diffstat', (req, res) => {
+    let usernames = [];
+    let parsedData = [];
+    let urls = []
+    let hashes = [];
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
+    .then((data) => {
+      let promises = computeUrls(data.count, config);
+      Promise.all(promises)
+      .then((results) => {
+
+        results.forEach((item) => {
+          item.values.forEach((dataset) => {
+            // Only check commits if they aren't merge commits
+            if(!(_.contains(usernames, dataset.author.user.username))) {
+              let userData = {
+                username: dataset.author.user.username,
+                commitHashes: [],
+                diff: {
+                  linesAdded: 0,
+                  linesRemoved: 0
+                }
+              }
+              parsedData.push(userData);
+              usernames.push(dataset.author.user.username);
+            }
+            parsedData.forEach((contributor) => {
+              if (!(dataset.message).includes('Merge')) {
+                if(!(_.contains(hashes, dataset.hash))) {
+                  hashes.push(dataset.hash);
+                }
+                if(contributor.username === dataset.author.user.username) {
+                  contributor.commitHashes.push(dataset.hash);
+                }
+              }
+            });
+          });
+        });
+
+        parsedData.forEach((contributor) => {
+          contributor.commitHashes.forEach((hash) => {
+            urls.push('https://api.bitbucket.org/1.0/repositories/DrkSephy/wombat/changesets/' + hash + '/diffstat');
+          });
+        });
+
+        let promises = urls.map((url) => getJSON(url, config));
+        Promise.all(promises)
+        .then((results) => {
+          results.forEach((result) => {
+            if (result.length > 0) {
+              let location = _.findIndex(results, result);
+              // console.log('--------The commit--------');
+              // console.log(hashes[location]);
+              // console.log('----------The diff---------');
+              // console.log(result);
+              // console.log('');
+              parsedData.forEach((contributor) => {
+                if(_.contains(contributor.commitHashes, hashes[location])) {
+                  result.forEach((datum) => {
+                    console.log('The user: ' + contributor.username + ' gets these extra lines: ' + datum.diffstat.added);
+                    contributor.diff.linesAdded += datum.diffstat.added;
+                    contributor.diff.linesRemoved += datum.diffstat.removed;
+                  });
+                }
+              })
+            }
+          });
+          res.send(parsedData);
+        });
+      });
+    });
+  });
 
   app.get('/api/weeklycommits', (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
