@@ -1,6 +1,6 @@
 import React from 'react';
-import Commits from './Commits';
 import Navbar from './Navbar';
+import Footer from './Footer';
 
 class App extends React.Component {
   render() {
@@ -8,6 +8,7 @@ class App extends React.Component {
       <div>
         <Navbar history={this.props.history} />
         {this.props.children}
+        <Footer />
       </div>
     );
   }
