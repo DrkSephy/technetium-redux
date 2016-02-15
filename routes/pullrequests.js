@@ -18,7 +18,7 @@ module.exports = (app, _, config) => {
       let usernames = [];
       let parsedData = [];
       data.values.forEach((result) => {
-        if(!(_.contains(usernames, result.author.username))) {
+        if (!(_.contains(usernames, result.author.username))) {
           let userData = {};
           userData.username = result.author.username;
           userData.pullRequests = 0;
@@ -27,7 +27,7 @@ module.exports = (app, _, config) => {
           usernames.push(result.author.username);
         }
         parsedData.forEach((contributor) => {
-          if(contributor.username === result.author.username) {
+          if (contributor.username === result.author.username) {
             contributor.pullRequests++;
           }
         });

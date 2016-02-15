@@ -162,7 +162,7 @@ module.exports = (app, _, config) => {
         parsedData.forEach((entry) => {
           let username = entry.username;
 
-          if(!(_.contains(usernames, username))) {
+          if (!(_.contains(usernames, username))) {
             let userEntry = {};
             userEntry[username] = {};
             dateRanges.forEach((date) => {
@@ -173,7 +173,7 @@ module.exports = (app, _, config) => {
           }
 
           talliedCommits.forEach((user) => {
-            if(user[username] !== undefined) {
+            if (user[username] !== undefined) {
               user[username][entry.date]++;
             }
           });
@@ -185,9 +185,9 @@ module.exports = (app, _, config) => {
           let userCommits = [];
           userCommits.push(user);
           talliedCommits.forEach((username) => {
-            if(username[user] !== undefined) {
-              for(var key in username[user]) {
-                if(!isNaN(username[user][key])) {
+            if (username[user] !== undefined) {
+              for (var key in username[user]) {
+                if (!isNaN(username[user][key])) {
                   userCommits.push(username[user][key]);
                 }
               }
@@ -210,7 +210,7 @@ module.exports = (app, _, config) => {
     let urls = [];
     let page = 1;
     let stop;
-    if(count >= 30) {
+    if (count >= 30) {
       stop = Math.floor(count / 30);
     } else {
       stop = 1;
@@ -223,7 +223,7 @@ module.exports = (app, _, config) => {
       page++;
       start++;
     }
-
+    
     let promises = urls.map((url) => getJSON(url, config));
     return promises;
   }

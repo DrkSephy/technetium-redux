@@ -41,7 +41,7 @@ module.exports = (app, _, config) => {
       let usernames = [];
       results['issues'].forEach((issue) => {
         let username = issue.responsible.username;
-        if(!(_.contains(usernames, username))) {
+        if (!(_.contains(usernames, username))) {
           let entry = {};
           entry.username = username;
           entry.opened = 0;
@@ -50,7 +50,7 @@ module.exports = (app, _, config) => {
           usernames.push(username);
         }
         parsedData.forEach((contributor) => {
-          if(contributor.username == issue.reported_by.username) {
+          if (contributor.username == issue.reported_by.username) {
               contributor.opened++;
           }
           contributor.id = generateRandomNumber();
@@ -71,7 +71,7 @@ module.exports = (app, _, config) => {
       let usernames = [];
       results['issues'].forEach((issue) => {
         let username = issue.responsible.username;
-        if(!(_.contains(usernames, username))) {
+        if (!(_.contains(usernames, username))) {
           let entry = {};
           entry.username = username;
           entry.responsible = 0;
@@ -80,7 +80,7 @@ module.exports = (app, _, config) => {
           usernames.push(username);
         }
         parsedData.forEach((contributor) => {
-          if(contributor.username == issue.responsible.username) {
+          if (contributor.username == issue.responsible.username) {
               contributor.responsible++;
           }
           contributor.id = generateRandomNumber();
@@ -101,7 +101,7 @@ module.exports = (app, _, config) => {
       let usernames = [];
       results['issues'].forEach((issue) => {
         let username = issue.responsible.username;
-        if(!(_.contains(usernames, username))) {
+        if (!(_.contains(usernames, username))) {
           let entry = {};
           entry.username = username;
           entry.completed = 0;
@@ -110,8 +110,8 @@ module.exports = (app, _, config) => {
           usernames.push(username);
         }
         parsedData.forEach((contributor) => {
-          if(contributor.username == issue.responsible.username) {
-            if(issue.status === 'resolved') {
+          if (contributor.username == issue.responsible.username) {
+            if (issue.status === 'resolved') {
               contributor.completed++;
             }
           }
