@@ -4,22 +4,8 @@ import _ from 'underscore';
 class ReportsActions {
   constructor() {
     this.generateActions(
-      'getCommitsSuccess',
-      'getCommitsFail',
-      'getIssuesOpenedSuccess',
-      'getIssuesOpenedFail',
-      'getIssuesAssignedSuccess',
-      'getIssuesAssignedFail',
-      'getIssuesCompletedSuccess',
-      'getIssuesCompletedFail',
-      'getIssuesCommentsSuccess',
-      'getIssuesCommentsFail',
       'getReportDataSuccess',
-      'getReportDataFail',
-      'getReportPullRequestsSuccess',
-      'getReportPullRequestsFail',
-      'getLinesOfCodeSuccess',
-      'getLinesOfCodeFail'
+      'getReportDataFail'
     );
   }
 
@@ -30,8 +16,7 @@ class ReportsActions {
       '/api/issues/assigned',
       '/api/issues/completed',
       '/api/issues/comments',
-      '/api/pullrequests',
-      '/api/diffstat'
+      '/api/pullrequests'
     ];
 
     let parsedData = [];
@@ -51,7 +36,7 @@ class ReportsActions {
       results.forEach((result) => {
         result.forEach((item) => {
 
-          if(item.username && !(_.contains(usernames, item.username))) {
+          if (item.username && !(_.contains(usernames, item.username))) {
             let userData = {
               username: item.username,
               issuesOpened: 0, 
@@ -68,76 +53,76 @@ class ReportsActions {
             usernames.push(item.username);
           }
 
-          if(item.commits) {
+          if (item.commits) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.commits = item.commits;
               }
             });
           }
 
 
-          if(item.opened) {
+          if (item.opened) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.issuesOpened = item.opened;
               }
             });
           }
 
 
-          if(item.responsible) {
+          if (item.responsible) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.issuesAssigned = item.responsible;
               }
             });
           }
 
 
-          if(item.completed) {
+          if (item.completed) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.issuesClosed = item.completed;
               }
             });
           }
 
-          if(item.comments) {
+          if (item.comments) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.issuesComments = item.comments;
               }
             });
           }
 
-          if(item.pullRequests) {
+          if (item.pullRequests) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.pullRequests = item.pullRequests;
               }
             })
           }
 
-          if(item.diff) {
+          if (item.diff) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.linesAdded = item.diff.linesAdded;
               }
             })
           }
 
-          if(item.diff) {
+          if (item.diff) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.linesRemoved = item.diff.linesRemoved;
               }
             });
           }
 
-          if(item.id) {
+          if (item.id) {
             parsedData.forEach((user) => {
-              if(user.username === item.username) {
+              if (user.username === item.username) {
                 user.id = item.id;
               }
             });
@@ -145,78 +130,7 @@ class ReportsActions {
         });
       });
       this.actions.getReportDataSuccess(parsedData);
-    });
-    
-  }
-
-  getCommits() {
-    $.ajax({ url: '/api/commits' })
-      .done((data) => {
-        this.actions.getCommitsSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getCommitsFail(jqXhr);
-      });
-  }
-
-  getIssuesOpened() {
-    $.ajax({ url: '/api/issues/opened' })
-      .done((data) => {
-        this.actions.getIssuesOpenedSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getIssuesOpenedFail(jqXhr);
-      });
-  }
-
-  getIssuesAssigned() {
-    $.ajax({ url: '/api/issues/assigned' })
-      .done((data) => {
-        this.actions.getIssuesAssignedSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getIssuesAssignedFail(jqXhr);
-      });
-  }
-
-  getIssuesCompleted() {
-    $.ajax({ url: '/api/issues/completed' })
-      .done((data) => {
-        this.actions.getIssuesCompletedSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getIssuesCompletedFail(jqXhr);
-      });
-  }
-
-  getIssuesComments() {
-    $.ajax({ url: '/api/issues/comments' })
-      .done((data) => {
-          this.actions.getIssuesCommentsSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getIssuesCommentsFail(jqXhr);
-      });
-  }
-
-  getPullRequests() {
-    $.ajax({ url: '/api/pullrequests' })
-      .done((data) => {
-          this.actions.getReportPullRequestsSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getReportPullRequestsFail(jqXhr);
-      });
-  }
-
-  getLinesOfCode() {
-    $.ajax({ url: '/api/diffstat' })
-      .done((data) => {
-        this.actions.getLinesOfCodeSuccess(data);
-      })
-      .fail((jqXhr) => {
-        this.actions.getLinesOfCodeFail(jqXhr);
-      });
+    }); 
   }
 }
 
