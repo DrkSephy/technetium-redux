@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import TimeSeries from './TimeSeries';
 import ReportsStore from '../stores/ReportsStore';
 import ReportsActions from '../actions/ReportsActions';
 
@@ -58,6 +59,7 @@ class Reports extends React.Component {
             </tbody>
           </table>
         </div>
+        <TimeSeries />
       </div>
     );    
   }
