@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
 import {Panel} from 'react-bootstrap';
+import Card from './Card';
 import TimeSeries from './TimeSeries';
 import ReportsStore from '../stores/ReportsStore';
 import ReportsActions from '../actions/ReportsActions';
@@ -43,6 +43,14 @@ class Reports extends React.Component {
 
     return (
       <div className='container'>
+
+        <div className='row'>
+          <div className="col-md-3"><Card /></div>
+          <div className="col-md-3"><Card /></div>
+          <div className="col-md-3"><Card /></div>
+          <div className="col-md-3"><Card /></div>
+        </div>
+
         <Panel header='Repository Statistics' bsStyle='info'>
           <div className='panel panel-default'>
             <table className='table table-striped'>
@@ -63,6 +71,7 @@ class Reports extends React.Component {
             </table>
           </div>
         </Panel>
+
         <Panel header='Commit Time Series' bsStyle='info'>
           <TimeSeries />
         </Panel>
