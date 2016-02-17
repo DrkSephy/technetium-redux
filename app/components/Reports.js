@@ -42,41 +42,31 @@ class Reports extends React.Component {
     });
 
     return (
-      <div>
-        <div>
-          <Panel header='Repository Statistics'>
-            <div className='container'>
-              <div className='panel panel-default'>
-                <table className='table table-striped'>
-                  <thead>
-                  <tr>
-                    <th colSpan='1'>Username</th>
-                    <th colSpan='1'>Commits</th>
-                    <th colSpan='1'>Pull Requests</th>
-                    <th colSpan='1'>Issues Assigned</th>
-                    <th colSpan='1'>Issues Closed</th>
-                    <th colSpan='1'>Issues Opened</th>
-                    <th colSpan='1'>Issue Comments</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                    {reportData}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </Panel>
-        </div>
-
-        <div>
-          <Panel header='Commit Time Series'>
-            <div className='container'>
-              <TimeSeries />
-            </div>
-          </Panel>
-        </div>
+      <div className='container'>
+        <Panel header='Repository Statistics' bsStyle='info'>
+          <div className='panel panel-default'>
+            <table className='table table-striped'>
+              <thead>
+              <tr>
+                <th colSpan='1'>Username</th>
+                <th colSpan='1'>Commits</th>
+                <th colSpan='1'>Pull Requests</th>
+                <th colSpan='1'>Issues Assigned</th>
+                <th colSpan='1'>Issues Closed</th>
+                <th colSpan='1'>Issues Opened</th>
+                <th colSpan='1'>Issue Comments</th>
+              </tr>
+              </thead>
+              <tbody>
+                {reportData}
+              </tbody>
+            </table>
+          </div>
+        </Panel>
+        <Panel header='Commit Time Series' bsStyle='info'>
+          <TimeSeries />
+        </Panel>
       </div>
-
     );  
   }
 }
