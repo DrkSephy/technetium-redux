@@ -45,10 +45,10 @@ class Reports extends React.Component {
       <div className='container'>
 
         <div className='row'>
-          <div className="col-md-3"><Card /></div>
-          <div className="col-md-3"><Card /></div>
-          <div className="col-md-3"><Card /></div>
-          <div className="col-md-3"><Card /></div>
+          <div className="col-md-3"><Card header='Commits' value='14' /></div>
+          <div className="col-md-3"><Card header='Issues Opened' value='5' /></div>
+          <div className="col-md-3"><Card header='Issues Assigned' value='3' /></div>
+          <div className="col-md-3"><Card header='Issues Closed' value='10' /></div>
         </div>
 
         <Panel header='Repository Statistics' bsStyle='info'>
