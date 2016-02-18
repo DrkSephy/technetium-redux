@@ -12,6 +12,7 @@ import Chart from './components/Chart';
 import TimeSeries from './components/TimeSeries';
 import Reports from './components/Reports';
 import PullRequest from './components/PullRequest';
+import Subscriptions from './components/Subscriptions';
 
 
 export default (
@@ -27,5 +28,6 @@ export default (
     <Route path='/timeseries' component={TimeSeries} />
     <Route path='/reports' component={Reports} />
     <Route path='/pullRequests' component={PullRequest} />
+    <Route path='/subscriptions' component={Subscriptions} />
   </Route>
 );

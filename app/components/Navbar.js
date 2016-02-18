@@ -46,6 +46,7 @@ class Navbar extends React.Component {
             </li>
             <li><Link to='/pullRequests'>Pull Requests</Link></li>
             <li><Link to='/reports'>Reports</Link></li>
+            <li><Link to='/subscriptions'>Subscribe</Link></li>
           </ul>
         </div>
       </nav>
