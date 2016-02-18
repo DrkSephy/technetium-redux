@@ -5,14 +5,15 @@ class ReportsStore {
   constructor() {
     this.bindActions(ReportsActions);
     this.reportData = [];
+    this.issuesOpened = 0;
   }
 
   onGetReportDataSuccess(data) {
     this.reportData = data;
   }
 
-  onGetCommitsSuccess(data) {
-    this.commits = data;
+  onGetReportOpenedIssuesSuccess(data) {
+    this.issuesOpened = data;
   }
 }
 

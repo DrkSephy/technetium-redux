@@ -5,8 +5,20 @@ class ReportsActions {
   constructor() {
     this.generateActions(
       'getReportDataSuccess',
-      'getReportDataFail'
+      'getReportDataFail',
+      'getReportOpenedIssuesSuccess',
+      'getReportOpenedIssuesFail'
     );
+  }
+
+  getOpenedIssues() {
+    $.ajax({ url: '/api/issues/opened/filtered' })
+      .done((data) => {
+        this.actions.getReportOpenedIssuesSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getReportOpenedIssuesFail(jqXhr);
+      });
   }
 
   getReportData() {
