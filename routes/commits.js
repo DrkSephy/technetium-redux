@@ -58,6 +58,33 @@ module.exports = (app, _, config) => {
   });
 
   /**
+   * GET /api/commits/filtered
+   * Returns the number of commits in a repository for the past 2 weeks.
+  */
+  app.get('/api/commits/filtered', (req, res) => {
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
+    .then((data) => {
+      let promises = computeUrls(data.count, config);
+      Promise.all(promises)
+      .then((results) => {
+        let parsedData = {
+          commits: 0
+        };
+        let ranges = getDateRange();
+        results.forEach((result) => {
+          result['values'].forEach((commit) => {
+            let date = moment(commit.date);
+            if (date.isBetween(ranges.startDate, ranges.endDate)) {
+              parsedData.commits++;
+            }
+          });
+        });
+      res.send(parsedData);
+      });
+    });
+  });
+
+  /**
    * GET /api/diffstat
    * Returns the lines of code per contributor in a repository.
   */
