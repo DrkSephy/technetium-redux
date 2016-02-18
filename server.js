@@ -5,18 +5,27 @@ var swig = require('swig');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
-var routes = require('./app/routes');
-
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
-var config = require('./secrets');
 var request = require('request');
 var _ = require('underscore');
+var mongoose = require('mongoose');
+
+var routes = require('./app/routes');
+var config = require('./secrets');
+var Subscriptions = require('./models/subscriptions');
+
 
 // Create the Express Application
 var app = express();
+
+// Connect to MongoDB
+mongoose.connect(config.database);
+mongoose.connection.on('error', function() {
+  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+});
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
@@ -29,6 +38,23 @@ require('./routes/commits')(app, _, config);
 require('./routes/charts')(app);
 require('./routes/timeseries')(app);
 require('./routes/pullrequests')(app, _, config);
+
+app.post('/api/subscriptions', (req, res, next) => {
+  var url = req.body.url;
+  var subscription = new Subscriptions({
+    url: url
+  });
+
+  subscription.save((err) => {
+    if (err) return next(err);
+    res.send({ message: 'Subscription added successfully!'});
+  });
+
+  Subscriptions.find((err, subscription) => {
+    if (err) return next(err);
+    console.log(subscription);
+  });
+});
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
