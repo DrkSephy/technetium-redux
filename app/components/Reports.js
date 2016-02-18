@@ -53,7 +53,7 @@ class Reports extends React.Component {
           <div className="col-md-3"><Card header='Issues Closed' value={this.state.issuesOpened.resolved} /></div>
         </div>
 
-        <Panel header='Repository Statistics' bsStyle='info'>
+        <Panel header='Repository Statistics' bsStyle='primary'>
           <div className='panel panel-default'>
             <table className='table table-striped'>
               <thead>
@@ -74,7 +74,7 @@ class Reports extends React.Component {
           </div>
         </Panel>
 
-        <Panel header='Commit Time Series' bsStyle='info'>
+        <Panel header='Commit Time Series' bsStyle='primary'>
           <TimeSeries />
         </Panel>
       </div>

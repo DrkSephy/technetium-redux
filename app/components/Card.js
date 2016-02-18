@@ -13,7 +13,7 @@ class Card extends React.Component {
 
   render() {
     return (
-      <Panel header={this.props.header} bsStyle='info'>
+      <Panel header={this.props.header} bsStyle='primary'>
         <h3>{this.props.value}</h3>
       </Panel>
     );
