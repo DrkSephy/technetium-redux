@@ -70,15 +70,21 @@ module.exports = (app, _, config) => {
     .then((results) => {
       let parsedData = {
         opened: 0,
-        assigned: 0
+        assigned: 0,
+        resolved: 0
       };
       let ranges = getDateRange();
       results['issues'].forEach((issue) => {
         let date = moment(issue.created_on);
         if (date.isBetween(ranges.startDate, ranges.endDate)) {
           parsedData.opened++;
+
           if (issue.responsible) {
             parsedData.assigned++;
+          }
+
+          if (issue.status === 'resolved') {
+            parsedData.resolved++;
           }
         }
       })
