@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var subscriptionSchema = new mongoose.Schema({
-  name: String
+  url: String
 });
 
 module.exports = mongoose.model('Subscriptions', subscriptionSchema);
