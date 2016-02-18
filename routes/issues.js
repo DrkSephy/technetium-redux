@@ -21,7 +21,9 @@ module.exports = (app, _, config) => {
         let issueData = {};
         issueData.reported_by = issue.reported_by.username;
         issueData.title = issue.title;
-        issueData.responsible = issue.responsible.username;
+        if (issue.responsible) {
+          issueData.responsible = issue.responsible.username;
+        }
         issueData.priority = issue.priority;
         issueData.metadata = issue.metadata.kind;
         issueData.id = generateRandomNumber();

@@ -43,7 +43,7 @@ class Issues extends React.Component {
             <tr>
               <td colSpan='1'>Reported By</td>
               <td colSpan='1'>Title</td>
-              <td colSpan='1'>Resonsible</td>
+              <td colSpan='1'>Responsible</td>
               <td colSpan='1'>Priority</td>
               <td colSpan='1'>Type</td>
             </tr>
