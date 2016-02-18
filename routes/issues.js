@@ -69,14 +69,17 @@ module.exports = (app, _, config) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
     .then((results) => {
       let parsedData = {
-        value: 0
+        opened: 0,
+        assigned: 0
       };
       let ranges = getDateRange();
       results['issues'].forEach((issue) => {
         let date = moment(issue.created_on);
-
         if (date.isBetween(ranges.startDate, ranges.endDate)) {
-          parsedData.value++;
+          parsedData.opened++;
+          if (issue.responsible) {
+            parsedData.assigned++;
+          }
         }
       })
       res.send(parsedData);
