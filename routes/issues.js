@@ -41,21 +41,23 @@ module.exports = (app, _, config) => {
       let parsedData = [];
       let usernames = [];
       results['issues'].forEach((issue) => {
-        let username = issue.responsible.username;
-        if (!(_.contains(usernames, username))) {
-          let entry = {};
-          entry.username = username;
-          entry.opened = 0;
-          entry.id = null;
-          parsedData.push(entry);
-          usernames.push(username);
-        }
-        parsedData.forEach((contributor) => {
-          if (contributor.username == issue.reported_by.username) {
-              contributor.opened++;
+        if (issue.responsible) {
+          let username = issue.responsible.username;
+          if (!(_.contains(usernames, username))) {
+            let entry = {};
+            entry.username = username;
+            entry.opened = 0;
+            entry.id = null;
+            parsedData.push(entry);
+            usernames.push(username);
           }
-          contributor.id = generateRandomNumber();
-        });
+          parsedData.forEach((contributor) => {
+            if (contributor.username == issue.reported_by.username) {
+                contributor.opened++;
+            }
+            contributor.id = generateRandomNumber();
+          });
+        }
       });
       res.send(parsedData);
     });
@@ -102,21 +104,23 @@ module.exports = (app, _, config) => {
       let parsedData = [];
       let usernames = [];
       results['issues'].forEach((issue) => {
-        let username = issue.responsible.username;
-        if (!(_.contains(usernames, username))) {
-          let entry = {};
-          entry.username = username;
-          entry.responsible = 0;
-          entry.id = null;
-          parsedData.push(entry);
-          usernames.push(username);
-        }
-        parsedData.forEach((contributor) => {
-          if (contributor.username == issue.responsible.username) {
-              contributor.responsible++;
+        if (issue.responsible) {
+          let username = issue.responsible.username;
+          if (!(_.contains(usernames, username))) {
+            let entry = {};
+            entry.username = username;
+            entry.responsible = 0;
+            entry.id = null;
+            parsedData.push(entry);
+            usernames.push(username);
           }
-          contributor.id = generateRandomNumber();
-        });
+          parsedData.forEach((contributor) => {
+            if (contributor.username == issue.responsible.username) {
+                contributor.responsible++;
+            }
+            contributor.id = generateRandomNumber();
+          });
+        }
       });
       res.send(parsedData);
     });
@@ -132,22 +136,24 @@ module.exports = (app, _, config) => {
       let parsedData = [];
       let usernames = [];
       results['issues'].forEach((issue) => {
-        let username = issue.responsible.username;
-        if (!(_.contains(usernames, username))) {
-          let entry = {};
-          entry.username = username;
-          entry.completed = 0;
-          entry.id = generateRandomNumber();
-          parsedData.push(entry);
-          usernames.push(username);
-        }
-        parsedData.forEach((contributor) => {
-          if (contributor.username == issue.responsible.username) {
-            if (issue.status === 'resolved') {
-              contributor.completed++;
-            }
+        if (issue.responsible) {
+          let username = issue.responsible.username;
+          if (!(_.contains(usernames, username))) {
+            let entry = {};
+            entry.username = username;
+            entry.completed = 0;
+            entry.id = generateRandomNumber();
+            parsedData.push(entry);
+            usernames.push(username);
           }
-        });
+          parsedData.forEach((contributor) => {
+            if (contributor.username == issue.responsible.username) {
+              if (issue.status === 'resolved') {
+                contributor.completed++;
+              }
+            }
+          });
+        }
       });
       res.send(parsedData);
     });
