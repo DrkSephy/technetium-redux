@@ -3,7 +3,8 @@
  * @module routes/issues
 */
 
-import { getJSON, generateRandomNumber, getIssueCommentUrls } from './utils';
+import {getJSON, generateRandomNumber, getIssueCommentUrls, getDateRange, generateDateRange} from './utils';
+import moment from 'moment';
 
 'use strict';
 
@@ -56,6 +57,29 @@ module.exports = (app, _, config) => {
           contributor.id = generateRandomNumber();
         });
       });
+      res.send(parsedData);
+    });
+  });
+
+  /**
+   * GET /api/issues/opened/filtered
+   * Returns number of issues opened in the last 14 days.
+  */
+  app.get('/api/issues/opened/filtered', (req, res) => {
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    .then((results) => {
+      let parsedData = {
+        opened: 0
+      };
+      let ranges = getDateRange();
+      results['issues'].forEach((issue) => {
+        let date = moment(issue.created_on);
+
+        if (date.isBetween(ranges.startDate, ranges.endDate)) {
+          parsedData.opened++;
+          console.log(parsedData['opened']);
+        }
+      })
       res.send(parsedData);
     });
   });

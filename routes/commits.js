@@ -3,7 +3,7 @@
  * @module routes/commits
 */
 
-import { getJSON, generateRandomNumber, getDateRange, generateDateRange } from './utils';
+import {getJSON, generateRandomNumber, getDateRange, generateDateRange} from './utils';
 import moment from 'moment';
 
 'use strict';
@@ -137,7 +137,6 @@ module.exports = (app, _, config) => {
       let promises = computeUrls(data.count, config);
       Promise.all(promises)
       .then((results) => {
-
         let timeSeries = [];
         let users = [];
         let ranges = getDateRange();
