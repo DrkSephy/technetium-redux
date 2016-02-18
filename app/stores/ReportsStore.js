@@ -6,6 +6,7 @@ class ReportsStore {
     this.bindActions(ReportsActions);
     this.reportData = [];
     this.issuesOpened = 0;
+    this.commits = 0;
   }
 
   onGetReportDataSuccess(data) {
@@ -14,6 +15,10 @@ class ReportsStore {
 
   onGetReportOpenedIssuesSuccess(data) {
     this.issuesOpened = data;
+  }
+
+  onGetReportCommitsSuccess(data) {
+    this.commits = data;
   }
 }
 

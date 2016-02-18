@@ -16,6 +16,7 @@ class Reports extends React.Component {
     ReportsStore.listen(this.onChange);
     ReportsActions.getReportData();
     ReportsActions.getOpenedIssues();
+    ReportsActions.getFilteredCommits();
   }
 
   componentWillUnmount() {
@@ -46,7 +47,7 @@ class Reports extends React.Component {
       <div className='container'>
 
         <div className='row'>
-          <div className="col-md-3"><Card header='Commits' value='14' /></div>
+          <div className="col-md-3"><Card header='Commits' value={this.state.commits.commits} /></div>
           <div className="col-md-3"><Card header='Issues Opened' value={this.state.issuesOpened.opened} /></div>
           <div className="col-md-3"><Card header='Issues Assigned' value={this.state.issuesOpened.assigned} /></div>
           <div className="col-md-3"><Card header='Issues Closed' value={this.state.issuesOpened.resolved} /></div>

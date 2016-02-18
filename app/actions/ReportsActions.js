@@ -7,8 +7,20 @@ class ReportsActions {
       'getReportDataSuccess',
       'getReportDataFail',
       'getReportOpenedIssuesSuccess',
-      'getReportOpenedIssuesFail'
+      'getReportOpenedIssuesFail',
+      'getReportCommitsSuccess',
+      'getReportCommitsFail'
     );
+  }
+
+  getFilteredCommits() {
+    $.ajax({ url: '/api/commits/filtered' })
+      .done((data) => {
+        this.actions.getReportCommitsSuccess(data);
+      })
+      .fail((jqXhr) => {
+        this.actions.getReportCommitsFail(jqXhr);
+      });
   }
 
   getOpenedIssues() {
