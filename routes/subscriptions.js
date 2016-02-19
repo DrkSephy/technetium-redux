@@ -35,4 +35,18 @@ module.exports = (app) => {
       res.send(subscription);
     });
   }); 
+
+  /**
+   * GET /api/subscriptions/remove
+   * Removes all repository subscriptions.
+  */
+  app.get('/api/subscriptions/remove', (req, res, next) => {
+    Subscriptions.findOne({ field: 'name' }, (err, model) => {
+      if (err) return next(err);
+      Subscriptions.remove((err) => {
+        if (err) return next(err);
+        res.send('Removed all documents');
+      });
+    });
+  });
 }
