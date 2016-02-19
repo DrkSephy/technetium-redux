@@ -55,10 +55,7 @@ gulp.task('browserify', ['browserify-vendor'], function () {
     .transform(babelify, {presets: ['es2015', 'react']})
     .bundle()
     .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(gulpif(production, streamify(uglify({mangle: false}))))
-    .pipe(sourcemaps.write('.'))
     .pipe(gulp.dest('public/js'));
 });
 
@@ -80,9 +77,6 @@ gulp.task('browserify-watch', ['browserify-vendor'], function() {
         gutil.log(gutil.colors.green('Finished rebundling in', (Date.now() - start) + 'ms.'));
       })
       .pipe(source('bundle.js'))
-      .pipe(buffer())
-      .pipe(sourcemaps.init({ loadMaps: true }))
-      .pipe(sourcemaps.write('.'))
       .pipe(gulp.dest('public/js/'));
   }
 });
