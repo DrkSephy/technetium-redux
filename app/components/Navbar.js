@@ -1,18 +1,22 @@
 import React from 'react';
 import {Link} from 'react-router';
+import NavbarStore from '../stores/NavbarStore';
+import NavbarActions from '../actions/NavbarActions';
 
 class Navbar extends React.Component {
   constructor(props) {
     super(props);
+    this.state = NavbarStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    // NavbarStore.listen(this.onChange);
+    NavbarStore.listen(this.onChange);
+    NavbarActions.getSubscriptions();
   }
 
   componentWillUnmount() {
-    // NavbarStore.unlisten(this.onChange);
+    NavbarStore.unlisten(this.onChange);
   }
 
   onChange(state) {
@@ -20,6 +24,12 @@ class Navbar extends React.Component {
   }
 
   render() {
+    let stuff = this.state.subscriptions.map((data) => {
+      return (
+        <li><Link to='/reports'>{data.url}</Link></li>
+      )
+    });
+
     return (
       <nav className='navbar navbar-default navbar-static-top'>
         <div className='navbar-header'>
@@ -35,7 +45,7 @@ class Navbar extends React.Component {
             <li><Link to='/'>Home</Link></li>
             <li><Link to='/commits'>Commits</Link></li>
             <li className='dropdown'>
-              <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Issue Data <span className='caret'></span></a>
+              <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Issue Data<span className='caret'></span></a>
               <ul className='dropdown-menu'>
                 <li><Link to='/issues'>Issues</Link></li>
                 <li><Link to='/issuesOpened'>Issues Opened</Link></li>
@@ -47,6 +57,12 @@ class Navbar extends React.Component {
             <li><Link to='/pullRequests'>Pull Requests</Link></li>
             <li><Link to='/reports'>Reports</Link></li>
             <li><Link to='/subscriptions'>Subscribe</Link></li>
+            <li className='dropdown'>
+              <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Subscriptions<span className='caret'></span></a>
+              <ul className='dropdown-menu'>
+                {stuff}
+              </ul>
+            </li>
           </ul>
         </div>
       </nav>
