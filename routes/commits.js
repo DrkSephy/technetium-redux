@@ -9,7 +9,6 @@ import moment from 'moment';
 'use strict';
 
 module.exports = (app, _, config) => {
-
   /**
    * GET /api/count
    * Returns the number of commits in a repository.

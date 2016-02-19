@@ -13,7 +13,7 @@ class SubscriptionsActions {
   addSubscription(url) {
     $.ajax({ 
       type: 'POST',
-      url: '/api/subscriptions',
+      url: '/api/subscribe',
       data: { url: url }
     })
     .done((data) => {
