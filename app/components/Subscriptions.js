@@ -1,6 +1,7 @@
 import React from 'react';
 import SubscriptionsStore from '../stores/SubscriptionsStore';
 import SubscriptionsActions from '../actions/SubscriptionsActions';
+import NavbarActions from '../actions/NavbarActions';
 
 class Subscriptions extends React.Component {
   constructor(props) {
@@ -32,6 +33,7 @@ class Subscriptions extends React.Component {
 
     if (url) {
       SubscriptionsActions.addSubscription(url);
+      NavbarActions.getSubscriptions();
     }
   }
 
