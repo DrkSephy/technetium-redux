@@ -24,4 +24,15 @@ module.exports = (app) => {
       res.send({ message: 'Subscribed to: ' + url + ' successfully'});
     });
   });
+
+  /**
+   * GET /api/subscriptions
+   * Returns all repository subscriptions.
+  */
+  app.get('/api/subscriptions', (req, res, next) => {
+    Subscriptions.find((err, subscription) => {
+      if (err) return next(err);
+      res.send(subscription);
+    });
+  }); 
 }

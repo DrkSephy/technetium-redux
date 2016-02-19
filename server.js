@@ -15,8 +15,6 @@ var mongoose = require('mongoose');
 
 var routes = require('./app/routes');
 var config = require('./secrets');
-var Subscriptions = require('./models/subscriptions');
-
 
 // Create the Express Application
 var app = express();
@@ -38,23 +36,7 @@ require('./routes/commits')(app, _, config);
 require('./routes/charts')(app);
 require('./routes/timeseries')(app);
 require('./routes/pullrequests')(app, _, config);
-
-app.post('/api/subscriptions', (req, res, next) => {
-  var url = req.body.url;
-  var subscription = new Subscriptions({
-    url: url
-  });
-
-  subscription.save((err) => {
-    if (err) return next(err);
-    res.send({ message: 'Subscription added successfully!'});
-  });
-
-  Subscriptions.find((err, subscription) => {
-    if (err) return next(err);
-    console.log(subscription);
-  });
-});
+require('./routes/subscriptions')(app);
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
