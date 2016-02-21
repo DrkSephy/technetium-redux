@@ -17,6 +17,7 @@ class Reports extends React.Component {
     ReportsActions.getReportData();
     ReportsActions.getOpenedIssues();
     ReportsActions.getFilteredCommits();
+    console.log(this.props.params);
   }
 
   componentWillUnmount() {
