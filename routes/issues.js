@@ -38,7 +38,9 @@ module.exports = (app, _, config) => {
    * Returns number of issues opened by each contributor in a repository.
   */
   app.get('/api/issues/opened', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
     .then((results) => {
       let parsedData = [];
       let usernames = [];
@@ -70,7 +72,10 @@ module.exports = (app, _, config) => {
    * Returns number of issues opened in the last 14 days.
   */
   app.get('/api/issues/opened/filtered', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    console.log('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/');
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
     .then((results) => {
       let parsedData = {
         opened: 0,
@@ -101,7 +106,9 @@ module.exports = (app, _, config) => {
    * Returns number of issues assigned to each contributor in a repository.
   */
   app.get('/api/issues/assigned', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
     .then((results) => {
       let parsedData = [];
       let usernames = [];
@@ -133,7 +140,9 @@ module.exports = (app, _, config) => {
    * Returns number of issues completed by each contributor in a repository.
   */
   app.get('/api/issues/completed', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
     .then((results) => {
       let parsedData = [];
       let usernames = [];
@@ -166,7 +175,9 @@ module.exports = (app, _, config) => {
    * Returns number of total comments by each contributor in a repository.
   */
   app.get('/api/issues/comments', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
     .then((data) => {
       let promises = getIssueCommentUrls(data.count, config);
       Promise.all(promises)
