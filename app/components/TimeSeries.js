@@ -12,7 +12,7 @@ class TimeSeries extends React.Component {
 
   componentDidMount() {
     TimeSeriesStore.listen(this.onChange);
-    TimeSeriesActions.getData();
+    TimeSeriesActions.getData(this.props.username, this.props.reponame);
   }
 
   componentWillUnmount() {

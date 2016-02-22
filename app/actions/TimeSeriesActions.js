@@ -8,8 +8,14 @@ class TimeSeriesActions {
     );
   }
 
-  getData() {
-    $.ajax({ url: '/api/weeklycommits' })
+  getData(username, reponame) {
+    $.ajax({ 
+        url: '/api/weeklycommits',
+        data: {
+          username: username,
+          reponame: reponame
+        }
+      })
       .done((data) => {
         this.actions.getTimeSeriesSuccess(data);
       })
