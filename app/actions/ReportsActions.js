@@ -13,8 +13,14 @@ class ReportsActions {
     );
   }
 
-  getFilteredCommits() {
-    $.ajax({ url: '/api/commits/filtered' })
+  getFilteredCommits(username, reponame) {
+    $.ajax({
+        url: '/api/commits/filtered',
+        data: {
+          username: username,
+          reponame: reponame
+        }
+      })
       .done((data) => {
         this.actions.getReportCommitsSuccess(data);
       })
@@ -23,8 +29,14 @@ class ReportsActions {
       });
   }
 
-  getOpenedIssues() {
-    $.ajax({ url: '/api/issues/opened/filtered' })
+  getOpenedIssues(username, reponame) {
+    $.ajax({
+        url: '/api/issues/opened/filtered' ,
+        data: {
+          username: username,
+          reponame: reponame
+        }
+      })
       .done((data) => {
         this.actions.getReportOpenedIssuesSuccess(data);
       })
@@ -33,7 +45,7 @@ class ReportsActions {
       });
   }
 
-  getReportData() {
+  getReportData(username, reponame) {
     let urls = [
       '/api/commits',
       '/api/issues/opened',
@@ -48,7 +60,13 @@ class ReportsActions {
 
     let promises = urls.map((url) => {
       return new Promise((resolve, reject) => {
-        $.ajax({ url: url })
+        $.ajax({
+            url: url,
+            data: {
+              username: username,
+              reponame: reponame
+            }
+          })
           .done((data) => {
             resolve(data);
           });

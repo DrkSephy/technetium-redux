@@ -14,10 +14,10 @@ class Reports extends React.Component {
 
   componentDidMount() {
     ReportsStore.listen(this.onChange);
-    ReportsActions.getReportData();
-    ReportsActions.getOpenedIssues();
-    ReportsActions.getFilteredCommits();
-    console.log(this.props.params);
+    ReportsActions.getReportData(this.props.params.username, this.props.params.reponame);
+    ReportsActions.getOpenedIssues(this.props.params.username, this.props.params.reponame);
+    ReportsActions.getFilteredCommits(this.props.params.username, this.props.params.reponame);
+    // console.log(this.props.params);
   }
 
   componentWillUnmount() {
@@ -76,7 +76,7 @@ class Reports extends React.Component {
         </Panel>
 
         <Panel header='Commit Time Series' bsStyle='primary'>
-          <TimeSeries />
+          <TimeSeries username={this.props.params.username} reponame={this.props.params.reponame}/>
         </Panel>
       </div>
     );  
