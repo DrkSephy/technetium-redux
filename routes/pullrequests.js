@@ -13,7 +13,9 @@ import { getJSON, generateRandomNumber } from './utils';
 */
 module.exports = (app, _, config) => {
   app.get('/api/pullrequests', (req, res) => {
-    getJSON('https://api.bitbucket.org/2.0/repositories/DrkSephy/wombat/pullrequests?state=[MERGED]', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/pullrequests?state=[MERGED]', config)
     .then((data) => {
       let usernames = [];
       let parsedData = [];
