@@ -25,9 +25,11 @@ module.exports = (app, _, config) => {
    * Returns the number of commits in a repository per contributor.
   */
   app.get('/api/commits', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config);
+      let promises = computeUrls(data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let users = []
@@ -61,9 +63,11 @@ module.exports = (app, _, config) => {
    * Returns the number of commits in a repository for the past 2 weeks.
   */
   app.get('/api/commits/filtered', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config);
+      let promises = computeUrls(data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let parsedData = {
@@ -158,9 +162,11 @@ module.exports = (app, _, config) => {
    * Bundles commit data to render timeseries chart.
   */
   app.get('/api/weeklycommits', (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config);
+      let promises = computeUrls(data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let timeSeries = [];
@@ -231,7 +237,7 @@ module.exports = (app, _, config) => {
    * @param {number} count - The number of commits in a repository.
    * @return {object} promises - An array of promises.
   */
-  function computeUrls(count, config) {
+  function computeUrls(count, config, username, reponame) {
     let urls = [];
     let page = 1;
     let stop;
@@ -243,7 +249,7 @@ module.exports = (app, _, config) => {
     let start = 0;
 
     while (start <= stop) {
-      let url = 'https://api.bitbucket.org/2.0/repositories/DrkSephy/wombat/commits/master?page=' + page;
+      let url = 'https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/commits/master?page=' + page;
       urls.push(url);
       page++;
       start++;
