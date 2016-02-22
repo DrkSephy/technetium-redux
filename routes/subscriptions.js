@@ -14,14 +14,16 @@ module.exports = (app) => {
    * Subscribes to a given repository.
   */
   app.post('/api/subscribe', (req, res, next) => {
-    let url = req.body.url;
+    let username = req.body.username;
+    let reponame = req.body.reponame;
     let subscription = new Subscriptions({
-      url: url
+      username: username,
+      reponame: reponame
     })
 
     subscription.save((err) => {
       if (err) return next(err);
-      res.send({ message: 'Subscribed to: ' + url + ' successfully'});
+      res.send({ message: 'Subscribed to: ' + username +  '/' + reponame + ' successfully'});
     });
   });
 

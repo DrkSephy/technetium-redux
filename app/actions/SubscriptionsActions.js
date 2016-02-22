@@ -5,16 +5,21 @@ class SubscriptionsActions {
     this.generateActions(
       'addSubscriptionSuccess',
       'addSubscriptionFail',
-      'updateUrl',
-      'invalidUrl'
+      'updateUsername',
+      'invalidUsername',
+      'updateReponame',
+      'invalidReponame'
     );
   }
 
-  addSubscription(url) {
+  addSubscription(username, reponame) {
     $.ajax({ 
       type: 'POST',
       url: '/api/subscribe',
-      data: { url: url }
+      data: { 
+        username: username,
+        reponame: reponame 
+      }
     })
     .done((data) => {
       this.actions.addSubscriptionSuccess(data.message);

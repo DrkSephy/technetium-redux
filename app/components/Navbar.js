@@ -24,9 +24,10 @@ class Navbar extends React.Component {
   }
 
   render() {
-    let stuff = this.state.subscriptions.map((data) => {
+    let subscriptions = this.state.subscriptions.map((data) => {
+      let url = '/report/' + data.username + '/' + data.reponame
       return (
-        <li><Link to='/reports'>{data.url}</Link></li>
+        <li><Link to={url}>{data.username}/{data.reponame}</Link></li>
       )
     });
 
@@ -60,7 +61,7 @@ class Navbar extends React.Component {
             <li className='dropdown'>
               <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Subscriptions<span className='caret'></span></a>
               <ul className='dropdown-menu'>
-                {stuff}
+                {subscriptions}
               </ul>
             </li>
           </ul>

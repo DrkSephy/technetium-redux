@@ -4,29 +4,44 @@ import SubscriptionsActions from '../actions/SubscriptionsActions';
 class SubscriptionsStore {
   constructor() {
     this.bindActions(SubscriptionsActions);
-    this.url = '';
+    this.username = '';
+    this.reponame = '';
     this.helpBlock = '';
-    this.urlValidationState = '';
+    this.usernameValidationState = '';
+    this.reponameValidationState = '';
   }
 
   onAddSubscriptionSuccess(successMessage) {
-    this.urlValidationState = 'has-success';
+    this.usernameValidationState = 'has-success';
+    this.reponameValidationState = 'has-success';
     this.helpBlock = successMessage;
   }
 
   onAddSubscriptionFail(errorMessage) {
-    this.urlValidationState = 'has-error';
+    this.usernameValidationState = 'has-error';
+    this.reponameValidationState = 'has-error';
     this.helpBlock = errorMessage;
   }
 
-  onUpdateUrl(event) {
-    this.url = event.target.value;
-    this.urlValidationState = '';
+  onUpdateUsername(event) {
+    this.username = event.target.value;
+    this.usernameValidationState = '';
     this.helpBlock = '';
   }
 
-  onInvalidUrl() {
-    this.urlValidationState = 'has-error';
+  onInvalidUsername() {
+    this.usernameValidationState = 'has-error';
+    this.helpBlock = 'Please enter a subscription url.';
+  }
+
+  onUpdateReponame(event) {
+    this.reponame = event.target.value;
+    this.reponameValidationState = '';
+    this.helpBlock = '';
+  }
+
+  onInvalidReponame() {
+    this.reponameValidationState = 'has-error';
     this.helpBlock = 'Please enter a subscription url.';
   }
 }
