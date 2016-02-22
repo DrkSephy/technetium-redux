@@ -74,10 +74,12 @@ module.exports = (app, _, config) => {
           commits: 0
         };
         let ranges = getDateRange();
+        let startDate = ranges.startDate.subtract(1, 'days');
+        let endDate = ranges.endDate.add(1, 'days');
         results.forEach((result) => {
           result['values'].forEach((commit) => {
             let date = moment(commit.date);
-            if (date.isBetween(ranges.startDate, ranges.endDate)) {
+            if (date.isBetween(startDate, endDate)) {
               parsedData.commits++;
             }
           });
