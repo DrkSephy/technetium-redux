@@ -27,7 +27,7 @@ export default (
     <Route path='/chart' component={Chart} />
     <Route path='/timeseries' component={TimeSeries} />
     <Route path='/reports' component={Reports} />
-        <Route path='/report/:user/:repo' component={Reports} />
+        <Route path='/report/:username/:reponame' component={Reports} />
     <Route path='/pullRequests' component={PullRequest} />
     <Route path='/subscriptions' component={Subscriptions} />
   </Route>
