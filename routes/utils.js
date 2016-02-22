@@ -66,7 +66,7 @@ export function getIssueCommentUrls(count, config) {
 */
 export function getDateRange() {
   let endDate = moment().add(1, 'days');
-  let startDate = moment().subtract(14, 'days');
+  let startDate = moment().subtract(6, 'days');
   return { startDate: startDate, endDate: endDate };
 }
 
