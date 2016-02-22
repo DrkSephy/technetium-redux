@@ -1,5 +1,5 @@
 import React from 'react';
-import {Panel} from 'react-bootstrap';
+import LinkWithTooltip from './LinkWithTooltip';
 
 class Card extends React.Component {
   constructor(props) {
@@ -13,9 +13,17 @@ class Card extends React.Component {
 
   render() {
     return (
-      <Panel header={this.props.header} bsStyle='primary'>
-        <h3>{this.props.value}</h3>
-      </Panel>
+      <div className="panel panel-primary">
+        <div className="panel-heading clearfix">
+          <h4 className="pull-left">{this.props.header}</h4>
+          <h4 className="pull-right">
+            <LinkWithTooltip tooltip={this.props.tooltip} href='#'>(?)</LinkWithTooltip>
+          </h4>
+        </div>
+        <h2 className="text-center">
+          {this.props.value}
+        </h2>
+      </div>
     );
   }
 }
