@@ -189,19 +189,11 @@ module.exports = (app, _, config) => {
             }
           });
         });
-        let data = {
-          columns: [
-          ]
-        };
+        let data = [];
         parsedData.forEach((entry) => {
-          let array = []
-          for (var prop in entry) {
-            array.push(entry[prop]);
-          }
-          data.columns.push(array);
+          data.push(entry.count);
         });
-        console.log(data.columns);
-        res.send(data.columns);
+        res.send(data);
       });
     });
   });
