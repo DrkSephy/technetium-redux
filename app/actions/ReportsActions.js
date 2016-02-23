@@ -13,8 +13,26 @@ class ReportsActions {
       'getSparklineDataSuccess',
       'getSparklineDataFail',
       'getSparklineIssuesOpenedSuccess',
-      'getSparklineIssuesOpenedFail'
+      'getSparklineIssuesOpenedFail',
+      'getSparklineIssuesAssignedSuccess',
+      'getSparklineIssuesAssignedFail'
     );
+  }
+
+  getSparklineIssuesAssignedData(username, reponame) {
+    $.ajax({
+      url: '/api/issues/assigned/sparkline',
+      data: {
+        username: username,
+        reponame: reponame
+      }
+    })
+    .done((data) => {
+      this.actions.getSparklineIssuesAssignedSuccess(data);
+    })
+    .fail((jqXhr) => {
+      this.actions.getSparklineIssuesAssignedFail(data);
+    });
   }
 
   getSparklineIssuesOpenedData(username, reponame) {
