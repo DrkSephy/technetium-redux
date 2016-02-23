@@ -10,6 +10,15 @@ class ReportsStore {
     this.sparklineData = [];
     this.sparklineIssuesOpened = [];
     this.sparklineIssuesAssigned = [];
+    this.sparklineIssuesClosed = [];
+  }
+
+  onGetSparklineIssuesClosedSuccess(data) {
+    this.sparklineIssuesClosed = data;
+  }
+
+  onGetSparklineIssuesClosedFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
   onGetSparklineIssuesOpenedSuccess(data) {
