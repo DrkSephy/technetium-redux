@@ -9,8 +9,26 @@ class ReportsActions {
       'getReportOpenedIssuesSuccess',
       'getReportOpenedIssuesFail',
       'getReportCommitsSuccess',
-      'getReportCommitsFail'
+      'getReportCommitsFail',
+      'getSparklineDataSuccess',
+      'getSparklineDataFail'
     );
+  }
+
+  getSparklineData(username, reponame) {
+    $.ajax({
+      url: '/api/commits/sparkline',
+      data: {
+        username: username,
+        reponame: reponame
+      }
+    })
+    .done((data) => {
+      this.actions.getSparklineDataSuccess(data);
+    })
+    .fail((jqXhr) => {
+      this.actions.getSparklineDataFail(jqXhr);
+    });
   }
 
   getFilteredCommits(username, reponame) {
