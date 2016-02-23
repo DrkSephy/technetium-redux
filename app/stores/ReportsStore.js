@@ -7,6 +7,7 @@ class ReportsStore {
     this.reportData = [];
     this.issuesOpened = 0;
     this.commits = 0;
+    this.sparklineData = [];
   }
 
   onGetReportDataSuccess(data) {
@@ -19,6 +20,14 @@ class ReportsStore {
 
   onGetReportCommitsSuccess(data) {
     this.commits = data;
+  }
+
+  onGetSparklineDataSuccess(data) {
+    this.sparklineData = data;
+  }
+
+  onGetSparklineDataFail(data) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }
 
