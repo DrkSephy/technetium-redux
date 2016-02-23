@@ -21,6 +21,7 @@ class Reports extends React.Component {
     ReportsActions.getFilteredCommits(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineIssuesOpenedData(this.props.params.username, this.props.params.reponame);
+    ReportsActions.getSparklineIssuesAssignedData(this.props.params.username, this.props.params.reponame);
   }
 
   componentWillUnmount() {
@@ -65,7 +66,8 @@ class Reports extends React.Component {
           <div className="col-md-3">
             <Card header='Issues Assigned' 
               value={this.state.issuesOpened.assigned} 
-              tooltip='Issues Assigned over the last 7 days.' /></div>
+              tooltip='Issues Assigned over the last 7 days.' 
+              sparklineData={this.state.sparklineIssuesAssigned} /></div>
           <div className="col-md-3">
             <Card header='Issues Closed' 
               value={this.state.issuesOpened.resolved} 
