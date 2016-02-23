@@ -15,8 +15,26 @@ class ReportsActions {
       'getSparklineIssuesOpenedSuccess',
       'getSparklineIssuesOpenedFail',
       'getSparklineIssuesAssignedSuccess',
-      'getSparklineIssuesAssignedFail'
+      'getSparklineIssuesAssignedFail',
+      'getSparklineIssuesClosedSuccess',
+      'getSparklineIssuesClosedFail'
     );
+  }
+
+  getSparklineIssuesClosedData(username, reponame) {
+    $.ajax({
+      url: '/api/issues/closed/sparkline',
+      data: {
+        username: username,
+        reponame: reponame
+      }
+    })
+    .done((data) => {
+      this.actions.getSparklineIssuesClosedSuccess(data);
+    })
+    .fail((jqXhr) => {
+      this.actions.getSparklineIssuesClosedFail(data);
+    })
   }
 
   getSparklineIssuesAssignedData(username, reponame) {
