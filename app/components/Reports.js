@@ -76,32 +76,34 @@ class Reports extends React.Component {
               sparklineData={this.state.sparklineIssuesClosed} /></div>
         </div>
 
-        <div className="panel panel-primary">
-          <div className="panel-heading clearfix">
-            <h4 className="pull-left">Repository Statistics</h4>
-            <h4 className="pull-right">
-              <LinkWithTooltip 
-                tooltip='Overall Repository Statistics' href='#'>(?)
-              </LinkWithTooltip>
-            </h4>
+          <div className="panel panel-primary">
+            <div className="panel-heading clearfix">
+              <h4 className="pull-left">Repository Statistics</h4>
+              <h4 className="pull-right">
+                <LinkWithTooltip 
+                  tooltip='Overall Repository Statistics' href='#'>(?)
+                </LinkWithTooltip>
+              </h4>
+            </div>
+            <div className="table-responsive">
+              <table className='table table-striped'>
+                <thead>
+                <tr>
+                  <th colSpan='1'>Username</th>
+                  <th colSpan='1'>Commits</th>
+                  <th colSpan='1'>Pull Requests</th>
+                  <th colSpan='1'>Issues Assigned</th>
+                  <th colSpan='1'>Issues Closed</th>
+                  <th colSpan='1'>Issues Opened</th>
+                  <th colSpan='1'>Issue Comments</th>
+                </tr>
+                </thead>
+                <tbody>
+                  {reportData}
+                </tbody>
+              </table>
+            </div>
           </div>
-          <table className='table table-striped'>
-            <thead>
-            <tr>
-              <th colSpan='1'>Username</th>
-              <th colSpan='1'>Commits</th>
-              <th colSpan='1'>Pull Requests</th>
-              <th colSpan='1'>Issues Assigned</th>
-              <th colSpan='1'>Issues Closed</th>
-              <th colSpan='1'>Issues Opened</th>
-              <th colSpan='1'>Issue Comments</th>
-            </tr>
-            </thead>
-            <tbody>
-              {reportData}
-            </tbody>
-          </table>
-        </div>
 
         <div className="panel panel-primary">
           <div className="panel-heading clearfix">
