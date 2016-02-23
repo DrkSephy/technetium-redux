@@ -20,6 +20,7 @@ class Reports extends React.Component {
     ReportsActions.getOpenedIssues(this.props.params.username, this.props.params.reponame);
     ReportsActions.getFilteredCommits(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineData(this.props.params.username, this.props.params.reponame);
+    ReportsActions.getSparklineIssuesOpenedData(this.props.params.username, this.props.params.reponame);
   }
 
   componentWillUnmount() {
@@ -51,21 +52,33 @@ class Reports extends React.Component {
 
         <div className='row'>
           <div className="col-md-3">
-            <Card header='Commits' value={this.state.commits.commits} tooltip='Commits over the last 7 days.' sparklineData={this.state.sparklineData}/>
+            <Card header='Commits' 
+              value={this.state.commits.commits} 
+              tooltip='Commits over the last 7 days.' 
+              sparklineData={this.state.sparklineData} />
           </div>
           <div className="col-md-3">
-            <Card header='Issues Opened' value={this.state.issuesOpened.opened} tooltip='Issues Opened over the last 7 days.' /></div>
+            <Card header='Issues Opened' 
+              value={this.state.issuesOpened.opened} 
+              tooltip='Issues Opened over the last 7 days.' 
+              sparklineData={this.state.sparklineIssuesOpened} /></div>
           <div className="col-md-3">
-            <Card header='Issues Assigned' value={this.state.issuesOpened.assigned} tooltip='Issues Assigned over the last 7 days.' /></div>
+            <Card header='Issues Assigned' 
+              value={this.state.issuesOpened.assigned} 
+              tooltip='Issues Assigned over the last 7 days.' /></div>
           <div className="col-md-3">
-            <Card header='Issues Closed' value={this.state.issuesOpened.resolved} tooltip='Issues Closed over the last 7 days.' /></div>
+            <Card header='Issues Closed' 
+              value={this.state.issuesOpened.resolved} 
+              tooltip='Issues Closed over the last 7 days.' /></div>
         </div>
 
         <div className="panel panel-primary">
           <div className="panel-heading clearfix">
             <h4 className="pull-left">Repository Statistics</h4>
             <h4 className="pull-right">
-              <LinkWithTooltip tooltip='Overall Repository Statistics' href='#'>(?)</LinkWithTooltip>
+              <LinkWithTooltip 
+                tooltip='Overall Repository Statistics' href='#'>(?)
+              </LinkWithTooltip>
             </h4>
           </div>
           <table className='table table-striped'>
@@ -93,7 +106,9 @@ class Reports extends React.Component {
               <LinkWithTooltip tooltip='Commit History over the last 7 days.' href='#'>(?)</LinkWithTooltip>
             </h4>
           </div>
-          <TimeSeries username={this.props.params.username} reponame={this.props.params.reponame}/>
+          <TimeSeries 
+            username={this.props.params.username} 
+            reponame={this.props.params.reponame} />
         </div>
       </div>
     );  
