@@ -1,8 +1,8 @@
 import React from 'react';
-import {Panel, Tooltip} from 'react-bootstrap';
 import ReactTooltip from 'react-tooltip';
-import Card from './Card';
+import {Panel, Tooltip} from 'react-bootstrap';
 import LinkWithTooltip from './LinkWithTooltip';
+import Card from './Card';
 import TimeSeries from './TimeSeries';
 import ReportsStore from '../stores/ReportsStore';
 import ReportsActions from '../actions/ReportsActions';
@@ -19,6 +19,7 @@ class Reports extends React.Component {
     ReportsActions.getReportData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getOpenedIssues(this.props.params.username, this.props.params.reponame);
     ReportsActions.getFilteredCommits(this.props.params.username, this.props.params.reponame);
+    ReportsActions.getSparklineData(this.props.params.username, this.props.params.reponame);
   }
 
   componentWillUnmount() {
@@ -50,7 +51,7 @@ class Reports extends React.Component {
 
         <div className='row'>
           <div className="col-md-3">
-            <Card header='Commits' value={this.state.commits.commits} tooltip='Commits over the last 7 days.' />
+            <Card header='Commits' value={this.state.commits.commits} tooltip='Commits over the last 7 days.' sparklineData={this.state.sparklineData}/>
           </div>
           <div className="col-md-3">
             <Card header='Issues Opened' value={this.state.issuesOpened.opened} tooltip='Issues Opened over the last 7 days.' /></div>

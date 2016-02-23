@@ -1,4 +1,5 @@
 import React from 'react';
+import Sparkline from './Sparkline';
 import LinkWithTooltip from './LinkWithTooltip';
 
 class Card extends React.Component {
@@ -23,6 +24,9 @@ class Card extends React.Component {
         <h2 className="text-center">
           {this.props.value}
         </h2>
+        <div className="text-center">
+          <Sparkline sparklineData={this.props.sparklineData}/>
+        </div>
       </div>
     );
   }
