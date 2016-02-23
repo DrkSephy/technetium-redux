@@ -22,6 +22,7 @@ class Reports extends React.Component {
     ReportsActions.getSparklineData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineIssuesOpenedData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineIssuesAssignedData(this.props.params.username, this.props.params.reponame);
+    ReportsActions.getSparklineIssuesClosedData(this.props.params.username, this.props.params.reponame);
   }
 
   componentWillUnmount() {
@@ -71,7 +72,8 @@ class Reports extends React.Component {
           <div className="col-md-3">
             <Card header='Issues Closed' 
               value={this.state.issuesOpened.resolved} 
-              tooltip='Issues Closed over the last 7 days.' /></div>
+              tooltip='Issues Closed over the last 7 days.' 
+              sparklineData={this.state.sparklineIssuesClosed} /></div>
         </div>
 
         <div className="panel panel-primary">
