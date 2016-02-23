@@ -159,6 +159,53 @@ module.exports = (app, _, config) => {
     });
   });
 
+  app.get('/api/commits/sparkline', (req, res) => {
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
+    .then((data) => {
+      let promises = computeUrls(data.count, config, username, reponame);
+      Promise.all(promises)
+      .then((results) => {
+        let parsedData = [];
+        let ranges = getDateRange();
+        let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
+        dateRanges.forEach((range) => {
+          let entry = {
+            date: range,
+            count: 0
+          }
+          parsedData.push(entry);
+        });
+        results.forEach((result) => {
+          result['values'].forEach((item) => {
+            let date = moment(item.date);
+            if (date.isBetween(ranges.startDate.subtract(1, 'day'), ranges.endDate)) {
+              parsedData.forEach((entry) => {
+                if ((entry.date) === date.format('YYYY-MM-DD')) {
+                  entry.count++;
+                }
+              });
+            }
+          });
+        });
+        let data = {
+          columns: [
+          ]
+        };
+        parsedData.forEach((entry) => {
+          let array = []
+          for (var prop in entry) {
+            array.push(entry[prop]);
+          }
+          data.columns.push(array);
+        });
+        console.log(data.columns);
+        res.send(data.columns);
+      });
+    });
+  });
+
   /**
    * GET /api/weeklycommits
    * Bundles commit data to render timeseries chart.
