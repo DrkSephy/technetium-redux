@@ -159,6 +159,10 @@ module.exports = (app, _, config) => {
     });
   });
 
+  /**
+   * GET /api/commits/sparkline
+   * Returns an array of commits over the last 7 days to render a sparkline chart.
+  */
   app.get('/api/commits/sparkline', (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;

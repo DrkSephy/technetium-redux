@@ -74,7 +74,6 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/opened/filtered', (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    console.log('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/');
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
     .then((results) => {
       let parsedData = {
@@ -100,6 +99,43 @@ module.exports = (app, _, config) => {
       res.send(parsedData);
     });
   });
+
+  /**
+   * GET /api/issues/opened/sparkline
+   * Returns an array of issues opened over 7 days to render a sparkline chart.
+  */
+  app.get('/api/issues/opened/sparkline', (req, res) => {
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    .then((results) => {
+      let parsedData = [];
+      let ranges = getDateRange();
+      let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
+      dateRanges.forEach((range) => {
+        let entry = {
+          date: range,
+          count: 0
+        }
+        parsedData.push(entry);
+      });
+      results['issues'].forEach((issue) => {
+        let date = moment(issue.created_on);
+        if (date.isBetween(ranges.startDate, ranges.endDate)) {
+          parsedData.forEach((entry) => {
+            if ((entry.date) == date.format('YYYY-MM-DD')) {
+              entry.count++;
+            }
+          });
+        }
+      });
+      let data = [];
+      parsedData.forEach((entry) => {
+        data.push(entry.count);
+      });
+      res.send(data);
+    });
+  })
 
   /**
    * GET /api/issues/assigned
