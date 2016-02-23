@@ -8,6 +8,15 @@ class ReportsStore {
     this.issuesOpened = 0;
     this.commits = 0;
     this.sparklineData = [];
+    this.sparklineIssuesOpened = [];
+  }
+
+  onGetSparklineIssuesOpenedSuccess(data) {
+    this.sparklineIssuesOpened = data;
+  }
+
+  onGetSparklineIssuesOpenedFail(data) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
   onGetReportDataSuccess(data) {
