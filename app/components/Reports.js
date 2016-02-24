@@ -81,7 +81,8 @@ class Reports extends React.Component {
               <h4 className="pull-left">Repository Statistics</h4>
               <h4 className="pull-right">
                 <LinkWithTooltip 
-                  tooltip='Overall Repository Statistics' href='#'>(?)
+                  tooltip='Overall Repository Statistics' href='#'>
+                    <span className="glyphicon glyphicon-question-sign"></span>
                 </LinkWithTooltip>
               </h4>
             </div>
@@ -109,7 +110,9 @@ class Reports extends React.Component {
           <div className="panel-heading clearfix">
             <h4 className="pull-left">Weekly Commit Time Series</h4>
             <h4 className="pull-right">
-              <LinkWithTooltip tooltip='Commit History over the last 7 days.' href='#'>(?)</LinkWithTooltip>
+              <LinkWithTooltip tooltip='Commit History over the last 7 days.' href='#'>
+                <span className="glyphicon glyphicon-question-sign"></span>
+              </LinkWithTooltip>
             </h4>
           </div>
           <TimeSeries 

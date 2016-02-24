@@ -18,7 +18,9 @@ class Card extends React.Component {
         <div className="panel-heading clearfix">
           <h4 className="pull-left">{this.props.header}</h4>
           <h4 className="pull-right">
-            <LinkWithTooltip tooltip={this.props.tooltip} href='#'>(?)</LinkWithTooltip>
+            <LinkWithTooltip tooltip={this.props.tooltip} href='#'>
+              <span className="glyphicon glyphicon-question-sign"></span>
+            </LinkWithTooltip>
           </h4>
         </div>
         <h2 className="text-center">
