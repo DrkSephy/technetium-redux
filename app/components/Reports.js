@@ -6,6 +6,7 @@ import Card from './Card';
 import TimeSeries from './TimeSeries';
 import ReportsStore from '../stores/ReportsStore';
 import ReportsActions from '../actions/ReportsActions';
+import TimeSeriesActions from '../actions/TimeSeriesActions';
 
 class Reports extends React.Component {
   constructor(props) {
@@ -23,6 +24,17 @@ class Reports extends React.Component {
     ReportsActions.getSparklineIssuesOpenedData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineIssuesAssignedData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getSparklineIssuesClosedData(this.props.params.username, this.props.params.reponame);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    ReportsActions.getReportData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getOpenedIssues(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineIssuesOpenedData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineIssuesAssignedData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineIssuesClosedData(nextProps.params.username, nextProps.params.reponame);
+    TimeSeriesActions.getData(nextProps.params.username, nextProps.params.reponame);
   }
 
   componentWillUnmount() {
@@ -74,7 +86,7 @@ class Reports extends React.Component {
               value={this.state.issuesOpened.resolved} 
               tooltip='Issues Closed over the last 7 days.' 
               sparklineData={this.state.sparklineIssuesClosed} /></div>
-        </div>
+          </div>
 
           <div className="panel panel-primary">
             <div className="panel-heading clearfix">
