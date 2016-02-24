@@ -18,17 +18,17 @@ import Subscriptions from './components/Subscriptions';
 export default (
   <Route component={App}>
     <Route path='/' component={Home} />
-    <Route path='/commits' component={Commits} />
-    <Route path='/issues' component={Issues} />
-    <Route path='/issuesOpened' component={IssuesOpened} />
-    <Route path='/issuesAssigned' component={IssuesAssigned} />
-    <Route path='/issuesCompleted' component={IssuesCompleted} />
-    <Route path='/issueComments' component={IssueComments} />
-    <Route path='/chart' component={Chart} />
-    <Route path='/timeseries' component={TimeSeries} />
+    // <Route path='/commits' component={Commits} />
+    // <Route path='/issues' component={Issues} />
+    // <Route path='/issuesOpened' component={IssuesOpened} />
+    // <Route path='/issuesAssigned' component={IssuesAssigned} />
+    // <Route path='/issuesCompleted' component={IssuesCompleted} />
+    // <Route path='/issueComments' component={IssueComments} />
+    // <Route path='/chart' component={Chart} />
+    // <Route path='/timeseries' component={TimeSeries} />
+    // <Route path='/pullRequests' component={PullRequest} />
     <Route path='/reports' component={Reports} />
         <Route path='/report/:username/:reponame' component={Reports} />
-    <Route path='/pullRequests' component={PullRequest} />
     <Route path='/subscriptions' component={Subscriptions} />
   </Route>
 );
