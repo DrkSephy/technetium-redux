@@ -294,7 +294,7 @@ module.exports = (app, _, config) => {
     let start = 0;
 
     while (start <= stop) {
-      let url = 'https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/commits/master?page=' + page;
+      let url = 'https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/commits?page=' + page;
       urls.push(url);
       page++;
       start++;
