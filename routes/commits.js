@@ -9,6 +9,12 @@ import moment from 'moment';
 'use strict';
 
 module.exports = (app, _, config) => {
+
+/*---------------------------------------------------------
+ *                  COMMIT API ROUTES
+ *---------------------------------------------------------
+*/
+
   /**
    * GET /api/count
    * Returns the number of commits in a repository.
@@ -159,48 +165,10 @@ module.exports = (app, _, config) => {
     });
   });
 
-  /**
-   * GET /api/commits/sparkline
-   * Returns an array of commits over the last 7 days to render a sparkline chart.
-  */
-  app.get('/api/commits/sparkline', (req, res) => {
-    let username = req.query.username;
-    let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
-    .then((data) => {
-      let promises = computeUrls(data.count, config, username, reponame);
-      Promise.all(promises)
-      .then((results) => {
-        let parsedData = [];
-        let ranges = getDateRange();
-        let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
-        dateRanges.forEach((range) => {
-          let entry = {
-            date: range,
-            count: 0
-          }
-          parsedData.push(entry);
-        });
-        results.forEach((result) => {
-          result['values'].forEach((item) => {
-            let date = moment(item.date);
-            if (date.isBetween(ranges.startDate.subtract(1, 'day'), ranges.endDate)) {
-              parsedData.forEach((entry) => {
-                if ((entry.date) === date.format('YYYY-MM-DD')) {
-                  entry.count++;
-                }
-              });
-            }
-          });
-        });
-        let data = [];
-        parsedData.forEach((entry) => {
-          data.push(entry.count);
-        });
-        res.send(data);
-      });
-    });
-  });
+/*---------------------------------------------------------
+ *                COMMIT TIMESERIES ROUTES
+ *---------------------------------------------------------
+*/
 
   /**
    * GET /api/weeklycommits
@@ -275,6 +243,59 @@ module.exports = (app, _, config) => {
       });
     });
   });
+
+/*---------------------------------------------------------
+ *              SPARKLINE COMMIT API ROUTES
+ *---------------------------------------------------------
+*/
+
+  /**
+   * GET /api/commits/sparkline
+   * Returns an array of commits over the last 7 days to render a sparkline chart.
+  */
+  app.get('/api/commits/sparkline', (req, res) => {
+    let username = req.query.username;
+    let reponame = req.query.reponame;
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
+    .then((data) => {
+      let promises = computeUrls(data.count, config, username, reponame);
+      Promise.all(promises)
+      .then((results) => {
+        let parsedData = [];
+        let ranges = getDateRange();
+        let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
+        dateRanges.forEach((range) => {
+          let entry = {
+            date: range,
+            count: 0
+          }
+          parsedData.push(entry);
+        });
+        results.forEach((result) => {
+          result['values'].forEach((item) => {
+            let date = moment(item.date);
+            if (date.isBetween(ranges.startDate.subtract(1, 'day'), ranges.endDate)) {
+              parsedData.forEach((entry) => {
+                if ((entry.date) === date.format('YYYY-MM-DD')) {
+                  entry.count++;
+                }
+              });
+            }
+          });
+        });
+        let data = [];
+        parsedData.forEach((entry) => {
+          data.push(entry.count);
+        });
+        res.send(data);
+      });
+    });
+  });
+
+/*---------------------------------------------------------
+ *                    HELPER FUNCTIONS
+ *---------------------------------------------------------
+*/
 
   /**
    * Helper function for computing all query urls.
