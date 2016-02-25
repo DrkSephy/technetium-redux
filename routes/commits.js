@@ -3,7 +3,7 @@
  * @module routes/commits
 */
 
-import {getJSON, generateRandomNumber, getDateRange, generateDateRange} from './utils';
+import {getJSON, generateRandomNumber, getDateRange, generateDateRange, computeUrls} from './utils';
 import moment from 'moment';
 
 'use strict';
@@ -35,7 +35,7 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let users = []
@@ -73,7 +73,7 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let parsedData = {
@@ -106,7 +106,7 @@ module.exports = (app, _, config) => {
     let hashes = [];
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config);
       Promise.all(promises)
       .then((results) => {
 
@@ -179,7 +179,7 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let timeSeries = [];
@@ -258,7 +258,7 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
     .then((data) => {
-      let promises = computeUrls(data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let parsedData = [];
@@ -291,37 +291,4 @@ module.exports = (app, _, config) => {
       });
     });
   });
-
-/*---------------------------------------------------------
- *                    HELPER FUNCTIONS
- *---------------------------------------------------------
-*/
-
-  /**
-   * Helper function for computing all query urls.
-   * 
-   * @param {number} count - The number of commits in a repository.
-   * @return {object} promises - An array of promises.
-  */
-  function computeUrls(count, config, username, reponame) {
-    let urls = [];
-    let page = 1;
-    let stop;
-    if (count >= 30) {
-      stop = Math.floor(count / 30);
-    } else {
-      stop = 1;
-    }
-    let start = 0;
-
-    while (start <= stop) {
-      let url = 'https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/commits?page=' + page;
-      urls.push(url);
-      page++;
-      start++;
-    }
-    
-    let promises = urls.map((url) => getJSON(url, config));
-    return promises;
-  }
 }
