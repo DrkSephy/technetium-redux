@@ -13,11 +13,13 @@ import TimeSeries from './components/TimeSeries';
 import Reports from './components/Reports';
 import PullRequest from './components/PullRequest';
 import Subscriptions from './components/Subscriptions';
+import Login from './components/Login';
 
 
 export default (
   <Route component={App}>
     <Route path='/' component={Home} />
+    <Route path='/login' component={Login} />
     // <Route path='/commits' component={Commits} />
     // <Route path='/issues' component={Issues} />
     // <Route path='/issuesOpened' component={IssuesOpened} />

@@ -66,6 +66,7 @@ class Navbar extends React.Component {
                 {subscriptions}
               </ul>
             </li>
+            <li><Link to='/login'>Login</Link></li>
           </ul>
         </div>
       </nav>
