@@ -1,4 +1,6 @@
 import React from 'react';
+import LoginActions from '../actions/LoginActions';
+import LoginStore from '../stores/LoginStore';
 
 class Login extends React.Component {
   constructor(props) {
@@ -7,11 +9,11 @@ class Login extends React.Component {
   }
 
   componentDidMount() {
-
+    LoginStore.listen(this.onChange);
   }
 
   componentWillUnmount() {
-
+    LoginStore.unlisten(this.onChange);
   }
 
   onChange(state) {
@@ -20,6 +22,7 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
+    LoginActions.getToken();
   }
 
   render() {
@@ -28,8 +31,8 @@ class Login extends React.Component {
         <div className='row flipInX animated'>
           <div className='col-sm-3'>
             <div className='panel panel-default'>
-              <div className='panel-heading'>Login</div>
-              <div className='panel-body'>
+              <div className='panel-heading text-center'>Login</div>
+              <div className='panel-body text-center'>
                 <form onSubmit={this.handleSubmit.bind(this)}>
                   <button type='submit' className='btn btn-primary'>Login with Bitbucket</button>
                 </form>
