@@ -27,7 +27,7 @@ class Navbar extends React.Component {
     let subscriptions = this.state.subscriptions.map((data) => {
       let url = '/report/' + data.username + '/' + data.reponame
       return (
-        <li><Link to={url}>{data.username}/{data.reponame}</Link></li>
+        <li key={data._id}><Link to={url}>{data.username}/{data.reponame}</Link></li>
       )
     });
 
