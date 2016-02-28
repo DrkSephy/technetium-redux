@@ -22,8 +22,8 @@ var config = require('./secrets');
 var app = express();
 
 passport.use(new Strategy({
-    consumerKey: '6gzdExYccvG5j9gMXE',
-    consumerSecret: 'AMbfpJuk8DP3dtdWsxztaapZrZqenbyW',
+    consumerKey: config.consumerKey,
+    consumerSecret: config.consumerSecret,
     callbackURL: 'http://127.0.0.1:3000/login/bitbucket/return'
   },(token, tokenSecret, profile, cb) => {
     console.log('---------token---------')
@@ -78,7 +78,8 @@ app.get('/login/bitbucket',
 app.get('/login/bitbucket/return', 
   passport.authenticate('bitbucket', { failureRedirect: '/login' }),
   function(req, res) {
-    res.redirect('/loginSuccess');
+    res.send(req.user);
+    // res.redirect('/loginSuccess');
 });
 
 app.get('/profile',
