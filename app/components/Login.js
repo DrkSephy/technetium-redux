@@ -1,4 +1,5 @@
 import React from 'react';
+import {Link} from 'react-router';
 import LoginActions from '../actions/LoginActions';
 import LoginStore from '../stores/LoginStore';
 
@@ -34,7 +35,9 @@ class Login extends React.Component {
               <div className='panel-heading text-center'>Login</div>
               <div className='panel-body text-center'>
                 <form onSubmit={this.handleSubmit.bind(this)}>
-                  <button type='submit' className='btn btn-primary'>Login with Bitbucket</button>
+                  <a href='/login/bitbucket'>
+                    Login with Bitbucket
+                  </a>
                 </form>
               </div>
             </div>
