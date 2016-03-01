@@ -24,6 +24,10 @@ class Navbar extends React.Component {
   }
 
   render() {
+    const navStyle = {
+      paddingRight: '20px'
+    }
+
     let subscriptions = this.state.subscriptions.map((data) => {
       let url = '/report/' + data.username + '/' + data.reponame
       return (
@@ -67,6 +71,15 @@ class Navbar extends React.Component {
               </ul>
             </li>
             <li><Link to='/login'>Login</Link></li>
+          </ul>
+          <ul className='nav navbar-nav navbar-right' style={navStyle}>
+            <li className='dropdown'>
+              <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Hello, David!<b className='caret'></b></a>
+              <ul className='dropdown-menu'>
+                <li><a href='#'>Logout</a></li>
+                <li><a href='#'>Unsubscribe</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </nav>
