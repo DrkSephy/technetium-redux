@@ -27,18 +27,28 @@ class Login extends React.Component {
   }
 
   render() {
+    const divStyle = {
+      paddingLeft: '40%',
+      paddingRight: '40%',
+      paddingTop: '10%'
+    }
+
+    const linkStyle = {
+      textDecoration: 'none'
+    }
+
     return (
-      <div className='container'>
-        <div className='row flipInX animated'>
-          <div className='col-sm-3'>
-            <div className='panel panel-default'>
-              <div className='panel-heading text-center'>Login</div>
-              <div className='panel-body text-center'>
-                <form onSubmit={this.handleSubmit.bind(this)}>
-                  <a href='/login/bitbucket'>
-                    Login with Bitbucket
-                  </a>
-                </form>
+      <div style={divStyle}>
+        <div className='container'>
+          <div className='row flipInX animated'>
+            <div className='col-sm-3'>
+              <div className='panel panel-primary'>
+                <div className='panel-heading text-center'>Login</div>
+                <div className='panel-body text-center'>
+                  <button type='submit' className='btn btn-success'>
+                    <a style={linkStyle} href='/login/bitbucket'>Login with Bitbucket</a>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
