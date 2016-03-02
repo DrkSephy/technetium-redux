@@ -3,20 +3,20 @@ import alt from '../alt';
 class LoginActions {
   constructor() {
     this.generateActions(
-      'getTokenSuccess',
-      'getTokenFail'
+      'getUserProfileSuccess',
+      'getUserProfileFail'
     );
   }
 
-  getToken() {
-    console.log('Clicked');
-    $.ajax({ url: '/login/bitbucket' })
+  getUserProfile() {
+    $.ajax({ url: '/profile' })
     .done((data) => {
-      console.log(data);
-      this.actions.getTokenSuccess(data);
+      if (data.user) {
+        this.actions.getUserProfileSuccess(data);
+      }
     })
     .fail((jqXhr) => {
-      this.actions.getTokenFail(jqXhr);
+      this.actions.getUserProfileFail(jqXhr);
     });
   }
 }
