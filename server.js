@@ -68,18 +68,13 @@ require('./routes/timeseries')(app);
 require('./routes/pullrequests')(app, _, config);
 require('./routes/subscriptions')(app);
 
-app.get('/loginSuccess', (req, res) => {
-  res.send(req.user);
-});
-
 app.get('/login/bitbucket',
   passport.authenticate('bitbucket'));
 
 app.get('/login/bitbucket/return', 
   passport.authenticate('bitbucket', { failureRedirect: '/login' }),
-  function(req, res) {
-    res.send(req.user);
-    // res.redirect('/loginSuccess');
+  (req, res) => {
+    res.redirect('/');
 });
 
 app.get('/profile',
