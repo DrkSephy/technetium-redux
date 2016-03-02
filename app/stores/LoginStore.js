@@ -4,14 +4,16 @@ import LoginActions from '../actions/LoginActions';
 class LoginStore {
   constructor() {
     this.bindActions(LoginActions);
-    this.token = '';
+    this.username = '';
+    this.loggedIn = false;
   }
 
-  onGetTokenSuccess(data) {
-    this.token = data;
+  onGetUserProfileSuccess(data) {
+    this.username = data.user.username;
+    this.loggedIn = true;
   }
 
-  onGetTokenFail(jqXhr) {
+  onGetUserProfileFail(jqXhr) {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }
