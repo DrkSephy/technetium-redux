@@ -17,6 +17,7 @@ var Strategy = require('passport-bitbucket').Strategy;
 
 var routes = require('./app/routes');
 var config = require('./secrets');
+var User  = require('./models/users');
 
 // Create the Express Application
 var app = express();
@@ -26,29 +27,45 @@ passport.use(new Strategy({
     consumerSecret: config.consumerSecret,
     callbackURL: 'http://127.0.0.1:3000/login/bitbucket/return'
   },(token, tokenSecret, profile, cb) => {
-    console.log('---------token---------')
-    console.log(token);
-    // In this example, the user's Twitter profile is supplied as the user
-    // record.  In a production-quality application, the Twitter profile should
-    // be associated with a user record in the application's database, which
-    // allows for account linking and authentication with other identity
-    // providers.
+    User.findOne({ username: profile.username }, (err, user) => {
+      if (err) return next(err);
+
+      if (user) {
+        console.log('Username already exists!');
+      } else {
+        var newUser = new User({
+          username: profile.username,
+          authToken: token,
+          subscriptions: []
+        });
+
+        newUser.save((err) => {
+          if (err) return next(err);
+          console.log('User profile has been created successfully!');
+        });
+      }
+
+      User.find((err, users) => {
+        if (err) return next(err);
+        console.log(users);
+      });
+    });
     return cb(null, profile);
 }));
 
-passport.serializeUser(function(user, cb) {
+passport.serializeUser((user, cb) => {
   console.log('-----------user-------------');
   console.log(user);
   cb(null, user);
 });
 
-passport.deserializeUser(function(obj, cb) {
+passport.deserializeUser((obj, cb) => {
   cb(null, obj);
 });
 
 // Connect to MongoDB
 mongoose.connect(config.database);
-mongoose.connection.on('error', function() {
+mongoose.connection.on('error', () => {
   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
 });
 
