@@ -4,6 +4,7 @@
 */
 
 var Subscriptions = require('../models/subscriptions');
+var User = require('../models/users');
 
 'use strict';
 
@@ -16,14 +17,17 @@ module.exports = (app) => {
   app.post('/api/subscribe', (req, res, next) => {
     let username = req.body.username;
     let reponame = req.body.reponame;
-    let subscription = new Subscriptions({
-      username: username,
-      reponame: reponame
-    })
-
-    subscription.save((err) => {
+    User.findOne({ username: username }, (err, user) => {
       if (err) return next(err);
-      res.send({ message: 'Subscribed to: ' + username +  '/' + reponame + ' successfully'});
+
+      if (user) {
+        user.subscriptions.push(reponame);
+        user.save((err) => {
+          if (err) return next(err);
+          res.send({ message: 'Subscribed to: ' + username +  '/' + reponame + ' successfully'});
+        });
+        console.log(user.subscriptions);
+      }
     });
   });
 
