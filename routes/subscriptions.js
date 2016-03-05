@@ -20,7 +20,11 @@ module.exports = (app) => {
       if (err) return next(err);
 
       if (user) {
-        user.subscriptions.push(reponame);
+        let subscription = {
+          username: username,
+          reponame: reponame
+        };
+        user.subscriptions.push(subscription);
         user.save((err) => {
           if (err) return next(err);
           res.send({ message: 'Subscribed to: ' + username +  '/' + reponame + ' successfully'});
@@ -39,6 +43,33 @@ module.exports = (app) => {
       User.remove((err) => {
         if (err) return next(err);
         res.send('Removed all users');
+      });
+    });
+  });
+
+  app.get('/api/subscriptions', (req, res, next) => {
+    User.findOne({ username: req.user.username }, (err, user) => {
+      if (err) return next(err);
+
+      if (user) {
+        console.log('found user');
+        res.send(user.subscriptions);
+      } else {
+        res.send([]);
+      }
+    });
+  });
+
+  /**
+   * GET /api/subscriptions/remove
+   * Removes all repository subscriptions.
+  */
+  app.get('/api/subscriptions/remove', (req, res, next) => {
+    Subscriptions.findOne({ field: 'name' }, (err, model) => {
+      if (err) return next(err);
+      Subscriptions.remove((err) => {
+        if (err) return next(err);
+        res.send('Removed all documents');
       });
     });
   });
