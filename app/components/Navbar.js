@@ -9,20 +9,20 @@ class Navbar extends React.Component {
   constructor(props) {
     super(props);
     this.state = NavbarStore.getState();
-    this.authState = LoginStore.getState();
+    // this.authState = LoginStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-    LoginStore.listen(this.onChange);
+    // LoginStore.listen(this.onChange);
     LoginActions.getUserProfile();
     NavbarActions.getSubscriptions();
   }
 
   componentWillUnmount() {
     NavbarStore.unlisten(this.onChange);
-    LoginStore.unlisten(this.onChange);
+    // LoginStore.unlisten(this.onChange);
   }
 
   onChange(state) {
