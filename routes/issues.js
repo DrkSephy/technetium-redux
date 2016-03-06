@@ -8,7 +8,7 @@ import moment from 'moment';
 
 'use strict';
 
-module.exports = (app, _, config) => {
+module.exports = (app, _, config, passport) => {
 
 /*---------------------------------------------------------
  *                    ISSUE API ROUTES
