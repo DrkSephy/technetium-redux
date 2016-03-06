@@ -13,61 +13,21 @@ var request = require('request');
 var _ = require('underscore');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var Strategy = require('passport-bitbucket').Strategy;
+var config = require('./secrets');
+var configDB = require('./config/database');
 
 var routes = require('./app/routes');
-var config = require('./secrets');
-var User  = require('./models/users');
 
 // Create the Express Application
 var app = express();
 
-passport.use(new Strategy({
-    consumerKey: config.consumerKey,
-    consumerSecret: config.consumerSecret,
-    callbackURL: 'http://127.0.0.1:3000/login/bitbucket/return'
-  },(token, tokenSecret, profile, cb) => {
-    User.findOne({ username: profile.username }, (err, user) => {
-      if (err) return next(err);
-
-      if (user) {
-        console.log('Username already exists!');
-      } else {
-        var newUser = new User({
-          username: profile.username,
-          authToken: token,
-          subscriptions: []
-        });
-
-        newUser.save((err) => {
-          if (err) return next(err);
-          console.log('User profile has been created successfully!');
-        });
-      }
-
-      User.find((err, users) => {
-        if (err) return next(err);
-        console.log(users);
-      });
-    });
-    return cb(null, profile);
-}));
-
-passport.serializeUser((user, cb) => {
-  console.log('-----------user-------------');
-  console.log(user);
-  cb(null, user);
-});
-
-passport.deserializeUser((obj, cb) => {
-  cb(null, obj);
-});
-
 // Connect to MongoDB
-mongoose.connect(config.database);
+mongoose.connect(configDB.database);
 mongoose.connection.on('error', () => {
   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
 });
+
+require('./config/passport')(passport);
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
