@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
   app.get('/api/charts', (req, res) => {
     let data = {
       columns: [

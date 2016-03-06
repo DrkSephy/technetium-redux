@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
   app.get('/api/timeseries', (req, res) => {
     let data = {
       columns: [

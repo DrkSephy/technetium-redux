@@ -11,7 +11,7 @@ import { getJSON, generateRandomNumber, isAuthenticated } from './utils';
  * GET /api/pullrequests
  * Returns the number of pull requests per contributor on a repository.
 */
-module.exports = (app, _, config, passport) => {
+module.exports = (app, _, config) => {
   app.get('/api/pullrequests', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;

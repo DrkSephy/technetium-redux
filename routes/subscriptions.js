@@ -8,7 +8,7 @@ import { isAuthenticated } from './utils';
 
 'use strict';
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
 
   /**
    * POST /api/subscribe
