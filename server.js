@@ -38,27 +38,13 @@ app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveU
 app.use(passport.initialize());
 app.use(passport.session());
 
+require('./routes/auth')(app, passport);
 require('./routes/issues')(app, _, config);
 require('./routes/commits')(app, _, config);
 require('./routes/charts')(app);
 require('./routes/timeseries')(app);
 require('./routes/pullrequests')(app, _, config);
 require('./routes/subscriptions')(app);
-
-app.get('/login/bitbucket',
-  passport.authenticate('bitbucket'));
-
-app.get('/login/bitbucket/return', 
-  passport.authenticate('bitbucket', { failureRedirect: '/login' }),
-  (req, res) => {
-    res.redirect('/');
-});
-
-app.get('/profile',
-  require('connect-ensure-login').ensureLoggedIn(),
-  function(req, res){
-    res.send({ user: req.user });
-});
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
