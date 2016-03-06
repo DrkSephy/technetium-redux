@@ -4,6 +4,7 @@
 */
 
 var User = require('../models/users');
+import { isAuthenticated } from './utils';
 
 'use strict';
 
@@ -13,7 +14,7 @@ module.exports = (app) => {
    * POST /api/subscribe
    * Subscribes to a given repository.
   */
-  app.post('/api/subscribe', (req, res, next) => {
+  app.post('/api/subscribe', isAuthenticated, (req, res, next) => {
     let username = req.body.username;
     let reponame = req.body.reponame;
     User.findOne({ username: username }, (err, user) => {
@@ -37,7 +38,7 @@ module.exports = (app) => {
    * GET /api/users/remove
    * Removes all users from MongoDB.
   */
-  app.get('/api/users/remove', (req, res, next) => {
+  app.get('/api/users/remove', isAuthenticated, (req, res, next) => {
     User.findOne({ field: 'name' }, (err, model) => {
       if (err) return next(err);
       User.remove((err) => {
@@ -47,7 +48,7 @@ module.exports = (app) => {
     });
   });
 
-  app.get('/api/subscriptions', (req, res, next) => {
+  app.get('/api/subscriptions', isAuthenticated, (req, res, next) => {
     User.findOne({ username: req.user.username }, (err, user) => {
       if (err) return next(err);
 
@@ -64,7 +65,7 @@ module.exports = (app) => {
    * GET /api/subscriptions/remove
    * Removes all repository subscriptions.
   */
-  app.get('/api/subscriptions/remove', (req, res, next) => {
+  app.get('/api/subscriptions/remove', isAuthenticated, (req, res, next) => {
     Subscriptions.findOne({ field: 'name' }, (err, model) => {
       if (err) return next(err);
       Subscriptions.remove((err) => {

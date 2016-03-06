@@ -3,7 +3,7 @@
  * @module routes/pullrequests
 */
 
-import { getJSON, generateRandomNumber } from './utils';
+import { getJSON, generateRandomNumber, isAuthenticated } from './utils';
 
 'use strict';
 
@@ -12,7 +12,7 @@ import { getJSON, generateRandomNumber } from './utils';
  * Returns the number of pull requests per contributor on a repository.
 */
 module.exports = (app, _, config) => {
-  app.get('/api/pullrequests', (req, res) => {
+  app.get('/api/pullrequests', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/pullrequests?state=[MERGED]', config)

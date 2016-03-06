@@ -3,7 +3,7 @@
  * @module routes/issues
 */
 
-import {getJSON, generateRandomNumber, getIssueCommentUrls, getDateRange, generateDateRange} from './utils';
+import {getJSON, generateRandomNumber, getIssueCommentUrls, getDateRange, generateDateRange, isAuthenticated} from './utils';
 import moment from 'moment';
 
 'use strict';
@@ -19,7 +19,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues
    * Returns issue data for a given repository.
   */
-  app.get('/api/issues', (req, res) => {
+  app.get('/api/issues', isAuthenticated, (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
     .then((results) => {
       let parsedData = [];
@@ -43,7 +43,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/opened
    * Returns number of issues opened by each contributor in a repository.
   */
-  app.get('/api/issues/opened', (req, res) => {
+  app.get('/api/issues/opened', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -77,7 +77,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/opened/filtered
    * Returns number of issues opened in the last 7 days.
   */
-  app.get('/api/issues/opened/filtered', (req, res) => {
+  app.get('/api/issues/opened/filtered', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -110,7 +110,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/assigned
    * Returns number of issues assigned to each contributor in a repository.
   */
-  app.get('/api/issues/assigned', (req, res) => {
+  app.get('/api/issues/assigned', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -144,7 +144,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/completed
    * Returns number of issues completed by each contributor in a repository.
   */
-  app.get('/api/issues/completed', (req, res) => {
+  app.get('/api/issues/completed', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -179,7 +179,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/comments
    * Returns number of total comments by each contributor in a repository.
   */
-  app.get('/api/issues/comments', (req, res) => {
+  app.get('/api/issues/comments', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -222,7 +222,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/closed/sparkline
    * Returns the number of issues closed over 7 days to render a sparkline chart.
   */
-  app.get('/api/issues/closed/sparkline', (req, res) => {
+  app.get('/api/issues/closed/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -259,7 +259,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/opened/sparkline
    * Returns an array of issues opened over 7 days to render a sparkline chart.
   */
-  app.get('/api/issues/opened/sparkline', (req, res) => {
+  app.get('/api/issues/opened/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
@@ -296,7 +296,7 @@ module.exports = (app, _, config) => {
    * GET /api/issues/opened/assigned
    * Returns an array of issues assigned over 7 days to render a sparkline chart.
   */
-  app.get('/api/issues/assigned/sparkline', (req, res) => {
+  app.get('/api/issues/assigned/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)

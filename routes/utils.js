@@ -8,6 +8,13 @@ import moment from 'moment';
 
 'use strict';
 
+export function isAuthenticated(req, res, next) {
+  if (req.user) {
+    return next();
+  }
+  res.redirect('/login');
+}
+
 /** 
  * Helper function for returning JSON from url. Returns a Promise object
    which will in turn resolve with the data returned from the Github API.

@@ -3,7 +3,7 @@
  * @module routes/commits
 */
 
-import {getJSON, generateRandomNumber, getDateRange, generateDateRange, computeUrls} from './utils';
+import {getJSON, generateRandomNumber, getDateRange, generateDateRange, computeUrls, isAuthenticated} from './utils';
 import moment from 'moment';
 
 'use strict';
@@ -19,7 +19,7 @@ module.exports = (app, _, config) => {
    * GET /api/count
    * Returns the number of commits in a repository.
   */
-  app.get('/api/count', (req, res) => {
+  app.get('/api/count', isAuthenticated, (req, res) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', config) 
     .then((data) => {
       res.send(data);
@@ -30,7 +30,7 @@ module.exports = (app, _, config) => {
    * GET /api/commits
    * Returns the number of commits in a repository per contributor.
   */
-  app.get('/api/commits', (req, res) => {
+  app.get('/api/commits', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
@@ -68,7 +68,7 @@ module.exports = (app, _, config) => {
    * GET /api/commits/filtered
    * Returns the number of commits in a repository for the past 2 weeks.
   */
-  app.get('/api/commits/filtered', (req, res) => {
+  app.get('/api/commits/filtered', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
@@ -99,7 +99,7 @@ module.exports = (app, _, config) => {
    * GET /api/diffstat
    * Returns the lines of code per contributor in a repository.
   */
-  app.get('/api/diffstat', (req, res) => {
+  app.get('/api/diffstat', isAuthenticated, (req, res) => {
     let usernames = [];
     let parsedData = [];
     let urls = []
@@ -174,7 +174,7 @@ module.exports = (app, _, config) => {
    * GET /api/weeklycommits
    * Bundles commit data to render timeseries chart.
   */
-  app.get('/api/weeklycommits', (req, res) => {
+  app.get('/api/weeklycommits', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
@@ -253,7 +253,7 @@ module.exports = (app, _, config) => {
    * GET /api/commits/sparkline
    * Returns an array of commits over the last 7 days to render a sparkline chart.
   */
-  app.get('/api/commits/sparkline', (req, res) => {
+  app.get('/api/commits/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
