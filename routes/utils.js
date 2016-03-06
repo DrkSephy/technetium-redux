@@ -9,7 +9,7 @@ import moment from 'moment';
 'use strict';
 
 export function isAuthenticated(req, res, next) {
-  if (req.user) {
+  if (req.isAuthenticated()) {
     return next();
   }
   res.redirect('/login');
