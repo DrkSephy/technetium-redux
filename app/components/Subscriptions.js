@@ -38,8 +38,12 @@ class Subscriptions extends React.Component {
     }
 
     if (username && reponame) {
+      // Add new subscription to database
       SubscriptionsActions.addSubscription(username, reponame);
-      NavbarActions.getSubscriptions();
+      // Get all subscriptions
+      setTimeout(() => {
+        NavbarActions.getSubscriptions();
+      }, 3000);
     }
   }
 

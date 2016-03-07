@@ -82,8 +82,8 @@ class Navbar extends React.Component {
               <li className='dropdown'>
                 <a href='#' className='dropdown-toggle' data-toggle='dropdown'>Hello, {LoginStore.getState().username}<b className='caret'></b></a>
                 <ul className='dropdown-menu'>
-                  <li><a href='#'>Logout</a></li>
-                  <li><a href='#'>Unsubscribe</a></li>
+                  <li><a href='/logout'>Logout</a></li>
+                  <li><a href='#' onClick={NavbarActions.removeSubscriptions}>Unsubscribe</a></li>
                 </ul>
               </li>
             </ul>

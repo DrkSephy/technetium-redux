@@ -48,6 +48,11 @@ module.exports = (app) => {
     });
   });
 
+
+  /**
+   * GET /api/subscriptions
+   * Returns the users subscriptions.
+  */
   app.get('/api/subscriptions', isAuthenticated, (req, res, next) => {
     User.findOne({ username: req.user.username }, (err, user) => {
       if (err) return next(err);
@@ -66,11 +71,11 @@ module.exports = (app) => {
    * Removes all repository subscriptions.
   */
   app.get('/api/subscriptions/remove', isAuthenticated, (req, res, next) => {
-    Subscriptions.findOne({ field: 'name' }, (err, model) => {
-      if (err) return next(err);
-      Subscriptions.remove((err) => {
+    User.findOne({ username: req.user.username }, (err, user) => {
+      user.subscriptions = [];
+      user.save((err) => {
         if (err) return next(err);
-        res.send('Removed all documents');
+        res.send({ message: 'Unsubscribed to all repositories!'});
       });
     });
   });
