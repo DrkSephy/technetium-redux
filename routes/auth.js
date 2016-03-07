@@ -15,4 +15,9 @@ module.exports = (app, passport) => {
     function(req, res){
       res.send({ user: req.user });
   });
+
+  app.get('/logout', (req, res) => {
+    req.logout();
+    res.redirect('/login');
+  });
 }
