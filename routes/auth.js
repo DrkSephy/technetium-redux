@@ -12,7 +12,7 @@ module.exports = (app, passport) => {
 
   app.get('/profile',
     require('connect-ensure-login').ensureLoggedIn(),
-    function(req, res){
+    (req, res) => {
       res.send({ user: req.user });
   });
 

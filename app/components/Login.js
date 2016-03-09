@@ -1,11 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router';
+import {browserHistory} from 'react-router';
 import LoginActions from '../actions/LoginActions';
 import LoginStore from '../stores/LoginStore';
 
 class Login extends React.Component {
   constructor(props) {
     super(props);
+    this.state = LoginStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
@@ -23,7 +24,6 @@ class Login extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    LoginActions.getToken();
   }
 
   render() {
