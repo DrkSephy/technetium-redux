@@ -58,7 +58,6 @@ module.exports = (app) => {
       if (err) return next(err);
 
       if (user) {
-        console.log('found user');
         res.send(user.subscriptions);
       } else {
         res.send([]);

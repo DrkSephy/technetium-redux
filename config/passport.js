@@ -3,14 +3,14 @@ var config = require('../secrets');
 var User  = require('../models/users');
 
 module.exports = function(passport) {
-  passport.serializeUser((user, cb) => {
-    console.log('-----------user-------------');
-    console.log(user);
-    cb(null, user);
+  passport.serializeUser((user, done) => {     
+    done(null, user.username);   
   });
 
-  passport.deserializeUser((obj, cb) => {
-    cb(null, obj);
+  passport.deserializeUser((username, done) => {
+    User.findOne({ username: username }, (err, user) => {
+      done(err, user);
+    });   
   });
 
   passport.use(new Strategy({
