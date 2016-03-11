@@ -22,9 +22,9 @@ export function isAuthenticated(req, res, next) {
  * @param {string} url - The url to query.
  * @return {object} data - JSON response from API.
 */
-export function getJSON(url, config) {
+export function getJSON(url, token) {
   return new Promise((resolve, reject) => {
-    request.get(url, { 'auth': { 'user': config.USERNAME, 'pass': config.PASSWORD}}, 
+    request.get(url, { 'auth': { 'bearer': token } },
       (error, response, body) => {
         if (body) {
             resolve(JSON.parse(body));
