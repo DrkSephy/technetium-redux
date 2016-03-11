@@ -20,7 +20,7 @@ module.exports = (app, _, config) => {
    * Returns issue data for a given repository.
   */
   app.get('/api/issues', isAuthenticated, (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       results['issues'].forEach((issue) => {
@@ -46,7 +46,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/opened', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       let usernames = [];
@@ -80,7 +80,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/opened/filtered', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = {
         opened: 0,
@@ -113,7 +113,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/assigned', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       let usernames = [];
@@ -147,7 +147,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/completed', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       let usernames = [];
@@ -182,9 +182,9 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/comments', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((data) => {
-      let promises = getIssueCommentUrls(data.count, config);
+      let promises = getIssueCommentUrls(data.count, req.user.authToken);
       Promise.all(promises)
       .then((results) => {
         let usernames = [];
@@ -225,7 +225,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/closed/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       let ranges = getDateRange();
@@ -262,7 +262,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/opened/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       let ranges = getDateRange();
@@ -299,7 +299,7 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/assigned/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
       let ranges = getDateRange();

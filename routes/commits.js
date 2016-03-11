@@ -8,7 +8,7 @@ import moment from 'moment';
 
 'use strict';
 
-module.exports = (app, _, config) => {
+module.exports = (app, _) => {
 
 /*---------------------------------------------------------
  *                  COMMIT API ROUTES
@@ -20,7 +20,7 @@ module.exports = (app, _, config) => {
    * Returns the number of commits in a repository.
   */
   app.get('/api/count', isAuthenticated, (req, res) => {
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets/', config) 
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/private-test/changesets/', req.user.authToken)
     .then((data) => {
       res.send(data);
     });
@@ -33,9 +33,9 @@ module.exports = (app, _, config) => {
   app.get('/api/commits', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
-      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let users = []
@@ -71,9 +71,9 @@ module.exports = (app, _, config) => {
   app.get('/api/commits/filtered', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
-      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let parsedData = {
@@ -104,9 +104,9 @@ module.exports = (app, _, config) => {
     let parsedData = [];
     let urls = []
     let hashes = [];
-    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/changesets?limit=0', req.user.authToken)
     .then((data) => {
-      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken);
       Promise.all(promises)
       .then((results) => {
 
@@ -143,7 +143,7 @@ module.exports = (app, _, config) => {
           urls.push('https://api.bitbucket.org/1.0/repositories/DrkSephy/wombat/changesets/' + hash + '/diffstat');
         });
 
-        let promises = urls.map((url) => getJSON(url, config));
+        let promises = urls.map((url) => getJSON(url, req.user.authToken));
         Promise.all(promises)
         .then((results) => {
           results.forEach((result) => {
@@ -177,9 +177,9 @@ module.exports = (app, _, config) => {
   app.get('/api/weeklycommits', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
-      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let timeSeries = [];
@@ -256,9 +256,9 @@ module.exports = (app, _, config) => {
   app.get('/api/commits/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', config)
+    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
-      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, config, username, reponame);
+      let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let parsedData = [];
