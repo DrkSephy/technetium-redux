@@ -13,7 +13,6 @@ var request = require('request');
 var _ = require('underscore');
 var mongoose = require('mongoose');
 var passport = require('passport');
-var config = require('./secrets');
 var configDB = require('./config/database');
 
 var routes = require('./app/routes');
@@ -39,11 +38,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/auth')(app, passport);
-require('./routes/issues')(app, _, config);
-require('./routes/commits')(app, _, config);
+require('./routes/issues')(app, _);
+require('./routes/commits')(app, _);
 require('./routes/charts')(app);
 require('./routes/timeseries')(app);
-require('./routes/pullrequests')(app, _, config);
+require('./routes/pullrequests')(app, _);
 require('./routes/subscriptions')(app);
 
 app.use(function(req, res) {
