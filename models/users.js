@@ -4,6 +4,7 @@ var userSchema = new mongoose.Schema({
   username: String,
   authToken: String,
   refreshToken: String,
+  tokenExpiration: Number,
   subscriptions: [{
     username: String,
     reponame: String

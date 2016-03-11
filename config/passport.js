@@ -1,7 +1,11 @@
+import moment from 'moment';
+import request from 'request';
 var Strategy = require('passport-bitbucket-oauth2').Strategy;
+
 var config = require('../secrets');
 var User  = require('../models/users');
-var request = require('request');
+
+'use strict';
 
 module.exports = function(passport) {
   passport.serializeUser((user, done) => {     
@@ -23,27 +27,36 @@ module.exports = function(passport) {
         if (err) return next(err);
 
         if (user) {
-          var url = 'https://bitbucket.org/site/oauth2/access_token';
-          var data = {
-            'client_id': config.consumerKey,
-            'client_secret': config.consumerSecret,
-            'refresh_token': user.refreshToken,
-            'grant_type': 'refresh_token'
-          }
-          request.post({url: url, form: data}, (error, response, body) => {
-            var data = JSON.parse(body);
-            user.authToken = data['access_token'];
-            user.refreshToken = data['refresh_token'];
-            user.save((err) => {
-              if (err) return next(err);
+          var currentTime = moment().unix();
+          if (currentTime >= user.tokenExpiration) {
+            console.log('User access token has expired, fetching new token');
+            var url = 'https://bitbucket.org/site/oauth2/access_token';
+            var data = {
+              'client_id': config.consumerKey,
+              'client_secret': config.consumerSecret,
+              'refresh_token': user.refreshToken,
+              'grant_type': 'refresh_token'
+            }
+            request.post({url: url, form: data}, (error, response, body) => {
+              var data = JSON.parse(body);
+              var tokenExpirationTime = moment().add(1, 'hour').unix();
+              user.authToken = data['access_token'];
+              user.refreshToken = data['refresh_token'];
+              user.tokenExpiration = tokenExpirationTime;
+              user.save((err) => {
+                console.log(user);
+                if (err) return next(err);
                 console.log('Successfully updated user model with auth tokens!');
+              });
             });
-          });
+          }
         } else {
+          var tokenExpirationTime = moment().add(1, 'hour').unix();
           var newUser = new User({
             username: profile.username,
             authToken: token,
             refreshToken: tokenSecret,
+            tokenExpiration: tokenExpirationTime,
             subscriptions: []
           });
 
