@@ -51,12 +51,12 @@ module.exports = function(passport) {
             });
           }
         } else {
-          var tokenExpirationTime = moment().add(1, 'hour').unix();
+          var tokenExpiration = moment().add(1, 'hour').unix();
           var newUser = new User({
             username: profile.username,
             authToken: token,
             refreshToken: tokenSecret,
-            tokenExpiration: tokenExpirationTime,
+            tokenExpiration: tokenExpiration,
             subscriptions: []
           });
 
