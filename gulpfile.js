@@ -94,6 +94,7 @@ gulp.task('styles', function() {
 gulp.task('css', function() {
   return gulp.src([
     'public/css/main.css',
+    'public/css/daterangepicker.css',
     'bower_components/c3/c3.css'
   ]).pipe(concat('compiled.css'))
     .pipe(gulp.dest('public/css'));
