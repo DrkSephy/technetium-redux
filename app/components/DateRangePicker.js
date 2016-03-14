@@ -30,8 +30,8 @@ class DateRange extends React.Component {
   }
 
   render() {
-    const divStyle = {
-      float: 'right',
+    const buttonStyle = {
+      width: '100%'
     }
 
     var start = this.state.startDate.format('YYYY/MM/DD');
@@ -41,25 +41,21 @@ class DateRange extends React.Component {
       label = start;
     }
     return (
-    <div className='container' style={divStyle}>
-      <div className='row' style={divStyle}>
-        <DateRangePicker 
-          startDate={this.state.startDate} 
-          endDate={this.state.endDate} 
-          ranges={this.state.ranges} 
-          onEvent={this.handleEvent}>
-          <Button className="selected-date-range-btn" style={{width:'100%'}}>
-            <div className="pull-left"><Glyphicon glyph="calendar" /></div>
-            <div className="pull-right">
-              <span>
-                {label}
-              </span>
-              <span className="caret"></span>
-            </div>
-          </Button>
-        </DateRangePicker>
-      </div>
-    </div>
+      <DateRangePicker 
+        startDate={this.state.startDate} 
+        endDate={this.state.endDate} 
+        ranges={this.state.ranges} 
+        onEvent={this.handleEvent}>
+        <Button className='selected-date-range-btn' style={buttonStyle}>
+          <div className='pull-left'><Glyphicon glyph='calendar' /></div>
+          <div className='text-center'>
+            {label}
+            <div className='pull-right'>
+              <Glyphicon glyph='glyphicon glyphicon-chevron-down' /></div>
+          </div>
+        </Button>
+        <br> </br>
+      </DateRangePicker>
     );
   }
 }
