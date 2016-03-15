@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactTooltip from 'react-tooltip';
+import DateRange from './DateRangePicker';
 import {Panel, Tooltip} from 'react-bootstrap';
 import LinkWithTooltip from './LinkWithTooltip';
 import Card from './Card';
@@ -46,6 +47,9 @@ class Reports extends React.Component {
   }
 
   render() {
+    const divStyle = {
+      float: 'right'
+    }
 
     let reportData = this.state.reportData.map((data) => {
       return (
@@ -63,7 +67,11 @@ class Reports extends React.Component {
 
     return (
       <div className='container'>
-
+        <div className='row'>
+          <div className='col-md-3' style={divStyle}>
+            <DateRange />
+          </div>
+        </div>
         <div className='row'>
           <div className="col-md-3">
             <Card header='Commits' 
