@@ -34,6 +34,10 @@ class DateRange extends React.Component {
       width: '100%'
     }
 
+    const divStyle = {
+      paddingTop: '10%'
+    }
+
     var start = this.state.startDate.format('YYYY/MM/DD');
     var end = this.state.endDate.format('YYYY/MM/DD');
     var label = start + ' - ' + end;
@@ -54,7 +58,7 @@ class DateRange extends React.Component {
               <Glyphicon glyph='glyphicon glyphicon-chevron-down' /></div>
           </div>
         </Button>
-        <br> </br>
+        <div style={divStyle}> </div>
       </DateRangePicker>
     );
   }
