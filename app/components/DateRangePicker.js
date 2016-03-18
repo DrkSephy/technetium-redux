@@ -1,8 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import {Button, Glyphicon} from 'react-bootstrap';
 import moment from 'moment';
+import {Button, Glyphicon} from 'react-bootstrap';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
+import DateRangePickerStore from '../stores/DateRangePickerStore';
+import DateRangePickerActions from '../actions/DateRangePickerActions';
 
 class DateRange extends React.Component {
   constructor(props) {
@@ -20,6 +21,10 @@ class DateRange extends React.Component {
       endDate: moment()
     };
     this.handleEvent = this.handleEvent.bind(this);
+  }
+
+  componentDidMount(picker) {
+    DateRangePickerStore.listen(this.handleEvent);
   }
 
   handleEvent(event, picker) {
@@ -49,7 +54,7 @@ class DateRange extends React.Component {
         startDate={this.state.startDate} 
         endDate={this.state.endDate} 
         ranges={this.state.ranges} 
-        onEvent={this.handleEvent}>
+        onApply={this.handleEvent}>
         <Button className='selected-date-range-btn' style={buttonStyle}>
           <div className='pull-left'><Glyphicon glyph='calendar' /></div>
           <div className='text-center'>
