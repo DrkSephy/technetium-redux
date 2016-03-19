@@ -20,18 +20,23 @@ class DateRange extends React.Component {
       startDate: moment().subtract(29, 'days'),
       endDate: moment()
     };
-    this.handleEvent = this.handleEvent.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  componentDidMount(picker) {
-    DateRangePickerStore.listen(this.handleEvent);
+  componentDidMount() {
+    DateRangePickerStore.listen(this.onChange);
+  }
+
+  componentWillUnmount() {
+    DateRangePickerStore.unlisten(this.onChange);
+  }
+
+  onChange(state) {
+    this.setState(state);
   }
 
   handleEvent(event, picker) {
-    this.setState({
-      startDate: picker.startDate,
-      endDate: picker.endDate
-    });
+    DateRangePickerActions.setRanges(picker.startDate, picker.endDate);
   }
 
   render() {
