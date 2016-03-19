@@ -4,14 +4,13 @@ import DateRangePickerActions from '../actions/DateRangePickerActions';
 class DateRangePickerStore {
   constructor() {
     this.bindActions(DateRangePickerActions);
-    this.sDate = '';
-    this.eDate = '';
+    this.startDate = '';
+    this.endDate = '';
   }
 
   onUpdateDateRangeSuccess(payload) {
-    console.log(payload);
-    this.sDate = payload.startDate;
-    this.eDate = payload.endDate;
+    this.startDate = payload.startDate;
+    this.endDate = payload.endDate;
   }
 
   onUpdateDateRangeFail(message) {
