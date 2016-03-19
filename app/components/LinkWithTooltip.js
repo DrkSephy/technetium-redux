@@ -8,8 +8,7 @@ class LinkWithTooltip extends React.Component {
     return (
       <OverlayTrigger
         overlay={tooltip} placement="left"
-        delayShow={200} delayHide={150}
-      >
+        delayShow={200} delayHide={150}>
         <a href={this.props.href}>{this.props.children}</a>
       </OverlayTrigger>
     );
