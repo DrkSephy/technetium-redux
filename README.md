@@ -26,8 +26,6 @@ Lastly, create a file `secrets.js` in the root directory which contains the foll
 
 ```javascript
 module.exports = {
-  USERNAME: '', // Bitbucket Username
-  PASSWORD: '', // Bitbucket Password
   database: 'localhost', // Setup MongoDB connection url
   consumerKey: '', // Bitbucket Consumer Key
   consumerSecret: '' // Bitbucket Consumer Secret
@@ -94,11 +92,11 @@ With this, the application can be used by navigating to `localhost:3000`.
 
 ### Authentication
 
-- [ ] Application needs OAuth 1.0/2.0 Auth in order to access private repositories
+- [X] Application needs OAuth 1.0/2.0 Auth in order to access private repositories
 
 ### Subscriptions
 
-- [ ] User should be able to subscribe to a repository based on a URL
+- [X] User should be able to subscribe to a repository based on a URL
 
 ### Search
 
