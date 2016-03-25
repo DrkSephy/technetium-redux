@@ -65,7 +65,7 @@ class Subscriptions extends React.Component {
                   <div className={'form-group ' + this.state.reponameValidationState}>
                     <label className='control-label'>Repository Name</label>
                     <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
-                           onChange={SubscriptionsActions.updateReponame} />
+                           onChange={SubscriptionsActions.updateReponame} autoFocus/>
                     <span className='help-block'>{this.state.helpBlock}</span>
                   </div>
                   <button type='submit' className='btn btn-primary'>Submit</button>
