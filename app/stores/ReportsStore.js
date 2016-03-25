@@ -5,12 +5,22 @@ class ReportsStore {
   constructor() {
     this.bindActions(ReportsActions);
     this.reportData = [];
-    this.issuesOpened = 0;
     this.commits = 0;
+    this.issuesOpened = 0;
     this.sparklineData = [];
     this.sparklineIssuesOpened = [];
     this.sparklineIssuesAssigned = [];
     this.sparklineIssuesClosed = [];
+    this.username = '';
+    this.reponame = '';
+  }
+
+  onSetUsernameSuccess(data) {
+    this.username = data;
+  }
+
+  onSetReponameSuccess(data) {
+    this.reponame = data;
   }
 
   onGetSparklineIssuesClosedSuccess(data) {
