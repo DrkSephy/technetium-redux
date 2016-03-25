@@ -1,6 +1,8 @@
 import React from 'react';
 import moment from 'moment';
 import {Button, Glyphicon} from 'react-bootstrap';
+import ReportsStore from '../stores/ReportsStore';
+import ReportsActions from '../actions/ReportsActions';
 import DateRangePicker from 'react-bootstrap-daterangepicker';
 import DateRangePickerStore from '../stores/DateRangePickerStore';
 import DateRangePickerActions from '../actions/DateRangePickerActions';
@@ -37,6 +39,14 @@ class DateRange extends React.Component {
 
   handleEvent(event, picker) {
     DateRangePickerActions.setRanges(picker.startDate, picker.endDate);
+    let startDate = picker.startDate.unix();
+    let endDate = picker.endDate.unix();
+    ReportsActions.getOpenedIssues(
+      ReportsStore.getState().username,
+      ReportsStore.getState().reponame,
+      startDate,
+      endDate
+    );
   }
 
   render() {
