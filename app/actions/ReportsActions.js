@@ -97,12 +97,14 @@ class ReportsActions {
     });
   }
 
-  getFilteredCommits(username, reponame) {
+  getFilteredCommits(username, reponame, startDate=null, endDate=null) {
     $.ajax({
         url: '/api/commits/filtered',
         data: {
           username: username,
-          reponame: reponame
+          reponame: reponame,
+          startDate,
+          endDate
         }
       })
       .done((data) => {
