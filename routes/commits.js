@@ -71,6 +71,21 @@ module.exports = (app, _) => {
   app.get('/api/commits/filtered', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
+    let startDate = req.query.startDate;
+    let endDate = req.query.endDate;
+
+    // If no start date was supplied, set a default
+    if (startDate == '') {
+      console.log('Start date was null');
+      startDate = moment().subtract(29, 'days').unix();
+    }
+
+    // If no end date was supplied, set a default
+    if (endDate == '') {
+      console.log('End date was null');
+      endDate = moment().unix();
+    }
+
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
       let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
@@ -79,13 +94,10 @@ module.exports = (app, _) => {
         let parsedData = {
           commits: 0
         };
-        let ranges = getDateRange();
-        let startDate = ranges.startDate.subtract(1, 'days');
-        let endDate = ranges.endDate.add(1, 'days');
         results.forEach((result) => {
           result['values'].forEach((commit) => {
-            let date = moment(commit.date);
-            if (date.isBetween(startDate, endDate)) {
+            let date = moment(commit.date).unix();
+            if (date >= startDate && date <= endDate) {
               parsedData.commits++;
             }
           });
