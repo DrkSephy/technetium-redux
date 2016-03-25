@@ -3,7 +3,7 @@ import {Tooltip, OverlayTrigger} from 'react-bootstrap';
 
 class LinkWithTooltip extends React.Component {
   render() {
-    let tooltip = <Tooltip>{this.props.tooltip}</Tooltip>;
+    let tooltip = <Tooltip id={this.props.tooltip}>{this.props.tooltip}</Tooltip>;
 
     return (
       <OverlayTrigger
