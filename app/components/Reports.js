@@ -18,6 +18,8 @@ class Reports extends React.Component {
 
   componentDidMount() {
     ReportsStore.listen(this.onChange);
+    ReportsActions.setUsername(this.props.params.username);
+    ReportsActions.setReponame(this.props.params.reponame);
     ReportsActions.getReportData(this.props.params.username, this.props.params.reponame);
     ReportsActions.getOpenedIssues(this.props.params.username, this.props.params.reponame);
     ReportsActions.getFilteredCommits(this.props.params.username, this.props.params.reponame);
@@ -28,6 +30,8 @@ class Reports extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    ReportsActions.setUsername(nextProps.params.username);
+    ReportsActions.setReponame(nextProps.params.reponame);
     ReportsActions.getReportData(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getOpenedIssues(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame);
