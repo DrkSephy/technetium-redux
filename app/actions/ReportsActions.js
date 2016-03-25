@@ -17,8 +17,20 @@ class ReportsActions {
       'getSparklineIssuesAssignedSuccess',
       'getSparklineIssuesAssignedFail',
       'getSparklineIssuesClosedSuccess',
-      'getSparklineIssuesClosedFail'
+      'getSparklineIssuesClosedFail',
+      'setUsernameSuccess',
+      'setUsernameFail',
+      'setReponameSuccess',
+      'setReponameFail'
     );
+  }
+
+  setUsername(username) {
+    this.actions.setUsernameSuccess(username);
+  }
+
+  setReponame(reponame) {
+    this.actions.setReponameSuccess(reponame);
   }
 
   getSparklineIssuesClosedData(username, reponame) {
