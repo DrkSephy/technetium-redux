@@ -113,12 +113,14 @@ class ReportsActions {
       });
   }
 
-  getOpenedIssues(username, reponame) {
+  getOpenedIssues(username, reponame, startDate=null, endDate=null) {
     $.ajax({
         url: '/api/issues/opened/filtered' ,
         data: {
           username: username,
-          reponame: reponame
+          reponame: reponame,
+          startDate: startDate,
+          endDate: endDate
         }
       })
       .done((data) => {
