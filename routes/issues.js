@@ -102,7 +102,6 @@ module.exports = (app, _, config) => {
         assigned: 0,
         resolved: 0
       };
-      let ranges = getDateRange();
       results['issues'].forEach((issue) => {
         let date = moment(issue.created_on).unix();
         if (date >= startDate && date <= endDate) {
