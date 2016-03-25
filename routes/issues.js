@@ -80,6 +80,21 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/opened/filtered', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
+    let startDate = req.query.startDate;
+    let endDate = req.query.endDate;
+
+    // If no start date was supplied, set a default
+    if (startDate == '') {
+      console.log('Start date was null');
+      startDate = moment().subtract(29, 'days').unix();
+    }
+
+    // If no end date was supplied, set a default
+    if (endDate == '') {
+      console.log('End date was null');
+      endDate = moment().unix();
+    }
+
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = {
@@ -89,8 +104,8 @@ module.exports = (app, _, config) => {
       };
       let ranges = getDateRange();
       results['issues'].forEach((issue) => {
-        let date = moment(issue.created_on);
-        if (date.isBetween(ranges.startDate, ranges.endDate)) {
+        let date = moment(issue.created_on).unix();
+        if (date >= startDate && date <= endDate) {
           parsedData.opened++;
 
           if (issue.responsible) {
@@ -101,7 +116,7 @@ module.exports = (app, _, config) => {
             parsedData.resolved++;
           }
         }
-      })
+      });
       res.send(parsedData);
     });
   });
