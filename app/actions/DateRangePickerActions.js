@@ -9,12 +9,10 @@ class DateRangePickerActions {
   }
 
   setRanges(startDate, endDate) {
-    if (startDate && endDate !== undefined) {
-      this.actions.updateDateRangeSuccess({
-        'startDate': startDate,
-        'endDate': endDate 
-      });
-    } 
+    this.actions.updateDateRangeSuccess({
+      'startDate': startDate,
+      'endDate': endDate
+    });
   }
 }
 
