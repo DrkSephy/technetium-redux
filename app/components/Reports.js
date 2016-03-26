@@ -5,6 +5,7 @@ import {Panel, Tooltip} from 'react-bootstrap';
 import LinkWithTooltip from './LinkWithTooltip';
 import Card from './Card';
 import TimeSeries from './TimeSeries';
+import DateRangePickerStore from '../stores/DateRangePickerStore';
 import ReportsStore from '../stores/ReportsStore';
 import ReportsActions from '../actions/ReportsActions';
 import TimeSeriesActions from '../actions/TimeSeriesActions';
@@ -30,11 +31,13 @@ class Reports extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
+    let startDate = DateRangePickerStore.getState().startDate.unix();
+    let endDate = DateRangePickerStore.getState().endDate.unix();
     ReportsActions.setUsername(nextProps.params.username);
     ReportsActions.setReponame(nextProps.params.reponame);
     ReportsActions.getReportData(nextProps.params.username, nextProps.params.reponame);
-    ReportsActions.getOpenedIssues(nextProps.params.username, nextProps.params.reponame);
-    ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getOpenedIssues(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
+    ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
     ReportsActions.getSparklineData(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getSparklineIssuesOpenedData(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getSparklineIssuesAssignedData(nextProps.params.username, nextProps.params.reponame);
