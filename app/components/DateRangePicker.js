@@ -27,6 +27,7 @@ class DateRange extends React.Component {
 
   componentDidMount() {
     DateRangePickerStore.listen(this.onChange);
+    DateRangePickerActions.setRanges(this.state.startDate, this.state.endDate);
   }
 
   componentWillUnmount() {
