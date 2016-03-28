@@ -239,11 +239,23 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/closed/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
+    let startDate = req.query.startDate;
+    let endDate = req.query.endDate;
+
+    // If no start date was supplied, set a default
+    if (startDate == '') {
+      startDate = moment().subtract(29, 'days').format('YYYY-MM-DD');
+    }
+
+    // If no end date was supplied, set a default
+    if (endDate == '') {
+      endDate = moment().format('YYYY-MM-DD');
+    }
+
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = [];
-      let ranges = getDateRange();
-      let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
+      let dateRanges = generateDateRange(startDate, endDate);
       dateRanges.forEach((range) => {
         let entry = {
           date: range,
@@ -253,7 +265,7 @@ module.exports = (app, _, config) => {
       });
       results['issues'].forEach((issue) => {
         let date = moment(issue.utc_created_on);
-        if (issue.responsible && issue.status === 'resolved' && date.isBetween(ranges.startDate, ranges.endDate)) {
+        if (issue.responsible && issue.status === 'resolved') {
           parsedData.forEach((entry) => {
             if ((entry.date) === date.format('YYYY-MM-DD')) {
               entry.count++;
