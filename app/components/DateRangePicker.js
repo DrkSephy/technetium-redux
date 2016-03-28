@@ -40,18 +40,27 @@ class DateRange extends React.Component {
 
   handleEvent(event, picker) {
     DateRangePickerActions.setRanges(picker.startDate, picker.endDate);
-    let startDate = picker.startDate.unix();
-    let endDate = picker.endDate.unix();
+    let startDateUnix = picker.startDate.unix();
+    let endDateUnix = picker.endDate.unix();
+    let startDate = picker.startDate.format('YYYY-MM-DD');
+    let endDate = picker.endDate.format('YYYY-MM-DD');
 
     // Get issues assigned, opened and completed over a time period
     ReportsActions.getOpenedIssues(
       ReportsStore.getState().username,
       ReportsStore.getState().reponame,
-      startDate,
-      endDate
+      startDateUnix,
+      endDateUnix
     );
 
     ReportsActions.getFilteredCommits(
+      ReportsStore.getState().username,
+      ReportsStore.getState().reponame,
+      startDateUnix,
+      endDateUnix
+    );
+
+    ReportsActions.getSparklineIssuesOpenedData(
       ReportsStore.getState().username,
       ReportsStore.getState().reponame,
       startDate,
