@@ -268,14 +268,26 @@ module.exports = (app, _) => {
   app.get('/api/commits/sparkline', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
+    let startDate = req.query.startDate;
+    let endDate = req.query.endDate;
+
+    // If no start date was supplied, set a default
+    if (startDate == '') {
+      startDate = moment().subtract(29, 'days').format('YYYY-MM-DD');
+    }
+
+    // If no end date was supplied, set a default
+    if (endDate == '') {
+      endDate = moment().format('YYYY-MM-DD');
+    }
+
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
       let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let parsedData = [];
-        let ranges = getDateRange();
-        let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
+        let dateRanges = generateDateRange(startDate, endDate);
         dateRanges.forEach((range) => {
           let entry = {
             date: range,
@@ -286,13 +298,11 @@ module.exports = (app, _) => {
         results.forEach((result) => {
           result['values'].forEach((item) => {
             let date = moment(item.date);
-            if (date.isBetween(ranges.startDate.subtract(1, 'day'), ranges.endDate)) {
-              parsedData.forEach((entry) => {
-                if ((entry.date) === date.format('YYYY-MM-DD')) {
-                  entry.count++;
-                }
-              });
-            }
+            parsedData.forEach((entry) => {
+              if ((entry.date) === date.format('YYYY-MM-DD')) {
+                entry.count++;
+              }
+            });
           });
         });
         let data = [];
