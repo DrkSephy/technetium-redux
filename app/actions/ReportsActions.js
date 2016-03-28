@@ -49,12 +49,14 @@ class ReportsActions {
     })
   }
 
-  getSparklineIssuesAssignedData(username, reponame) {
+  getSparklineIssuesAssignedData(username, reponame, startDate=null, endDate=null) {
     $.ajax({
       url: '/api/issues/assigned/sparkline',
       data: {
         username: username,
-        reponame: reponame
+        reponame: reponame,
+        startDate: startDate,
+        endDate: endDate
       }
     })
     .done((data) => {
