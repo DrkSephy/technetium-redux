@@ -87,8 +87,9 @@ export function getDateRange() {
 export function generateDateRange(startDate, endDate) {
   let datesArray = [];
   let currentDate = moment(startDate);
+  endDate = moment(endDate);
 
-  while (currentDate < endDate) {
+  while (currentDate <= endDate) {
     datesArray.push(moment(currentDate).format('YYYY-MM-DD'));
     currentDate = moment(currentDate).add(1, 'days');
   }
