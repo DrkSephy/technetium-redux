@@ -43,7 +43,7 @@ class Reports extends React.Component {
     ReportsActions.getSparklineData(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getSparklineIssuesOpenedData(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
     ReportsActions.getSparklineIssuesAssignedData(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
-    ReportsActions.getSparklineIssuesClosedData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineIssuesClosedData(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
     TimeSeriesActions.getData(nextProps.params.username, nextProps.params.reponame);
   }
 
