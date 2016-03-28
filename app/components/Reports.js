@@ -42,7 +42,7 @@ class Reports extends React.Component {
     ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame, startDateUnix, endDateUnix);
     ReportsActions.getSparklineData(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getSparklineIssuesOpenedData(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
-    ReportsActions.getSparklineIssuesAssignedData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineIssuesAssignedData(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
     ReportsActions.getSparklineIssuesClosedData(nextProps.params.username, nextProps.params.reponame);
     TimeSeriesActions.getData(nextProps.params.username, nextProps.params.reponame);
   }
