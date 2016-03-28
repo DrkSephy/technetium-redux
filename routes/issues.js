@@ -302,13 +302,11 @@ module.exports = (app, _, config) => {
       });
       results['issues'].forEach((issue) => {
         let date = moment(issue.created_on);
-        if (date.isBetween(startDate, endDate)) {
-          parsedData.forEach((entry) => {
-            if ((entry.date) === date.format('YYYY-MM-DD')) {
-              entry.count++;
-            }
-          });
-        }
+        parsedData.forEach((entry) => {
+          if ((entry.date) === date.format('YYYY-MM-DD')) {
+            entry.count++;
+          }
+        });
       });
       let data = [];
       parsedData.forEach((entry) => {
