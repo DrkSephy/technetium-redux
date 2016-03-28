@@ -33,12 +33,14 @@ class ReportsActions {
     this.actions.setReponameSuccess(reponame);
   }
 
-  getSparklineIssuesClosedData(username, reponame) {
+  getSparklineIssuesClosedData(username, reponame, startDate, endDate) {
     $.ajax({
       url: '/api/issues/closed/sparkline',
       data: {
         username: username,
-        reponame: reponame
+        reponame: reponame,
+        startDate: startDate,
+        endDate: endDate
       }
     })
     .done((data) => {
