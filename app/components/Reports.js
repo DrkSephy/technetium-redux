@@ -31,15 +31,17 @@ class Reports extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let startDate = DateRangePickerStore.getState().startDate.unix();
-    let endDate = DateRangePickerStore.getState().endDate.unix();
+    let startDateUnix = DateRangePickerStore.getState().startDate.unix();
+    let endDateUnix = DateRangePickerStore.getState().endDate.unix();
+    let startDate = DateRangePickerStore.getState().startDate.format('YYYY-MM-DD');
+    let endDate = DateRangePickerStore.getState().endDate.format('YYYY-MM-DD');
     ReportsActions.setUsername(nextProps.params.username);
     ReportsActions.setReponame(nextProps.params.reponame);
     ReportsActions.getReportData(nextProps.params.username, nextProps.params.reponame);
-    ReportsActions.getOpenedIssues(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
-    ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
+    ReportsActions.getOpenedIssues(nextProps.params.username, nextProps.params.reponame, startDateUnix, endDateUnix);
+    ReportsActions.getFilteredCommits(nextProps.params.username, nextProps.params.reponame, startDateUnix, endDateUnix);
     ReportsActions.getSparklineData(nextProps.params.username, nextProps.params.reponame);
-    ReportsActions.getSparklineIssuesOpenedData(nextProps.params.username, nextProps.params.reponame);
+    ReportsActions.getSparklineIssuesOpenedData(nextProps.params.username, nextProps.params.reponame, startDate, endDate);
     ReportsActions.getSparklineIssuesAssignedData(nextProps.params.username, nextProps.params.reponame);
     ReportsActions.getSparklineIssuesClosedData(nextProps.params.username, nextProps.params.reponame);
     TimeSeriesActions.getData(nextProps.params.username, nextProps.params.reponame);

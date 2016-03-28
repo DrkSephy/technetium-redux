@@ -65,12 +65,14 @@ class ReportsActions {
     });
   }
 
-  getSparklineIssuesOpenedData(username, reponame) {
+  getSparklineIssuesOpenedData(username, reponame, startDate=null, endDate=null) {
     $.ajax({
       url: '/api/issues/opened/sparkline',
       data: {
         username: username,
-        reponame: reponame
+        reponame: reponame,
+        startDate: startDate,
+        endDate: endDate
       }
     })
     .done((data) => {
