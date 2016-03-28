@@ -87,12 +87,14 @@ class ReportsActions {
     });
   }
 
-  getSparklineData(username, reponame) {
+  getSparklineData(username, reponame, startDate=null, endDate=null) {
     $.ajax({
       url: '/api/commits/sparkline',
       data: {
         username: username,
-        reponame: reponame
+        reponame: reponame,
+        startDate: startDate,
+        endDate: endDate
       }
     })
     .done((data) => {

@@ -81,6 +81,13 @@ class DateRange extends React.Component {
       endDate
     );
 
+    ReportsActions.getSparklineData(
+      ReportsStore.getState().username,
+      ReportsStore.getState().reponame,
+      startDate,
+      endDate
+    );
+
   }
 
   render() {
