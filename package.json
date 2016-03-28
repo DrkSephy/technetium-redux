@@ -10,7 +10,8 @@
   "scripts": {
     "start": "node server.js",
     "watch": "nodemon server.js",
-    "build-docs": "sh scripts/build-docs.sh"
+    "build-docs": "sh scripts/build-docs.sh",
+    "postinstall": "bower install && gulp build"
   },
   "babel": {
     "presets": [
