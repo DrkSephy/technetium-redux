@@ -49,6 +49,7 @@
     "moment": "^2.11.2",
     "mongoose": "^4.2.5",
     "morgan": "^1.6.1",
+    "passport": "^0.3.2",
     "passport-bitbucket-oauth2": "^0.1.2",
     "react": "^0.14.2",
     "react-bootstrap": "^0.28.3",
