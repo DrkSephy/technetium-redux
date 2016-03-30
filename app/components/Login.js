@@ -12,6 +12,7 @@ class Login extends React.Component {
 
   componentDidMount() {
     LoginStore.listen(this.onChange);
+    console.log('Mounted');
   }
 
   componentWillUnmount() {
@@ -20,10 +21,6 @@ class Login extends React.Component {
 
   onChange(state) {
     this.setState(state);
-  }
-
-  handleSubmit(event) {
-    event.preventDefault();
   }
 
   render() {
