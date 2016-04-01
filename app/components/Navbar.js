@@ -31,20 +31,15 @@ class Navbar extends React.Component {
       paddingRight: '20px'
     }
 
-    let subscriptions = [];
-
-    if (LoginStore.getState().loggedIn == true) {
-      console.log('Getting subscriptions');
-      subscriptions = this.state.subscriptions.map((data) => {
-        let url = '/report/' + data.username + '/' + data.reponame
-        return (
-          <li key={data._id}><Link to={url}>{data.username}/{data.reponame}</Link></li>
-        )
-      });
-    }
+    let subscriptions = this.state.subscriptions.map((data) => {
+      let url = '/report/' + data.username + '/' + data.reponame
+      return (
+        <li key={data._id}><Link to={url}>{data.username}/{data.reponame}</Link></li>
+      )
+    });
 
     return (
-      LoginStore.getState().loggedIn == true ? 
+      LoginStore.getState().loggedIn ?
         <nav className='navbar navbar-default navbar-static-top'>
           <div className='navbar-header'>
             <button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar'>
@@ -95,19 +90,6 @@ class Navbar extends React.Component {
         :
 
         <nav className='navbar navbar-default navbar-static-top'>
-          <div className='navbar-header'>
-            <button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar'>
-              <span className='sr-only'>Toggle navigation</span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
-              <span className='icon-bar'></span>
-            </button>
-          </div>
-          <div id='navbar' className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav navbar-right' style={navStyle}>
-              <li><a href='/login'>Login</a></li>
-            </ul>
-          </div>
         </nav>
     );
   }
