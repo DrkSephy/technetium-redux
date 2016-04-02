@@ -5,7 +5,7 @@ class LoginStore {
   constructor() {
     this.bindActions(LoginActions);
     this.username = '';
-    this.loggedIn = false;
+    this.loggedIn = null;
   }
 
   onGetUserProfileSuccess(data) {
@@ -13,8 +13,9 @@ class LoginStore {
     this.loggedIn = true;
   }
 
-  onGetUserProfileFail(jqXhr) {
-    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
+  onGetUserProfileFail(response) {
+    this.loggedIn = false;
+    // toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }
 
