@@ -1,5 +1,6 @@
 import React from 'react';
 import {Link} from 'react-router';
+import Login from '../components/Login';
 import LoginStore from '../stores/LoginStore';
 import NavbarStore from '../stores/NavbarStore';
 import LoginActions from '../actions/LoginActions';
@@ -39,7 +40,7 @@ class Navbar extends React.Component {
     });
 
     return (
-      LoginStore.getState().loggedIn ?
+      LoginStore.getState().loggedIn == true ?
         <nav className='navbar navbar-default navbar-static-top'>
           <div className='navbar-header'>
             <button type='button' className='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar'>
@@ -75,11 +76,7 @@ class Navbar extends React.Component {
         :
 
         <nav className='navbar navbar-default navbar-static-top'>
-          <div id='navbar' className='navbar-collapse collapse'>
-            <ul className='nav navbar-nav navbar-right' style={navStyle}>
-              <li><a href='/login/bitbucket'>Login</a></li>
-            </ul>
-          </div>
+          <Login />
         </nav>
     );
   }

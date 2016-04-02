@@ -12,11 +12,18 @@ class Login extends React.Component {
 
   componentDidMount() {
     LoginStore.listen(this.onChange);
-    console.log('Mounted');
   }
 
   componentWillUnmount() {
     LoginStore.unlisten(this.onChange);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    if (this.state.loggedIn != nextState.loggedIn) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   onChange(state) {
@@ -24,30 +31,20 @@ class Login extends React.Component {
   }
 
   render() {
-    const divStyle = {
-      paddingLeft: '40%',
-      paddingTop: '10%'
-    }
-
-    const linkStyle = {
-      textDecoration: 'none'
+    const navStyle = {
+      paddingRight: '20px'
     }
 
     return (
-      <div className='container' style={divStyle}>
-        <div className='row flipInX animated'>
-          <div className='col-sm-3'>
-            <div className='panel panel-primary'>
-              <div className='panel-heading text-center'>Login</div>
-              <div className='panel-body text-center'>
-                <button type='submit' className='btn btn-success'>
-                  <a style={linkStyle} href='/login/bitbucket'>Login</a>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      this.state.loggedIn === null ?
+      <div> </div> :
+      this.state.loggedIn === false ?
+      <div id='navbar' className='navbar-collapse collapse'>
+        <ul className='nav navbar-nav navbar-right' style={navStyle}>
+          <li><a href='/login/bitbucket'>Login</a></li>
+        </ul>
+      </div> :
+      <div></div>
     );
   }
 }
