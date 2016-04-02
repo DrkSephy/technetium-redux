@@ -11,7 +11,7 @@ import Login from './components/Login';
 
 export default (
   <Route component={App}>
-    <Route path='/' component={Home} />
+    <Route path='/' />
     <Route path='/login' component={Login} />
     <Route path='/reports' component={Reports} />
         <Route path='/report/:username/:reponame' component={Reports} />
