@@ -77,7 +77,7 @@ class Navbar extends React.Component {
         <nav className='navbar navbar-default navbar-static-top'>
           <div id='navbar' className='navbar-collapse collapse'>
             <ul className='nav navbar-nav navbar-right' style={navStyle}>
-              <li><a href='/login'>Login</a></li>
+              <li><a href='/login/bitbucket'>Login</a></li>
             </ul>
           </div>
         </nav>
