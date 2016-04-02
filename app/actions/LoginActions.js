@@ -13,6 +13,8 @@ class LoginActions {
     .done((data) => {
       if (data.user) {
         this.actions.getUserProfileSuccess(data);
+      } else {
+        this.actions.getUserProfileFail(false);
       }
     })
     .fail((jqXhr) => {
