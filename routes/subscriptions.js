@@ -17,7 +17,7 @@ module.exports = (app) => {
   app.post('/api/subscribe', isAuthenticated, (req, res, next) => {
     let username = req.body.username;
     let reponame = req.body.reponame;
-    User.findOne({ username: username }, (err, user) => {
+    User.findOne({ username: req.user.username }, (err, user) => {
       if (err) return next(err);
 
       if (user) {
