@@ -40,8 +40,6 @@ app.use(passport.session());
 require('./routes/auth')(app, passport);
 require('./routes/issues')(app, _);
 require('./routes/commits')(app, _);
-require('./routes/charts')(app);
-require('./routes/timeseries')(app);
 require('./routes/pullrequests')(app, _);
 require('./routes/subscriptions')(app);
 
