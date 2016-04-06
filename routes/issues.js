@@ -95,23 +95,25 @@ module.exports = (app, _, config) => {
       endDate = moment().unix();
     }
 
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
+    getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
       let parsedData = {
         opened: 0,
         assigned: 0,
         resolved: 0
       };
-      results['issues'].forEach((issue) => {
+      results['values'].forEach((issue) => {
         let date = moment(issue.created_on).unix();
         if (date >= startDate && date <= endDate) {
           parsedData.opened++;
+          console.log(issue);
 
-          if (issue.responsible) {
+          if (issue.assignee) {
+            console.log('Assigned issue');
             parsedData.assigned++;
           }
 
-          if (issue.status === 'resolved') {
+          if (issue.state === 'resolved') {
             parsedData.resolved++;
           }
         }
