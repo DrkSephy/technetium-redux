@@ -104,23 +104,23 @@ export function generateDateRange(startDate, endDate) {
  * @return {object} promises - An array of promises.
 */
 export function computeUrls(baseUrl, apiUrl, count, auth, username, reponame) {
-    let urls = [];
-    let page = 1;
-    let stop;
-    if (count >= 30) {
-      stop = Math.floor(count / 30);
-    } else {
-      stop = 1;
-    }
-    let start = 0;
-
-    while (start <= stop) {
-      let url = baseUrl + username + '/' + reponame + apiUrl + '?page=' + page;
-      urls.push(url);
-      page++;
-      start++;
-    }
-
-    let promises = urls.map((url) => getJSON(url, config));
-    return promises;
+  let urls = [];
+  let page = 1;
+  let stop;
+  if (count >= 30) {
+    stop = Math.floor(count / 30);
+  } else {
+    stop = 1;
   }
+  let start = 0;
+
+  while (start <= stop) {
+    let url = baseUrl + username + '/' + reponame + apiUrl + '?page=' + page;
+    urls.push(url);
+    page++;
+    start++;
+  }
+
+  let promises = urls.map((url) => getJSON(url, config));
+  return promises;
+}
