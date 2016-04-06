@@ -103,7 +103,7 @@ export function generateDateRange(startDate, endDate) {
  * @param {number} count - The number of commits in a repository.
  * @return {object} promises - An array of promises.
 */
-export function computeUrls(baseUrl, apiUrl, count, config, username, reponame) {
+export function computeUrls(baseUrl, apiUrl, count, auth, username, reponame) {
     let urls = [];
     let page = 1;
     let stop;
