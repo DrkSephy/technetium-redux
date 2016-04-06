@@ -3,7 +3,7 @@
  * @module routes/issues
 */
 
-import {getJSON, generateRandomNumber, getIssueCommentUrls, getDateRange, generateDateRange, isAuthenticated} from './utils';
+import {getJSON, generateRandomNumber, getIssueCommentUrls, getDateRange, generateDateRange, isAuthenticated, computeIssueUrls} from './utils';
 import moment from 'moment';
 
 'use strict';
@@ -97,28 +97,37 @@ module.exports = (app, _, config) => {
 
     getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
+      let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
       let parsedData = {
         opened: 0,
         assigned: 0,
         resolved: 0
       };
-      results['values'].forEach((issue) => {
-        let date = moment(issue.created_on).unix();
-        if (date >= startDate && date <= endDate) {
-          parsedData.opened++;
-          console.log(issue);
+      let issueData = [];
+      Promise.all(promises)
+      // Loop over all of the data!
+      .then((issues) => {
+        issues.forEach((issue) => {
+          issue['values'].forEach((entry) => {
+            issueData.push(entry);
+          });
+        });
+        issueData.forEach((issue) => {
+          let date = moment(issue.created_on).unix();
+          if (date >= startDate && date <= endDate) {
+            parsedData.opened++;
 
-          if (issue.assignee) {
-            console.log('Assigned issue');
-            parsedData.assigned++;
-          }
+            if (issue.assignee) {
+              parsedData.assigned++;
+            }
 
-          if (issue.state === 'resolved') {
-            parsedData.resolved++;
+            if (issue.state === 'resolved') {
+              parsedData.resolved++;
+            }
           }
-        }
+        });
+        res.send(parsedData);
       });
-      res.send(parsedData);
     });
   });
 
