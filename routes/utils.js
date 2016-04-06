@@ -121,6 +121,28 @@ export function computeUrls(baseUrl, apiUrl, count, auth, username, reponame) {
     start++;
   }
 
-  let promises = urls.map((url) => getJSON(url, config));
+  let promises = urls.map((url) => getJSON(url, auth));
+  return promises;
+}
+
+export function computeIssueUrls(baseUrl, apiUrl, count, auth, username, reponame) {
+  let urls = [];
+  let page = 1;
+  let stop;
+  if (count >= 20) {
+    stop = Math.floor(count / 20);
+  } else {
+    stop = 1;
+  }
+  let start = 0;
+
+  while (start <= stop) {
+    let url = baseUrl + username + '/' + reponame + apiUrl + '?page=' + page;
+    urls.push(url);
+    page++;
+    start++;
+  }
+
+  let promises = urls.map((url) => getJSON(url, auth));
   return promises;
 }
