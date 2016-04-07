@@ -145,30 +145,37 @@ module.exports = (app, _, config) => {
   app.get('/api/issues/assigned', isAuthenticated, (req, res) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
-    getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
+    getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
-      let parsedData = [];
-      let usernames = [];
-      results['issues'].forEach((issue) => {
-        if (issue.responsible) {
-          let username = issue.responsible.username;
-          if (!(_.contains(usernames, username))) {
-            let entry = {};
-            entry.username = username;
-            entry.responsible = 0;
-            entry.id = null;
-            parsedData.push(entry);
-            usernames.push(username);
-          }
-          parsedData.forEach((contributor) => {
-            if (contributor.username == issue.responsible.username) {
-                contributor.responsible++;
+      let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
+      Promise.all(promises)
+      .then((issues) => {
+        let parsedData = [];
+        let usernames = [];
+        issues.forEach((issue) => {
+          issue['values'].forEach((entry) => {
+            // Get user who opened the issue
+            if (entry.assignee) {
+              let username = entry.assignee.username;
+              if (!(_.contains(usernames, username))) {
+                let data = {};
+                data.username = username;
+                data.responsible = 0;
+                data.id = null;
+                parsedData.push(data);
+                usernames.push(username);
+              }
+              parsedData.forEach((contributor) => {
+                if (contributor.username == entry.assignee.username) {
+                  contributor.responsible++;
+                }
+                contributor.id = generateRandomNumber();
+              })
             }
-            contributor.id = generateRandomNumber();
           });
-        }
-      });
+        });
       res.send(parsedData);
+      });
     });
   });
 
