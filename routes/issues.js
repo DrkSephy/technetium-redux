@@ -231,7 +231,7 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((data) => {
-      let promises = getIssueCommentUrls(data.count, req.user.authToken);
+      let promises = getIssueCommentUrls(data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
         let usernames = [];

@@ -47,26 +47,6 @@ export function generateRandomNumber(min=1, max=9999) {
 }
 
 /**
- * Generates all URLS for accessing Issue Comments.
- *
- * @param {number} count - The number of issues in a repository.
- * @param {object} config - Credentials for making authenticated calls.
- * @return {object} promises - An array of promises for Issue Comments.
-*/
-export function getIssueCommentUrls(count, config) {
-  let urls = [];
-  while (count > 0) {
-    const url = 'https://bitbucket.org/api/1.0/repositories/DrkSephy/wombat/issues/' + count + '/comments';
-    urls.push(url);
-    count--;
-  }
-
-  let promises = urls.map((url) => getJSON(url, config));
-  return promises;
-}
-
-
-/**
  * Generates an object containing the startDate and endDate.
  *
  * @returns {object} - An object containing the start and end dates.
@@ -95,6 +75,25 @@ export function generateDateRange(startDate, endDate) {
   }
   
   return datesArray;
+}
+
+/**
+ * Generates all URLS for accessing Issue Comments.
+ *
+ * @param {number} count - The number of issues in a repository.
+ * @param {object} config - Credentials for making authenticated calls.
+ * @return {object} promises - An array of promises for Issue Comments.
+*/
+export function getIssueCommentUrls(count, auth, username, reponame) {
+  let urls = [];
+  while (count > 0) {
+    const url = 'https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/' + 'issues/' + count + '/comments';
+    urls.push(url);
+    count--;
+  }
+
+  let promises = urls.map((url) => getJSON(url, auth));
+  return promises;
 }
 
 /**
