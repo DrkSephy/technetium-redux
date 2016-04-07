@@ -120,7 +120,7 @@ module.exports = (app, _, config) => {
           });
         });
         issueData.forEach((issue) => {
-          let date = moment(issue.created_on).unix();
+          let date = moment(issue.updated_on).unix();
           if (date >= startDate && date <= endDate) {
             parsedData.opened++;
 
