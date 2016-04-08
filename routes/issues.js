@@ -92,13 +92,11 @@ module.exports = (app, _, config) => {
 
     // If no start date was supplied, set a default
     if (startDate == '') {
-      console.log('Start date was null');
       startDate = moment().subtract(29, 'days').unix();
     }
 
     // If no end date was supplied, set a default
     if (endDate == '') {
-      console.log('End date was null');
       endDate = moment().unix();
     }
 
