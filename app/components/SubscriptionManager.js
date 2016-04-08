@@ -4,6 +4,7 @@ import {ListGroup, ListGroupItem, Button, Panel, Tooltip} from 'react-bootstrap'
 import SubscriptionManagerStore from '../stores/SubscriptionManagerStore';
 import SubscriptionManagerActions from '../actions/SubscriptionManagerActions';
 import NavbarActions from '../actions/NavbarActions';
+import SubscriptionsActions from '../actions/SubscriptionsActions';
 
 class SubscriptionManager extends React.Component {
   constructor(props) {
@@ -27,11 +28,36 @@ class SubscriptionManager extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    const id = event.target.getAttribute('data-id');
-    SubscriptionManagerActions.handleUnsubscribe(id);
-    setTimeout(() => {
+
+    // Trigger unsubscribe event
+    if (event.currentTarget.value == 'unsubscribe') {
+      event.currentTarget.innerHTML = 'Subscribe';
+      event.currentTarget.value = 'subscribe';
+      event.currentTarget.bsStyle = 'primary';
+      // Get id of subscription to remove
+      const id = event.target.getAttribute('data-id');
+      // Handle unsubscribe action
+      SubscriptionManagerActions.handleUnsubscribe(id);
+      // Refresh the navbar
+      setTimeout(() => {
         NavbarActions.getSubscriptions();
-    }, 3000);
+      }, 3000);
+    }
+
+    // Trigger subscribe event
+    else if (event.currentTarget.value == 'subscribe') {
+      event.currentTarget.innerHTML = 'Unsubscribe';
+      event.currentTarget.value = 'unsubscribe';
+      event.currentTarget.bsStyle = 'danger';
+      const username = event.target.getAttribute('data-username');
+      const reponame = event.target.getAttribute('data-reponame');
+      // Call existing subscribe action to add subscription
+      SubscriptionsActions.addSubscription(username, reponame);
+      // Refresh the navbar
+      setTimeout(() => {
+        NavbarActions.getSubscriptions();
+      }, 3000);
+    }
   }
 
   render() {
@@ -44,7 +70,15 @@ class SubscriptionManager extends React.Component {
         <tr key={data._id}>
           <td style={tdStyle}>{data.username}</td>
           <td style={tdStyle}>{data.reponame}</td>
-          <td style={tdStyle}><Button data-id={data._id} bsStyle='danger' onClick={this.handleClick.bind(this)}>Unsubscribe</Button></td>
+          <td style={tdStyle}>
+            <Button
+              data-id={data._id}
+              data-username={data.username}
+              data-reponame={data.reponame}
+              bsStyle='danger'
+              value='unsubscribe'
+              onClick={this.handleClick.bind(this)}>Unsubscribe
+            </Button></td>
         </tr>
       );
     });
