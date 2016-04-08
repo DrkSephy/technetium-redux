@@ -8,11 +8,18 @@ class SubscriptionManagerStore {
   }
 
   onGetSubscriptionsSuccess(data) {
-    console.log(data);
     this.subscriptions = data;
   }
 
   onGetSubscriptionsFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
+  }
+
+  onHandleUnsubscribeSuccess(message) {
+    console.log(message);
+  }
+
+  onHandleUnsubscribeFail(jqXhr) {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 }
