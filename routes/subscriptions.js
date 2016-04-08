@@ -66,6 +66,23 @@ module.exports = (app) => {
   });
 
   /**
+   * GET /api/subscriptions/remove/single
+   * Removes a single subscription.
+  */
+  app.get('/api/subscriptions/remove/single', isAuthenticated, (req, res, next) => {
+    User.findOneAndUpdate(
+      {username: req.user.username},
+      {$pull: {'subscriptions': {'_id': req.query.id}}},
+      {new: true},
+      (err, doc) => {
+        console.log(err);
+        console.log(doc);
+      }
+    );
+    res.send({ message: 'Unsubscribed!'});
+  });
+
+  /**
    * GET /api/subscriptions/remove
    * Removes all repository subscriptions.
   */
