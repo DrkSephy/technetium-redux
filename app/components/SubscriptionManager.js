@@ -3,6 +3,7 @@ import LinkWithTooltip from './LinkWithTooltip';
 import {ListGroup, ListGroupItem, Button, Panel, Tooltip} from 'react-bootstrap';
 import SubscriptionManagerStore from '../stores/SubscriptionManagerStore';
 import SubscriptionManagerActions from '../actions/SubscriptionManagerActions';
+import NavbarActions from '../actions/NavbarActions';
 
 class SubscriptionManager extends React.Component {
   constructor(props) {
@@ -28,6 +29,9 @@ class SubscriptionManager extends React.Component {
     event.preventDefault();
     const id = event.target.getAttribute('data-id');
     SubscriptionManagerActions.handleUnsubscribe(id);
+    setTimeout(() => {
+        NavbarActions.getSubscriptions();
+    }, 3000);
   }
 
   render() {
