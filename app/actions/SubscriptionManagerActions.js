@@ -4,7 +4,9 @@ class SubscriptionManagerActions {
   constructor() {
     this.generateActions(
       'getSubscriptionsSuccess',
-      'getSubscriptionsFail'
+      'getSubscriptionsFail',
+      'handleUnsubscribeSuccess',
+      'handleUnsubscribeFail'
     );
   }
 
@@ -25,6 +27,12 @@ class SubscriptionManagerActions {
       data: {
         id: id
       }
+    })
+    .done((message) => {
+      this.actions.handleUnsubscribeSuccess(message);
+    })
+    .fail((jqXhr) => {
+      this.actions.handleUnsubscribeFail(jqXhr);
     });
   }
 }
