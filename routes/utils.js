@@ -145,3 +145,25 @@ export function computeIssueUrls(baseUrl, apiUrl, count, auth, username, reponam
   let promises = urls.map((url) => getJSON(url, auth));
   return promises;
 }
+
+export function computePullRequestUrls(baseUrl, count, auth, username, reponame) {
+  let urls = [];
+  let page = 1;
+  let stop;
+  if (count >= 10) {
+    stop = Math.floor(count / 10);
+  } else {
+    stop = 1;
+  }
+  let start = 0;
+
+  while (start <= stop) {
+    let url = baseUrl + username + '/' + reponame + '/pullrequests?state=merged' + '&page=' + page;
+    urls.push(url);
+    page++;
+    start++;
+  }
+
+  let promises = urls.map((url) => getJSON(url, auth));
+  return promises;
+}

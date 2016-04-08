@@ -3,7 +3,7 @@
  * @module routes/pullrequests
 */
 
-import { getJSON, generateRandomNumber, isAuthenticated } from './utils';
+import {getJSON, generateRandomNumber, isAuthenticated, computePullRequestUrls} from './utils';
 
 'use strict';
 
@@ -16,25 +16,32 @@ module.exports = (app, _, config) => {
     let username = req.query.username;
     let reponame = req.query.reponame;
     getJSON('https://api.bitbucket.org/2.0/repositories/' + username + '/' + reponame + '/pullrequests?state=[MERGED]', req.user.authToken)
-    .then((data) => {
+    .then((results) => {
+      let promises = computePullRequestUrls('https://api.bitbucket.org/2.0/repositories/', results.size, req.user.authToken, username, reponame);
       let usernames = [];
       let parsedData = [];
-      data.values.forEach((result) => {
-        if (!(_.contains(usernames, result.author.username))) {
-          let userData = {};
-          userData.username = result.author.username;
-          userData.pullRequests = 0;
-          userData.id = generateRandomNumber();
-          parsedData.push(userData);
-          usernames.push(result.author.username);
-        }
-        parsedData.forEach((contributor) => {
-          if (contributor.username === result.author.username) {
-            contributor.pullRequests++;
-          }
+      let ids = [];
+      Promise.all(promises)
+      .then((pullRequests) => {
+        pullRequests.forEach((pullRequest) => {
+          pullRequest['values'].forEach((entry) => {
+            if (!(_.contains(usernames, entry.author.username))) {
+              let userData = {};
+              userData.username = entry.author.username;
+              userData.pullRequests = 0;
+              userData.id = generateRandomNumber();
+              parsedData.push(userData);
+              usernames.push(entry.author.username);
+            }
+            parsedData.forEach((contributor) => {
+              if (contributor.username === entry.author.username) {
+                contributor.pullRequests++;
+              }
+            });
+          });
         });
+        res.send(parsedData);
       });
-      res.send(parsedData);
     });
   });
 }
