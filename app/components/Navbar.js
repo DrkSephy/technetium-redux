@@ -61,6 +61,7 @@ class Navbar extends React.Component {
                   {subscriptions}
                 </ul>
               </li>
+              <li><Link to='subscriptionManager'>Subscription Manager</Link></li>
             </ul>
             <ul className='nav navbar-nav navbar-right' style={navStyle}>
               <li><a href='#' onClick={NavbarActions.removeSubscriptions}>Unsubscribe From All</a></li>
