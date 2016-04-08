@@ -18,13 +18,12 @@ class SubscriptionManagerActions {
     });
   }
 
-  handleUnsubscribe(username, reponame) {
+  handleUnsubscribe(id) {
     $.ajax({
       type: 'GET',
       url: '/api/subscriptions/remove/single',
       data: {
-        username: username,
-        reponame: reponame
+        id: id
       }
     });
   }

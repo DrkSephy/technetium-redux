@@ -26,9 +26,8 @@ class SubscriptionManager extends React.Component {
 
   handleClick(event) {
     event.preventDefault();
-    const username = event.target.getAttribute('data-user');
-    const reponame = event.target.getAttribute('data-repo');
-    SubscriptionManagerActions.handleUnsubscribe(username, reponame);
+    const id = event.target.getAttribute('data-id');
+    SubscriptionManagerActions.handleUnsubscribe(id);
   }
 
   render() {
@@ -41,7 +40,7 @@ class SubscriptionManager extends React.Component {
         <tr key={data._id}>
           <td style={tdStyle}>{data.username}</td>
           <td style={tdStyle}>{data.reponame}</td>
-          <td style={tdStyle}><Button data-user={data.username} data-repo={data.reponame} bsStyle='danger' onClick={this.handleClick.bind(this)}>Unsubscribe</Button></td>
+          <td style={tdStyle}><Button data-id={data._id} bsStyle='danger' onClick={this.handleClick.bind(this)}>Unsubscribe</Button></td>
         </tr>
       );
     });
