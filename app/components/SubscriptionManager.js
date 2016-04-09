@@ -4,7 +4,6 @@ import {ListGroup, ListGroupItem, Button, Panel, Tooltip} from 'react-bootstrap'
 import SubscriptionManagerStore from '../stores/SubscriptionManagerStore';
 import SubscriptionManagerActions from '../actions/SubscriptionManagerActions';
 import NavbarActions from '../actions/NavbarActions';
-import SubscriptionsActions from '../actions/SubscriptionsActions';
 
 class SubscriptionManager extends React.Component {
   constructor(props) {
@@ -52,7 +51,7 @@ class SubscriptionManager extends React.Component {
       const username = event.target.getAttribute('data-username');
       const reponame = event.target.getAttribute('data-reponame');
       // Call existing subscribe action to add subscription
-      SubscriptionsActions.addSubscription(username, reponame);
+      SubscriptionManagerActions.addSubscription(username, reponame);
       // Refresh the navbar
       setTimeout(() => {
         NavbarActions.getSubscriptions();
@@ -91,7 +90,7 @@ class SubscriptionManager extends React.Component {
               <h4 className="pull-left">Subscription Manager</h4>
               <h4 className="pull-right">
                 <LinkWithTooltip 
-                  tooltip='Overall Repository Statistics' href='#'>
+                  tooltip='Current Subscriptions' href='#'>
                     <span className="glyphicon glyphicon-question-sign"></span>
                 </LinkWithTooltip>
               </h4>
