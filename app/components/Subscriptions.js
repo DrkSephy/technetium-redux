@@ -1,21 +1,21 @@
 import React from 'react';
-import SubscriptionsStore from '../stores/SubscriptionsStore';
-import SubscriptionsActions from '../actions/SubscriptionsActions';
+import SubscriptionManagerStore from '../stores/SubscriptionManagerStore';
+import SubscriptionManagerActions from '../actions/SubscriptionManagerActions';
 import NavbarActions from '../actions/NavbarActions';
 
 class Subscriptions extends React.Component {
   constructor(props) {
     super(props);
-    this.state = SubscriptionsStore.getState();
+    this.state = SubscriptionManagerStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
-    SubscriptionsStore.listen(this.onChange);
+    SubscriptionManagerStore.listen(this.onChange);
   }
 
   componentWillUnmount() {
-    SubscriptionsStore.unlisten(this.onChange);
+    SubscriptionManagerStore.unlisten(this.onChange);
   }
 
   onChange(state) {
@@ -28,18 +28,18 @@ class Subscriptions extends React.Component {
     let reponame = this.state.reponame.trim();
 
     if (!username) {
-      SubscriptionsActions.invalidUsername();
+      SubscriptionManagerActions.invalidUsername();
       this.refs.usernameTextField.getDOMNode().focus();
     }
 
     if (!reponame) {
-      SubscriptionsActions.invalidReponame();
+      SubscriptionManagerActions.invalidReponame();
       this.refs.reponameTextField.getDOMNode().focus();
     }
 
     if (username && reponame) {
       // Add new subscription to database
-      SubscriptionsActions.addSubscription(username, reponame);
+      SubscriptionManagerActions.addSubscription(username, reponame);
       // Get all subscriptions
       setTimeout(() => {
         NavbarActions.getSubscriptions();
@@ -59,13 +59,13 @@ class Subscriptions extends React.Component {
                   <div className={'form-group ' + this.state.usernameValidationState}>
                     <label className='control-label'>Username</label>
                     <input type='text' className='form-control' ref='usernameTextField' value={this.state.username}
-                           onChange={SubscriptionsActions.updateUsername} autoFocus/>
+                           onChange={SubscriptionManagerActions.updateUsername} autoFocus/>
                     <span className='help-block'>{this.state.helpBlock}</span>
                   </div>
                   <div className={'form-group ' + this.state.reponameValidationState}>
                     <label className='control-label'>Repository Name</label>
                     <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
-                           onChange={SubscriptionsActions.updateReponame} autoFocus/>
+                           onChange={SubscriptionManagerActions.updateReponame} autoFocus/>
                     <span className='help-block'>{this.state.helpBlock}</span>
                   </div>
                   <button type='submit' className='btn btn-primary'>Submit</button>
