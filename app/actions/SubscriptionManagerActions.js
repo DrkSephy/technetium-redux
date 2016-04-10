@@ -26,16 +26,18 @@ class SubscriptionManagerActions {
     });
   }
 
-  handleUnsubscribe(id) {
+  handleUnsubscribe(id, username, reponame) {
     $.ajax({
       type: 'GET',
       url: '/api/subscriptions/remove/single',
       data: {
-        id: id
+        id: id,
+        username: username,
+        reponame: reponame
       }
     })
-    .done((message) => {
-      this.actions.handleUnsubscribeSuccess(message);
+    .done((data) => {
+      this.actions.handleUnsubscribeSuccess(data.message);
     })
     .fail((jqXhr) => {
       this.actions.handleUnsubscribeFail(jqXhr);
