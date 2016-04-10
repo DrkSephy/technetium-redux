@@ -15,7 +15,7 @@ class SubscriptionManager extends React.Component {
   componentDidMount() {
     SubscriptionManagerStore.listen(this.onChange);
     SubscriptionManagerActions.getSubscriptions();
-    this.refs.usernameTextField.getDOMNode().focus();
+    this.refs.usernameTextField.focus();
   }
 
   componentWillUnmount() {
@@ -71,12 +71,12 @@ class SubscriptionManager extends React.Component {
 
     if (!username) {
       SubscriptionManagerActions.invalidUsername();
-      this.refs.usernameTextField.getDOMNode().focus();
+      this.refs.usernameTextField.focus();
     }
 
     if (!reponame) {
       SubscriptionManagerActions.invalidReponame();
-      this.refs.reponameTextField.getDOMNode().focus();
+      this.refs.reponameTextField.focus();
     }
 
     if (username && reponame) {
