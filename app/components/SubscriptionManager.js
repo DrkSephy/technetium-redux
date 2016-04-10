@@ -15,6 +15,7 @@ class SubscriptionManager extends React.Component {
   componentDidMount() {
     SubscriptionManagerStore.listen(this.onChange);
     SubscriptionManagerActions.getSubscriptions();
+    this.refs.usernameTextField.getDOMNode().focus();
   }
 
   componentWillUnmount() {
@@ -35,8 +36,10 @@ class SubscriptionManager extends React.Component {
       event.currentTarget.bsStyle = 'primary';
       // Get id of subscription to remove
       const id = event.target.getAttribute('data-id');
+      const username = event.target.getAttribute('data-username');
+      const reponame = event.target.getAttribute('data-reponame');
       // Handle unsubscribe action
-      SubscriptionManagerActions.handleUnsubscribe(id);
+      SubscriptionManagerActions.handleUnsubscribe(id, username, reponame);
       // Refresh the navbar
       setTimeout(() => {
         NavbarActions.getSubscriptions();
@@ -117,19 +120,23 @@ class SubscriptionManager extends React.Component {
             <div className='panel-heading'>Add Subscription</div>
             <div className='panel-body'>
               <form onSubmit={this.handleSubmit.bind(this)}>
-                <div className={'form-group ' + this.state.usernameValidationState}>
-                  <label className='control-label'>Username</label>
-                  <input type='text' className='form-control' ref='usernameTextField' value={this.state.username}
-                         onChange={SubscriptionManagerActions.updateUsername} autoFocus/>
-                  <span className='help-block'>{this.state.helpBlock}</span>
+                <div className='form-group'>
+                  <div className={'col-sm-6 ' + this.state.usernameValidationState}>
+                    <label className='control-label'>Username</label>
+                    <input type='text' className='form-control' ref='usernameTextField' value={this.state.username}
+                           onChange={SubscriptionManagerActions.updateUsername} autoFocus/>
+                    <span className='help-block'>{this.state.helpBlock}</span>
+                  </div>
+                  <div className={'col-sm-6 ' + this.state.reponameValidationState}>
+                    <label className='control-label'>Repository Name</label>
+                    <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
+                           onChange={SubscriptionManagerActions.updateReponame} autoFocus/>
+                    <span className='help-block'>{this.state.helpBlock}</span>
+                  </div>
                 </div>
-                <div className={'form-group ' + this.state.reponameValidationState}>
-                  <label className='control-label'>Repository Name</label>
-                  <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
-                         onChange={SubscriptionManagerActions.updateReponame} autoFocus/>
-                  <span className='help-block'>{this.state.helpBlock}</span>
+                <div className='col-sm-6'>
+                  <button type='submit' className='btn btn-primary'>Submit</button>
                 </div>
-                <button type='submit' className='btn btn-primary'>Submit</button>
               </form>
             </div>
           </div>

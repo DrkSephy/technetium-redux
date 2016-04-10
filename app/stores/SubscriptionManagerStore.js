@@ -21,8 +21,8 @@ class SubscriptionManagerStore {
     toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
-  onHandleUnsubscribeSuccess(message) {
-    console.log(message);
+  onHandleUnsubscribeSuccess(successMessage) {
+    toastr.success(successMessage);
   }
 
   onHandleUnsubscribeFail(jqXhr) {
@@ -33,7 +33,7 @@ class SubscriptionManagerStore {
   onAddSubscriptionSuccess(successMessage) {
     this.usernameValidationState = 'has-success';
     this.reponameValidationState = 'has-success';
-    this.helpBlock = successMessage;
+    toastr.success(successMessage);
   }
 
   onAddSubscriptionFail(errorMessage) {
@@ -50,7 +50,7 @@ class SubscriptionManagerStore {
 
   onInvalidUsername() {
     this.usernameValidationState = 'has-error';
-    this.helpBlock = 'Please enter a subscription url.';
+    this.helpBlock = 'Please enter a username.';
   }
 
   onUpdateReponame(event) {
@@ -61,7 +61,7 @@ class SubscriptionManagerStore {
 
   onInvalidReponame() {
     this.reponameValidationState = 'has-error';
-    this.helpBlock = 'Please enter a subscription url.';
+    this.helpBlock = 'Please enter a repository name.';
   }
 }
 
