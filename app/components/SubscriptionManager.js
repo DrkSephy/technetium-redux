@@ -40,6 +40,7 @@ class SubscriptionManager extends React.Component {
       // Refresh the navbar
       setTimeout(() => {
         NavbarActions.getSubscriptions();
+        SubscriptionManagerActions.getSubscriptions();
       }, 3000);
     }
 
@@ -53,6 +54,32 @@ class SubscriptionManager extends React.Component {
       // Call existing subscribe action to add subscription
       SubscriptionManagerActions.addSubscription(username, reponame);
       // Refresh the navbar
+      setTimeout(() => {
+        NavbarActions.getSubscriptions();
+        SubscriptionManagerActions.getSubscriptions();
+      }, 3000);
+    }
+  }
+
+  handleSubmit(event) {
+    event.preventDefault();
+    let username = this.state.username.trim();
+    let reponame = this.state.reponame.trim();
+
+    if (!username) {
+      SubscriptionManagerActions.invalidUsername();
+      this.refs.usernameTextField.getDOMNode().focus();
+    }
+
+    if (!reponame) {
+      SubscriptionManagerActions.invalidReponame();
+      this.refs.reponameTextField.getDOMNode().focus();
+    }
+
+    if (username && reponame) {
+      // Add new subscription to database
+      SubscriptionManagerActions.addSubscription(username, reponame);
+      // Get all subscriptions
       setTimeout(() => {
         NavbarActions.getSubscriptions();
       }, 3000);
@@ -84,6 +111,32 @@ class SubscriptionManager extends React.Component {
 
     return (
       <div className='container'>
+
+            <div className='row flipInX animated'>
+              <div className='col-sm-8'>
+                <div className='panel panel-default'>
+                  <div className='panel-heading'>Add Subscription</div>
+                  <div className='panel-body'>
+                    <form onSubmit={this.handleSubmit.bind(this)}>
+                      <div className={'form-group ' + this.state.usernameValidationState}>
+                        <label className='control-label'>Username</label>
+                        <input type='text' className='form-control' ref='usernameTextField' value={this.state.username}
+                               onChange={SubscriptionManagerActions.updateUsername} autoFocus/>
+                        <span className='help-block'>{this.state.helpBlock}</span>
+                      </div>
+                      <div className={'form-group ' + this.state.reponameValidationState}>
+                        <label className='control-label'>Repository Name</label>
+                        <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
+                               onChange={SubscriptionManagerActions.updateReponame} autoFocus/>
+                        <span className='help-block'>{this.state.helpBlock}</span>
+                      </div>
+                      <button type='submit' className='btn btn-primary'>Submit</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+        </div>
+
         <div className='row'>
           <div className="panel panel-primary">
             <div className="panel-heading clearfix">
