@@ -82,6 +82,7 @@ class SubscriptionManager extends React.Component {
       // Get all subscriptions
       setTimeout(() => {
         NavbarActions.getSubscriptions();
+        SubscriptionManagerActions.getSubscriptions();
       }, 3000);
     }
   }
@@ -113,7 +114,7 @@ class SubscriptionManager extends React.Component {
       <div className='container'>
 
             <div className='row flipInX animated'>
-              <div className='col-sm-8'>
+              
                 <div className='panel panel-default'>
                   <div className='panel-heading'>Add Subscription</div>
                   <div className='panel-body'>
@@ -133,7 +134,6 @@ class SubscriptionManager extends React.Component {
                       <button type='submit' className='btn btn-primary'>Submit</button>
                     </form>
                   </div>
-                </div>
               </div>
         </div>
 
