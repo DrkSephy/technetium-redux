@@ -112,55 +112,55 @@ class SubscriptionManager extends React.Component {
 
     return (
       <div className='container'>
-
-            <div className='row flipInX animated'>
-              
-                <div className='panel panel-default'>
-                  <div className='panel-heading'>Add Subscription</div>
-                  <div className='panel-body'>
-                    <form onSubmit={this.handleSubmit.bind(this)}>
-                      <div className={'form-group ' + this.state.usernameValidationState}>
-                        <label className='control-label'>Username</label>
-                        <input type='text' className='form-control' ref='usernameTextField' value={this.state.username}
-                               onChange={SubscriptionManagerActions.updateUsername} autoFocus/>
-                        <span className='help-block'>{this.state.helpBlock}</span>
-                      </div>
-                      <div className={'form-group ' + this.state.reponameValidationState}>
-                        <label className='control-label'>Repository Name</label>
-                        <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
-                               onChange={SubscriptionManagerActions.updateReponame} autoFocus/>
-                        <span className='help-block'>{this.state.helpBlock}</span>
-                      </div>
-                      <button type='submit' className='btn btn-primary'>Submit</button>
-                    </form>
-                  </div>
-              </div>
+        <div className='row flipInX animated'>
+          <div className='panel panel-primary'>
+            <div className='panel-heading'>Add Subscription</div>
+            <div className='panel-body'>
+              <form onSubmit={this.handleSubmit.bind(this)}>
+                <div className={'form-group ' + this.state.usernameValidationState}>
+                  <label className='control-label'>Username</label>
+                  <input type='text' className='form-control' ref='usernameTextField' value={this.state.username}
+                         onChange={SubscriptionManagerActions.updateUsername} autoFocus/>
+                  <span className='help-block'>{this.state.helpBlock}</span>
+                </div>
+                <div className={'form-group ' + this.state.reponameValidationState}>
+                  <label className='control-label'>Repository Name</label>
+                  <input type='text' className='form-control' ref='reponameTextField' value={this.state.reponame}
+                         onChange={SubscriptionManagerActions.updateReponame} autoFocus/>
+                  <span className='help-block'>{this.state.helpBlock}</span>
+                </div>
+                <button type='submit' className='btn btn-primary'>Submit</button>
+              </form>
+            </div>
+          </div>
         </div>
 
-        <div className='row'>
-          <div className="panel panel-primary">
+        <div className='row flipInX animated'>
+          <div className='panel panel-primary'>
             <div className="panel-heading clearfix">
-              <h4 className="pull-left">Subscription Manager</h4>
-              <h4 className="pull-right">
+              Subscription Manager
+              <div className='pull-right'>
                 <LinkWithTooltip 
                   tooltip='Current Subscriptions' href='#'>
                     <span className="glyphicon glyphicon-question-sign"></span>
                 </LinkWithTooltip>
-              </h4>
+              </div>
             </div>
-            <div className="table-responsive">
-              <table className='table table-striped'>
-                <thead>
-                <tr>
-                  <th colSpan='1'>Username</th>
-                  <th colSpan='1'>Repository Name</th>
-                  <th colSpan='1'>Action</th>
-                </tr>
-                </thead>
-                <tbody>
-                  {subscriptions}
-                </tbody>
-              </table>
+            <div className='panel-body'>
+              <div className="table-responsive">
+                <table className='table table-striped'>
+                  <thead>
+                  <tr>
+                    <th colSpan='1'>Username</th>
+                    <th colSpan='1'>Repository Name</th>
+                    <th colSpan='1'>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    {subscriptions}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         </div>
