@@ -5,11 +5,22 @@ class SubscriptionManagerStore {
   constructor() {
     this.bindActions(SubscriptionManagerActions);
     this.subscriptions = [];
+    this.repos = [];
     this.username = '';
     this.reponame = '';
     this.helpBlock = '';
     this.usernameValidationState = '';
     this.reponameValidationState = '';
+  }
+
+  /* User Repositories table */
+  onGetRepositoriesSuccess(data) {
+    // console.log(data);
+    this.repos = data;
+  }
+
+  onGetRepositoriesFail(jqXhr) {
+    toastr.error(jqXhr.responseJSON && jqXhr.responseJSON.message || jqXhr.responseText || jqXhr.statusText);
   }
 
   /* Recent Subscriptions Table */
