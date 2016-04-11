@@ -42,6 +42,7 @@ require('./routes/issues')(app, _);
 require('./routes/commits')(app, _);
 require('./routes/pullrequests')(app, _);
 require('./routes/subscriptions')(app);
+require('./routes/repositories')(app);
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
