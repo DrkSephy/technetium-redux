@@ -14,7 +14,8 @@ class SubscriptionManager extends React.Component {
 
   componentDidMount() {
     SubscriptionManagerStore.listen(this.onChange);
-    SubscriptionManagerActions.getSubscriptions();
+    // SubscriptionManagerActions.getSubscriptions();
+    SubscriptionManagerActions.getRepositories();
     this.refs.usernameTextField.focus();
   }
 
@@ -33,33 +34,37 @@ class SubscriptionManager extends React.Component {
     if (event.currentTarget.value == 'unsubscribe') {
       event.currentTarget.innerHTML = 'Subscribe';
       event.currentTarget.value = 'subscribe';
-      event.currentTarget.bsStyle = 'primary';
+      event.currentTarget.style.backgroundColor = '#27d24b';
+      event.currentTarget.style.borderColor = '#ffffff'
       // Get id of subscription to remove
-      const id = event.target.getAttribute('data-id');
-      const username = event.target.getAttribute('data-username');
-      const reponame = event.target.getAttribute('data-reponame');
+      const id = event.currentTarget.getAttribute('data-id');
+      const username = event.currentTarget.getAttribute('data-username');
+      const reponame = event.currentTarget.getAttribute('data-reponame');
       // Handle unsubscribe action
       SubscriptionManagerActions.handleUnsubscribe(id, username, reponame);
       // Refresh the navbar
       setTimeout(() => {
         NavbarActions.getSubscriptions();
-        SubscriptionManagerActions.getSubscriptions();
+        SubscriptionManagerActions.getRepositories();
+        // SubscriptionManagerActions.getSubscriptions();
       }, 3000);
     }
 
-    // Trigger subscribe event
+    // // Trigger subscribe event
     else if (event.currentTarget.value == 'subscribe') {
       event.currentTarget.innerHTML = 'Unsubscribe';
       event.currentTarget.value = 'unsubscribe';
-      event.currentTarget.bsStyle = 'danger';
-      const username = event.target.getAttribute('data-username');
-      const reponame = event.target.getAttribute('data-reponame');
-      // Call existing subscribe action to add subscription
+      event.currentTarget.style.backgroundColor = '#f15051';
+      event.currentTarget.style.borderColor = '#ffffff'
+      const username = event.currentTarget.getAttribute('data-username');
+      const reponame = event.currentTarget.getAttribute('data-reponame');
+
+      // // Call existing subscribe action to add subscription
       SubscriptionManagerActions.addSubscription(username, reponame);
       // Refresh the navbar
       setTimeout(() => {
         NavbarActions.getSubscriptions();
-        SubscriptionManagerActions.getSubscriptions();
+        SubscriptionManagerActions.getRepositories();
       }, 3000);
     }
   }
@@ -85,7 +90,8 @@ class SubscriptionManager extends React.Component {
       // Get all subscriptions
       setTimeout(() => {
         NavbarActions.getSubscriptions();
-        SubscriptionManagerActions.getSubscriptions();
+        SubscriptionManagerActions.getRepositories();
+        // SubscriptionManagerActions.getSubscriptions();
       }, 3000);
     }
   }
@@ -95,19 +101,19 @@ class SubscriptionManager extends React.Component {
       verticalAlign: 'middle'
     }
 
-    let subscriptions = this.state.subscriptions.map((data) => {
+    let repositories = this.state.repos.map((repository) => {
       return (
-        <tr key={data._id}>
-          <td style={tdStyle}>{data.username}</td>
-          <td style={tdStyle}>{data.reponame}</td>
+        <tr key={repository.id}>
+          <td style={tdStyle}><a href={repository.link} target='_blank'>{repository.name}</a></td>
           <td style={tdStyle}>
             <Button
-              data-id={data._id}
-              data-username={data.username}
-              data-reponame={data.reponame}
-              bsStyle='danger'
-              value='unsubscribe'
-              onClick={this.handleClick.bind(this)}>Unsubscribe
+              data-id={repository.repoid}
+              data-username={repository.username}
+              data-reponame={repository.name}
+              bsStyle={repository.subscribed ? 'danger' : 'success'}
+              value={repository.subscribed ? 'unsubscribe' : 'subscribe'}
+              onClick={this.handleClick.bind(this)}
+              > {repository.subscribed ? 'Unsubscribe' : 'Subscribe'}
             </Button></td>
         </tr>
       );
@@ -135,7 +141,7 @@ class SubscriptionManager extends React.Component {
                   </div>
                 </div>
                 <div className='col-sm-6'>
-                  <button type='submit' className='btn btn-primary'>Submit</button>
+                  <button type='submit' className='btn btn-success'>Submit</button>
                 </div>
               </form>
             </div>
@@ -145,10 +151,10 @@ class SubscriptionManager extends React.Component {
         <div className='row flipInX animated'>
           <div className='panel panel-primary'>
             <div className="panel-heading clearfix">
-              Subscription Manager
+              Repositories
               <div className='pull-right'>
                 <LinkWithTooltip 
-                  tooltip='Current Subscriptions' href='#'>
+                  tooltip='Owned Repositories' href='#'>
                     <span className="glyphicon glyphicon-question-sign"></span>
                 </LinkWithTooltip>
               </div>
@@ -158,19 +164,19 @@ class SubscriptionManager extends React.Component {
                 <table className='table table-striped'>
                   <thead>
                   <tr>
-                    <th colSpan='1'>Username</th>
                     <th colSpan='1'>Repository Name</th>
                     <th colSpan='1'>Action</th>
                   </tr>
                   </thead>
                   <tbody>
-                    {subscriptions}
+                    {repositories}
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
         </div>
+
       </div>
     );
   }

@@ -14,7 +14,6 @@ module.exports = (app) => {
       if (err) return next(err);
 
       if (user) {
-        console.log(user.subscriptions);
         getJSON('https://api.bitbucket.org/2.0/repositories/' + req.user.username, req.user.authToken)
         .then((results) => {
           let repos = [];
