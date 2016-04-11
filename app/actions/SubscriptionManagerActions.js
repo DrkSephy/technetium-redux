@@ -12,7 +12,9 @@ class SubscriptionManagerActions {
       'updateUsername',
       'invalidUsername',
       'updateReponame',
-      'invalidReponame'
+      'invalidReponame',
+      'getRepositoriesSuccess',
+      'getRepositoriesFail'
     );
   }
 
@@ -59,6 +61,19 @@ class SubscriptionManagerActions {
     .fail((jqXhr) => {
       this.actions.addSubscriptionFail(jqXhr.responseJSON.message);
     });
+  }
+
+  getRepositories() {
+    $.ajax({
+      type: 'GET',
+      url: '/api/users/repositories'
+    })
+    .done((data) => {
+      this.actions.getRepositoriesSuccess(data);
+    })
+    .fail((jqXhr) => {
+      this.actions.getRepositoriesFail(jqXhr.responseJSON.message);
+    })
   }
 }
 
