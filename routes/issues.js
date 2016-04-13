@@ -102,12 +102,18 @@ module.exports = (app, _, config) => {
 
     getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
-      let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
       let parsedData = {
         opened: 0,
         assigned: 0,
         resolved: 0
       };
+
+      // No issue tracker. break early and send empty data
+      if (results.error) {
+        res.send(parsedData);
+      }
+
+      let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
       let issueData = [];
       Promise.all(promises)
       // Loop over all of the data!
