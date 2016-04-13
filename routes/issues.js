@@ -300,6 +300,12 @@ module.exports = (app, _, config) => {
         }
         parsedData.push(entry);
       });
+
+      // Break early if no issue tracker
+      if (results.error) {
+        res.send(parsedData);
+      }
+
       results['issues'].forEach((issue) => {
         let date = moment(issue.utc_created_on);
         if (issue.responsible && issue.status === 'resolved') {
@@ -340,6 +346,7 @@ module.exports = (app, _, config) => {
 
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
+      console.log(results);
       let parsedData = [];
       let dateRanges = generateDateRange(startDate, endDate);
       dateRanges.forEach((range) => {
@@ -349,6 +356,12 @@ module.exports = (app, _, config) => {
         }
         parsedData.push(entry);
       });
+
+      // Break early if no issue tracker
+      if (results.error) {
+        res.send(parsedData);
+      }
+
       results['issues'].forEach((issue) => {
         let date = moment(issue.created_on);
         parsedData.forEach((entry) => {
@@ -396,6 +409,12 @@ module.exports = (app, _, config) => {
         }
         parsedData.push(entry);
       });
+
+      // Break early if no issue tracker
+      if (results.error) {
+        res.send(parsedData);
+      }
+
       results['issues'].forEach((issue) => {
         let date = moment(issue.created_on);
         parsedData.forEach((entry) => {
