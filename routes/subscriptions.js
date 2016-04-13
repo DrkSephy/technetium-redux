@@ -23,7 +23,7 @@ module.exports = (app) => {
       if (user) {
         let subscription = {
           username: username,
-          reponame: reponame.toLowerCase()
+          reponame: reponame.replace(/\s+/g, '-').toLowerCase()
         };
         user.subscriptions.push(subscription);
         user.save((err) => {
