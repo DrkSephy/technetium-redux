@@ -346,7 +346,6 @@ module.exports = (app, _, config) => {
 
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
-      console.log(results);
       let parsedData = [];
       let dateRanges = generateDateRange(startDate, endDate);
       dateRanges.forEach((range) => {

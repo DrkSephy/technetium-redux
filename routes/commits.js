@@ -40,25 +40,36 @@ module.exports = (app, _) => {
       .then((results) => {
         let users = []
         let parsedData = [];
+        let commitData = [];
         results.forEach((item) => {
-          const data = item.values;
-          for (let value in data) {
-            const username = data[value].author.user.username;
-            if(username !== undefined && !(_.contains(users, username))) {
-              let userEntry = {};
-              userEntry.username = username;
-              userEntry.commits = 0;
-              userEntry.id = generateRandomNumber();
-              parsedData.push(userEntry);
-              users.push(username);
-            }
-            parsedData.forEach((contributor) => {
-              if(contributor.username === username) {
-                contributor.commits++;
-              }
-            });
-          }
+          item['values'].forEach((entry) => {
+            commitData.push(entry.author);
+          });
         });
+        commitData.forEach((commit) => {
+          var username;
+          if (!commit.user) {
+            username = commit.raw.split(' <')[0];
+          } else {
+            username = commit.user.username;
+          }
+
+          if(!(_.contains(users, username))) {
+            users.push(username);
+            let entry = {};
+            entry.username = username;
+            entry.commits = 0;
+            entry.id = generateRandomNumber();
+            parsedData.push(entry);
+          }
+
+          parsedData.forEach((contributor) => {
+            if (contributor.username == username) {
+              contributor.commits++;
+            }
+          });
+        });
+
         res.json(parsedData);
       });
     });
