@@ -48,6 +48,12 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
+
+      // // If there is no issue tracker...return early
+      if (results.error) {
+        res.send([]);
+      }
+
       let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((issues) => {
@@ -151,6 +157,12 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
+
+      // // If there is no issue tracker...return early
+      if (results.error) {
+        res.send([]);
+      }
+
       let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((issues) => {
@@ -192,6 +204,12 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/2.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((results) => {
+
+      // If there is no issue tracker...return early
+      if (results.error) {
+        res.send([]);
+      }
+
       let promises = computeIssueUrls('https://api.bitbucket.org/2.0/repositories/', '/issues', results.size, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((issues) => {
@@ -235,6 +253,12 @@ module.exports = (app, _, config) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/issues/', req.user.authToken)
     .then((data) => {
+
+      // If there is no issue tracker...return early
+      if (data.error) {
+        res.send([]);
+      }
+
       let promises = getIssueCommentUrls(data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
