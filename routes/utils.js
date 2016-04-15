@@ -52,8 +52,8 @@ export function generateRandomNumber(min=1, max=9999) {
  * @returns {object} - An object containing the start and end dates.
 */
 export function getDateRange() {
-  let endDate = moment().add(1, 'days');
-  let startDate = moment().subtract(6, 'days');
+  let startDate = moment().subtract(7, 'days');
+  let endDate = moment();
   return { startDate: startDate, endDate: endDate };
 }
 
