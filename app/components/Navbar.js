@@ -63,7 +63,7 @@ class Navbar extends React.Component {
               <li><Link to='subscriptionManager'>Subscription Manager</Link></li>
             </ul>
             <ul className='nav navbar-nav navbar-right' style={navStyle}>
-              <li><a href='#' onClick={NavbarActions.removeSubscriptions}>Unsubscribe From All</a></li>
+              <li><a href='/subscriptionManager' onClick={NavbarActions.removeSubscriptions}>Unsubscribe From All</a></li>
               <li className='dropdown'>
                 <a href='#' className='dropdown-toggle' data-toggle='dropdown'><span><Glyphicon glyph='user' /></span> Hello, {LoginStore.getState().username}<b className='caret'></b></a>
                 <ul className='dropdown-menu'>

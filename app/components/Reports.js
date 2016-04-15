@@ -57,7 +57,7 @@ class Reports extends React.Component {
 
   render() {
     const divStyle = {
-      float: 'right'
+      float: 'left'
     }
 
     let reportData = this.state.reportData.map((data) => {
@@ -144,7 +144,7 @@ class Reports extends React.Component {
               </LinkWithTooltip>
             </h4>
           </div>
-          <TimeSeries 
+          <TimeSeries
             username={this.props.params.username} 
             reponame={this.props.params.reponame} />
         </div>
