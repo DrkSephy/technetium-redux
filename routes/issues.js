@@ -327,7 +327,11 @@ module.exports = (app, _, config) => {
 
       // Break early if no issue tracker
       if (results.error) {
-        res.send(parsedData);
+        let data = [];
+        parsedData.forEach((entry) => {
+          data.push(entry.count);
+        });
+        res.send(data);
       }
 
       results['issues'].forEach((issue) => {
@@ -382,7 +386,11 @@ module.exports = (app, _, config) => {
 
       // Break early if no issue tracker
       if (results.error) {
-        res.send(parsedData);
+        let data = [];
+        parsedData.forEach((entry) => {
+          data.push(entry.count);
+        });
+        res.send(data);
       }
 
       results['issues'].forEach((issue) => {
@@ -435,7 +443,11 @@ module.exports = (app, _, config) => {
 
       // Break early if no issue tracker
       if (results.error) {
-        res.send(parsedData);
+        let data = [];
+        parsedData.forEach((entry) => {
+          data.push(entry.count);
+        });
+        res.send(data);
       }
 
       results['issues'].forEach((issue) => {
