@@ -201,6 +201,7 @@ module.exports = (app, _) => {
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
       let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
+      let commits = [];
       Promise.all(promises)
       .then((results) => {
         let timeSeries = [];
@@ -208,16 +209,36 @@ module.exports = (app, _) => {
         let ranges = getDateRange();
         let dateRanges = generateDateRange(ranges.startDate, ranges.endDate);
         let parsedData = [];
+
+        // Represent start and end range in unix time for easier comparisons
+        let startRange = ranges.startDate.unix();
+        let endRange = ranges.endDate.unix();
+
+        // Group all commits together
         results.forEach((item) => {
-          const data = item.values;
-          for (let value in data) {
-            let date = moment(data[value].date);
-            if (date.isBetween(ranges.startDate.subtract(1, 'day'), ranges.endDate)) {
-              let userEntry = {};
-              userEntry.username = data[value].author.user.username;
-              userEntry.date = date.format('YYYY-MM-DD');
-              parsedData.push(userEntry);
-            }
+          item['values'].forEach((commit) => {
+            commits.push(commit);
+          });
+        });
+
+        // Iterate over each commit
+        commits.forEach((commit) => {
+          // Grab username - either from raw or existing user field
+          var username;
+          if (!commit.author.user) {
+            username = commit.author.raw.split(' <')[0];
+          } else {
+            username = commit.author.user.username;
+          }
+
+          const date = moment(commit.date);
+          const dateUnix = date.unix();
+
+          if (dateUnix >= startRange && dateUnix <= endRange) {
+            let entry = {};
+            entry.username = username;
+            entry.date = date.format('YYYY-MM-DD');
+            parsedData.push(entry);
           }
         });
 
