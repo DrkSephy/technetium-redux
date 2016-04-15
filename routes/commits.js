@@ -35,6 +35,11 @@ module.exports = (app, _) => {
     let reponame = req.query.reponame;
     getJSON('https://bitbucket.org/api/1.0/repositories/' + username + '/' + reponame + '/changesets?limit=0', req.user.authToken)
     .then((data) => {
+
+      if (data.error) {
+        res.send([]);
+      }
+
       let promises = computeUrls('https://api.bitbucket.org/2.0/repositories/', '/commits', data.count, req.user.authToken, username, reponame);
       Promise.all(promises)
       .then((results) => {
