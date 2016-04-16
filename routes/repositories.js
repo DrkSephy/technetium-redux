@@ -14,34 +14,31 @@ module.exports = (app) => {
       if (err) return next(err);
 
       if (user) {
-        getJSON('https://api.bitbucket.org/2.0/repositories/' + req.user.username, req.user.authToken)
+        getJSON('https://bitbucket.org/api/1.0/user/repositories/dashboard/', req.user.authToken)
         .then((results) => {
           let repos = [];
-          let promises = computeRepositoryUrls('https://api.bitbucket.org/2.0/', results.size, req.user.authToken, req.user.username);
-          Promise.all(promises)
-          .then((repositories) => {
-            repositories.forEach((repository) => {
-              repository['values'].forEach((entry) => {
-                if (entry.scm == 'git') {
-                  let data = {}
-                  data.subscribed = false;
-                  data.name = entry.name;
-                  data.username = entry.owner.username;
-                  data.link = entry.links.html.href;
-                  data.id = generateRandomNumber();
-                  data.repoid = null;
-                  user.subscriptions.forEach((subscription) => {
-                    if (subscription.reponame == entry.name) {
-                      data.subscribed = true;
-                      data.repoid = subscription._id;
-                    } 
-                  });
-                  repos.push(data);
-                }
-              });
+          results.forEach((result) => {
+            let data = result[1];
+            data.forEach((entry) => {
+              if (entry.scm == 'git') {
+                let repo = {};
+                repo.subscribed = false;
+                repo.name = entry.slug;
+                repo.username = entry.owner;
+                repo.link = 'https://bitbucket.org/' + entry.absolute_url;
+                repo.id = generateRandomNumber();
+                repo.repoid = null;
+                user.subscriptions.forEach((subscription) => {
+                  if (subscription.reponame == entry.slug) {
+                    repo.subscribed = true;
+                    repo.repoid = subscription._id;
+                  }
+                });
+                repos.push(repo);
+              }
             });
-            res.send(repos);
           });
+          res.send(repos);
         });
       }
     });
