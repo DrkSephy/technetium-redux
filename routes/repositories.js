@@ -29,7 +29,7 @@ module.exports = (app) => {
                 repo.id = generateRandomNumber();
                 repo.repoid = null;
                 user.subscriptions.forEach((subscription) => {
-                  if (subscription.reponame == entry.slug) {
+                  if (subscription.reponame == entry.slug && subscription.username == entry.owner) {
                     repo.subscribed = true;
                     repo.repoid = subscription._id;
                   }
