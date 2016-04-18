@@ -104,7 +104,7 @@ class SubscriptionManager extends React.Component {
     let repositories = this.state.repos.map((repository) => {
       return (
         <tr key={repository.id}>
-          <td style={tdStyle}><a href={repository.link} target='_blank'>{repository.name}</a></td>
+          <td style={tdStyle}><a href={repository.link} target='_blank'>{repository.username + '/' + repository.name}</a></td>
           <td style={tdStyle}>
             <Button
               data-id={repository.repoid}
