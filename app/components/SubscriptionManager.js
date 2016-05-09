@@ -148,7 +148,7 @@ class SubscriptionManager extends React.Component {
           </div>
         </div>
 
-        <div className='row flipInX animated'>
+        <div className='row'>
           <div className='panel panel-primary'>
             <div className="panel-heading clearfix">
               Repositories
