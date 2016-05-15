@@ -29,7 +29,6 @@ module.exports = function(passport) {
         if (user) {
           var currentTime = moment().unix();
           if (currentTime >= user.tokenExpiration) {
-            console.log('User access token has expired, fetching new token');
             var url = 'https://bitbucket.org/site/oauth2/access_token';
             var data = {
               'client_id': config.consumerKey,
@@ -44,9 +43,7 @@ module.exports = function(passport) {
               user.refreshToken = data['refresh_token'];
               user.tokenExpiration = tokenExpirationTime;
               user.save((err) => {
-                console.log(user);
                 if (err) return next(err);
-                console.log('Successfully updated user model with auth tokens!');
               });
             });
           }
@@ -62,7 +59,6 @@ module.exports = function(passport) {
 
           newUser.save((err) => {
             if (err) return next(err);
-            console.log('User profile has been created successfully!');
           });
         }
       });

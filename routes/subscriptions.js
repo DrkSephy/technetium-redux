@@ -28,8 +28,6 @@ module.exports = (app) => {
         user.subscriptions.push(subscription);
         user.save((err) => {
           if (err) return next(err);
-          console.log('New subscriptions');
-          console.log(user.subscriptions)
           res.send({ message: 'Subscribed to ' + username +  '/' + reponame + ' successfully'});
         });
       }
@@ -78,8 +76,6 @@ module.exports = (app) => {
       {new: true},
       (err, doc) => {
         res.send({ message: 'Successfully unsubscribed from ' + req.query.username + '/' + req.query.reponame });
-        // console.log(err);
-        console.log(doc);
       }
     );
   });
