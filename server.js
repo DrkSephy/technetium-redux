@@ -14,6 +14,7 @@ var _ = require('underscore');
 var mongoose = require('mongoose');
 var passport = require('passport');
 var configDB = require('./config/database');
+var config = require('./secrets.js');
 
 var routes = require('./app/routes');
 
@@ -33,7 +34,7 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: true, saveUninitialized: true }));
+app.use(require('express-session')({ secret: config.serverSecret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
